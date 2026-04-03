@@ -1,7 +1,7 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', __('site.dashboard.title'))
-@section('meta_description', 'RIF IPTV dashboard for subscriptions, payments, support follow-up, and admin delivery workflows.')
+@section('meta_description', 'RIF Streaming dashboard for subscriptions, payments, support follow-up, and admin delivery workflows.')
 @section('meta_robots', 'noindex,nofollow')
 
 @section('content')
@@ -32,6 +32,34 @@
     $workflowStatusLabels = __('workflow.statuses');
     $latestPaymentMethod = $latestTransaction?->payment_method ?? $client?->preferred_payment_method ?? null;
     $clientStatus = $client?->onboarding_status ?? $subscription?->status ?? 'new';
+    $formatClientPhone = function ($queueClient) {
+        return $queueClient->phone ?: trim(($queueClient->user->phone_country_code ?? '').' '.($queueClient->user->phone_number ?? ''));
+    };
+    $bankActionState = function ($queueClient, $queueTransaction) {
+        $paymentConfirmed = ($queueTransaction?->status === 'paid') || filled($queueTransaction?->proof_path);
+
+        return [
+            'assign' => ! $queueClient->assigned_admin_id,
+            'start_support' => (bool) $queueClient->assigned_admin_id && ! $queueClient->support_started_at,
+            'confirm_payment' => (bool) $queueClient->support_started_at && ! $paymentConfirmed,
+            'send_tutorial' => $paymentConfirmed && ! $queueClient->setup_tutorial_sent_at,
+            'save_credentials' => $paymentConfirmed && (bool) $queueClient->setup_tutorial_sent_at && ! $queueClient->completed_at,
+            'mark_completed' => ! $queueClient->completed_at && filled($queueClient->iptv_username) && filled($queueClient->iptv_password),
+            'payment_confirmed' => $paymentConfirmed,
+        ];
+    };
+    $cardActionState = function ($queueClient, $queueTransaction) {
+        $paymentConfirmed = $queueTransaction?->status === 'paid';
+
+        return [
+            'assign' => ! $queueClient->assigned_admin_id,
+            'start_support' => (bool) $queueClient->assigned_admin_id && ! $queueClient->support_started_at,
+            'send_tutorial' => $paymentConfirmed && (bool) $queueClient->support_started_at && ! $queueClient->setup_tutorial_sent_at,
+            'save_credentials' => $paymentConfirmed && (bool) $queueClient->setup_tutorial_sent_at && ! $queueClient->completed_at,
+            'mark_completed' => ! $queueClient->completed_at && filled($queueClient->iptv_username) && filled($queueClient->iptv_password),
+            'payment_confirmed' => $paymentConfirmed,
+        ];
+    };
 @endphp
 
 <section class="section-space">
@@ -152,13 +180,14 @@
                                     $queueStatus = $queueClient->onboarding_status ?: 'new';
                                     $queueSubscription = $queueClient->latest_subscription;
                                     $queueTransaction = $queueClient->latest_transaction;
+                                    $actionState = $bankActionState($queueClient, $queueTransaction);
                                 @endphp
                                 <div class="workflow-card">
                                     <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-3">
                                         <div>
                                             <h3 class="h5 text-body-rif mb-1">{{ $queueClient->user->name }}</h3>
                                             <div class="text-soft-rif">{{ $queueClient->user->email }}</div>
-                                            <div class="text-soft-rif">{{ $queueClient->phone ?: $queueClient->user->phone_country_code.' '.$queueClient->user->phone_number }}</div>
+                                            <div class="text-soft-rif">{{ $formatClientPhone($queueClient) }}</div>
                                         </div>
                                         <div class="text-lg-end">
                                             <span class="status-badge {{ $statusClasses[$queueStatus] ?? 'status-warning' }}">{{ $workflowStatusLabels[$queueStatus] ?? ucfirst(str_replace('_', ' ', $queueStatus)) }}</span>
@@ -173,47 +202,86 @@
                                         <div class="workflow-meta-item"><span>{{ __('workflow.common.payment') }}</span><strong>{{ __('workflow.common.bank_transfer') }}</strong></div>
                                     </div>
 
+                                    <div class="d-flex flex-wrap gap-2 mb-3">
+                                        @if ($queueClient->assigned_admin_id)
+                                            <span class="status-badge status-success">{{ __('workflow.admin.actions.assign') }}</span>
+                                        @endif
+                                        @if ($queueClient->support_started_at)
+                                            <span class="status-badge status-success">{{ __('workflow.admin.actions.start_support') }}</span>
+                                        @endif
+                                        @if ($actionState['payment_confirmed'])
+                                            <span class="status-badge status-success">{{ __('workflow.admin.actions.confirm_payment') }}</span>
+                                        @endif
+                                        @if ($queueClient->setup_tutorial_sent_at)
+                                            <span class="status-badge status-success">{{ __('workflow.admin.actions.send_tutorial') }}</span>
+                                        @endif
+                                        @if ($queueClient->iptv_username && $queueClient->iptv_password)
+                                            <span class="status-badge status-success">{{ __('workflow.admin.actions.save_credentials') }}</span>
+                                        @endif
+                                    </div>
+
                                     <div class="workflow-actions">
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
-                                            @csrf
-                                            <input type="hidden" name="action" value="assign">
-                                            <button type="submit" class="btn-rif-outline w-100">{{ __('workflow.admin.actions.assign') }}</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
-                                            @csrf
-                                            <input type="hidden" name="action" value="start_support">
-                                            <button type="submit" class="btn-rif-outline w-100">{{ __('workflow.admin.actions.start_support') }}</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}" enctype="multipart/form-data" class="workflow-proof-form">
-                                            @csrf
-                                            <input type="hidden" name="action" value="confirm_payment">
-                                            <label class="form-label form-label-rif mb-2">{{ __('workflow.admin.actions.payment_proof') }}</label>
-                                            <input type="file" name="payment_proof" class="form-control form-control-rif mb-3">
-                                            <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.confirm_payment') }}</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
-                                            @csrf
-                                            <input type="hidden" name="action" value="send_tutorial">
-                                            <button type="submit" class="btn-rif-outline w-100">{{ __('workflow.admin.actions.send_tutorial') }}</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}" class="workflow-credentials-form">
-                                            @csrf
-                                            <input type="hidden" name="action" value="save_credentials">
-                                            <div class="row g-2">
-                                                <div class="col-md-6">
-                                                    <input type="text" name="iptv_username" class="form-control form-control-rif" placeholder="{{ __('workflow.admin.actions.iptv_username') }}" value="{{ $queueClient->iptv_username }}">
+                                        @if ($actionState['assign'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
+                                                @csrf
+                                                <input type="hidden" name="action" value="assign">
+                                                <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.assign') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if ($actionState['start_support'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
+                                                @csrf
+                                                <input type="hidden" name="action" value="start_support">
+                                                <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.start_support') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if ($actionState['confirm_payment'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}" enctype="multipart/form-data" class="workflow-proof-form">
+                                                @csrf
+                                                <input type="hidden" name="action" value="confirm_payment">
+                                                <label class="form-label form-label-rif mb-2">{{ __('workflow.admin.actions.payment_proof') }}</label>
+                                                <input type="file" name="payment_proof" class="form-control form-control-rif mb-3">
+                                                <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.confirm_payment') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if ($actionState['send_tutorial'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
+                                                @csrf
+                                                <input type="hidden" name="action" value="send_tutorial">
+                                                <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.send_tutorial') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if ($actionState['save_credentials'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}" class="workflow-credentials-form">
+                                                @csrf
+                                                <input type="hidden" name="action" value="save_credentials">
+                                                <div class="row g-2">
+                                                    <div class="col-md-6">
+                                                        <input type="text" name="iptv_username" class="form-control form-control-rif" placeholder="{{ __('workflow.admin.actions.iptv_username') }}" value="{{ $queueClient->iptv_username }}">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text" name="iptv_password" class="form-control form-control-rif" placeholder="{{ __('workflow.admin.actions.iptv_password') }}" value="{{ $queueClient->iptv_password }}">
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <input type="text" name="iptv_password" class="form-control form-control-rif" placeholder="{{ __('workflow.admin.actions.iptv_password') }}" value="{{ $queueClient->iptv_password }}">
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="btn-rif-outline w-100 mt-3">{{ __('workflow.admin.actions.save_credentials') }}</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
-                                            @csrf
-                                            <input type="hidden" name="action" value="mark_completed">
-                                            <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.mark_completed') }}</button>
-                                        </form>
+                                                <button type="submit" class="btn-rif-secondary w-100 mt-3">{{ __('workflow.admin.actions.save_credentials') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if ($actionState['mark_completed'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
+                                                @csrf
+                                                <input type="hidden" name="action" value="mark_completed">
+                                                <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.mark_completed') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if (! collect($actionState)->except('payment_confirmed')->contains(true))
+                                            <div class="soft-card p-3 text-soft-rif small">Waiting for the next workflow event.</div>
+                                        @endif
                                     </div>
                                 </div>
                             @empty
@@ -237,13 +305,14 @@
                                     $queueStatus = $queueClient->onboarding_status ?: 'new';
                                     $queueSubscription = $queueClient->latest_subscription;
                                     $queueTransaction = $queueClient->latest_transaction;
+                                    $actionState = $cardActionState($queueClient, $queueTransaction);
                                 @endphp
                                 <div class="workflow-card">
                                     <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-3">
                                         <div>
                                             <h3 class="h5 text-body-rif mb-1">{{ $queueClient->user->name }}</h3>
                                             <div class="text-soft-rif">{{ $queueClient->user->email }}</div>
-                                            <div class="text-soft-rif">{{ $queueClient->phone ?: $queueClient->user->phone_country_code.' '.$queueClient->user->phone_number }}</div>
+                                            <div class="text-soft-rif">{{ $formatClientPhone($queueClient) }}</div>
                                         </div>
                                         <div class="text-lg-end">
                                             <span class="status-badge {{ $statusClasses[$queueStatus] ?? 'status-warning' }}">{{ $workflowStatusLabels[$queueStatus] ?? ucfirst(str_replace('_', ' ', $queueStatus)) }}</span>
@@ -258,40 +327,76 @@
                                         <div class="workflow-meta-item"><span>{{ __('workflow.common.provider') }}</span><strong>{{ $queueTransaction?->provider ?: 'Paddle' }}</strong></div>
                                     </div>
 
+                                    <div class="d-flex flex-wrap gap-2 mb-3">
+                                        @if ($queueClient->assigned_admin_id)
+                                            <span class="status-badge status-success">{{ __('workflow.admin.actions.assign') }}</span>
+                                        @endif
+                                        @if ($actionState['payment_confirmed'])
+                                            <span class="status-badge status-success">{{ __('workflow.admin.actions.confirm_payment') }}</span>
+                                        @endif
+                                        @if ($queueClient->support_started_at)
+                                            <span class="status-badge status-success">{{ __('workflow.admin.actions.start_support') }}</span>
+                                        @endif
+                                        @if ($queueClient->setup_tutorial_sent_at)
+                                            <span class="status-badge status-success">{{ __('workflow.admin.actions.send_tutorial') }}</span>
+                                        @endif
+                                        @if ($queueClient->iptv_username && $queueClient->iptv_password)
+                                            <span class="status-badge status-success">{{ __('workflow.admin.actions.save_credentials') }}</span>
+                                        @endif
+                                    </div>
+
                                     <div class="workflow-actions">
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
-                                            @csrf
-                                            <input type="hidden" name="action" value="assign">
-                                            <button type="submit" class="btn-rif-outline w-100">{{ __('workflow.admin.actions.assign') }}</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
-                                            @csrf
-                                            <input type="hidden" name="action" value="start_support">
-                                            <button type="submit" class="btn-rif-outline w-100">{{ __('workflow.admin.actions.start_support') }}</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
-                                            @csrf
-                                            <input type="hidden" name="action" value="send_tutorial">
-                                            <button type="submit" class="btn-rif-outline w-100">{{ __('workflow.admin.actions.send_tutorial') }}</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}" class="workflow-credentials-form">
-                                            @csrf
-                                            <input type="hidden" name="action" value="save_credentials">
-                                            <div class="row g-2">
-                                                <div class="col-md-6">
-                                                    <input type="text" name="iptv_username" class="form-control form-control-rif" placeholder="{{ __('workflow.admin.actions.iptv_username') }}" value="{{ $queueClient->iptv_username }}">
+                                        @if ($actionState['assign'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
+                                                @csrf
+                                                <input type="hidden" name="action" value="assign">
+                                                <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.assign') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if ($actionState['start_support'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
+                                                @csrf
+                                                <input type="hidden" name="action" value="start_support">
+                                                <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.start_support') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if ($actionState['send_tutorial'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
+                                                @csrf
+                                                <input type="hidden" name="action" value="send_tutorial">
+                                                <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.send_tutorial') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if ($actionState['save_credentials'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}" class="workflow-credentials-form">
+                                                @csrf
+                                                <input type="hidden" name="action" value="save_credentials">
+                                                <div class="row g-2">
+                                                    <div class="col-md-6">
+                                                        <input type="text" name="iptv_username" class="form-control form-control-rif" placeholder="{{ __('workflow.admin.actions.iptv_username') }}" value="{{ $queueClient->iptv_username }}">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text" name="iptv_password" class="form-control form-control-rif" placeholder="{{ __('workflow.admin.actions.iptv_password') }}" value="{{ $queueClient->iptv_password }}">
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <input type="text" name="iptv_password" class="form-control form-control-rif" placeholder="{{ __('workflow.admin.actions.iptv_password') }}" value="{{ $queueClient->iptv_password }}">
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="btn-rif-outline w-100 mt-3">{{ __('workflow.admin.actions.save_credentials') }}</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
-                                            @csrf
-                                            <input type="hidden" name="action" value="mark_completed">
-                                            <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.mark_completed') }}</button>
-                                        </form>
+                                                <button type="submit" class="btn-rif-secondary w-100 mt-3">{{ __('workflow.admin.actions.save_credentials') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if ($actionState['mark_completed'])
+                                            <form method="POST" action="{{ route('admin.clients.workflow', $queueClient) }}">
+                                                @csrf
+                                                <input type="hidden" name="action" value="mark_completed">
+                                                <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.admin.actions.mark_completed') }}</button>
+                                            </form>
+                                        @endif
+
+                                        @if (! collect($actionState)->except('payment_confirmed')->contains(true))
+                                            <div class="soft-card p-3 text-soft-rif small">Waiting for the next workflow event.</div>
+                                        @endif
                                     </div>
                                 </div>
                             @empty
@@ -338,14 +443,14 @@
                                     </td>
                                     <td>{{ $managedClient->phone ?: $managedClient->user->phone_country_code.' '.$managedClient->user->phone_number }}</td>
                                     <td>{{ $managedTransaction?->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : __('workflow.common.card') }}</td>
-                                    <td>{{ $managedTransaction?->bank_name ?: '—' }}</td>
+                                    <td>{{ $managedTransaction?->bank_name ?: 'â€”' }}</td>
                                     <td>{{ optional($managedClient->assignedAdmin)->name ?: __('portal.dashboard.shared.unassigned') }}</td>
                                     <td><span class="status-badge {{ $statusClasses[$managedStatus] ?? 'status-warning' }}">{{ $workflowStatusLabels[$managedStatus] ?? ucfirst(str_replace('_', ' ', $managedStatus)) }}</span></td>
                                     <td>
                                         @if ($managedTransaction?->proof_path)
                                             <a href="{{ asset($managedTransaction->proof_path) }}" target="_blank" class="nav-link-rif">{{ __('workflow.admin.clients_table.view_proof') }}</a>
                                         @else
-                                            <span class="text-soft-rif">—</span>
+                                            <span class="text-soft-rif">â€”</span>
                                         @endif
                                     </td>
                                 </tr>
@@ -595,3 +700,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
+

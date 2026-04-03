@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'common' => [
@@ -39,12 +39,12 @@ return [
     'flash' => [
         'plan-selected' => 'Plan selected. Choose your payment method to continue.',
         'bank-transfer-waiting' => 'Your bank transfer request is recorded. Our team will contact you on WhatsApp to continue.',
-        'card-paid' => 'Card payment confirmed. Your admin will now complete setup and send your IPTV access.',
+        'card-paid' => 'Card payment confirmed. Your admin will now complete setup and send your access details.',
         'client-workflow-updated' => 'Client workflow updated successfully.',
     ],
     'onboarding' => [
-        'title' => 'Checkout setup | RIF IPTV',
-        'meta_description' => 'Choose your RIF IPTV plan, select card or national bank transfer, and continue the onboarding flow.',
+        'title' => 'Checkout setup | RIF Streaming',
+        'meta_description' => 'Choose your RIF Streaming service plan, select card or national bank transfer, and continue the onboarding flow.',
         'kicker' => 'Client onboarding',
         'headline' => 'Choose your plan and finish payment the smooth way',
         'description' => 'Register once, choose the right plan, pick your payment method, and let the team continue the activation with you.',
@@ -54,7 +54,7 @@ return [
             ['title' => 'Get activated', 'text' => 'Support follows up on WhatsApp and delivers your setup.'],
         ],
         'plan_kicker' => 'Step 1',
-        'plan_title' => 'Select your subscription plan',
+        'plan_title' => 'Select your service plan',
         'payment_kicker' => 'Step 2',
         'payment_title' => 'Choose how you want to pay',
         'summary_kicker' => 'Order summary',
@@ -72,7 +72,7 @@ return [
         ],
         'families' => [
             'max_ott' => 'Flexible and affordable for smooth everyday streaming.',
-            't_rex' => 'A stronger premium line for sports, VOD, and heavy streaming use.',
+            't_rex' => 'A stronger service line for advanced setup help and longer support coverage.',
         ],
         'select_plan' => 'Save selected plan',
         'card_title' => 'Pay by card with Paddle',
@@ -86,21 +86,21 @@ return [
         'dashboard' => 'Go to dashboard',
     ],
     'checkout' => [
-        'title' => 'Paddle checkout | RIF IPTV',
-        'meta_description' => 'Secure your RIF IPTV order with Paddle card checkout.',
+        'title' => 'Paddle checkout | RIF Streaming',
+        'meta_description' => 'Secure your RIF Streaming order with Paddle card checkout.',
         'kicker' => 'Secure card payment',
         'headline' => 'Paddle checkout',
-        'description' => 'This screen represents the secure card checkout step before your admin completes IPTV setup.',
+        'description' => 'This screen represents the secure card checkout step before your admin completes the technical setup process.',
         'badge' => 'International payment',
         'note_title' => 'What happens next',
-        'note_text' => 'After card payment confirmation, your order appears as paid for the assigned admin. The admin then sends setup help, IPTV credentials, and activation details.',
+        'note_text' => 'After card payment confirmation, your order appears as paid for the assigned admin. The admin then sends setup help, access details, and next-step guidance.',
         'confirm' => 'Confirm card payment',
         'back' => 'Back to order setup',
     ],
     'client' => [
         'eyebrow' => 'Client dashboard',
         'headline' => 'Hello, :name',
-        'description' => 'Follow your plan, payment status, assigned admin, and IPTV setup from one clear space.',
+        'description' => 'Follow your plan, payment status, assigned admin, and technical setup progress from one clear space.',
         'live_badge' => 'Client account live',
         'metrics' => [
             'plan' => 'Selected plan',
@@ -139,8 +139,8 @@ return [
             'view_proof' => 'View payment proof',
         ],
         'credentials' => [
-            'kicker' => 'IPTV access',
-            'title' => 'Your IPTV credentials',
+            'kicker' => 'Streaming access',
+            'title' => 'Your access details',
             'username' => 'Username',
             'password' => 'Password',
         ],
@@ -204,8 +204,8 @@ return [
             'confirm_payment' => 'Confirm payment',
             'payment_proof' => 'Payment proof',
             'send_tutorial' => 'Tutorial sent',
-            'iptv_username' => 'IPTV username',
-            'iptv_password' => 'IPTV password',
+            'iptv_username' => 'Access username',
+            'iptv_password' => 'Access password',
             'save_credentials' => 'Save credentials',
             'mark_completed' => 'Mark completed',
         ],
@@ -241,3 +241,4 @@ return [
         ],
     ],
 ];
+

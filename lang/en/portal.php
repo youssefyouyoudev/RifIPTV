@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'guest' => [
@@ -12,8 +12,8 @@ return [
         ],
         'panel' => [
             'kicker' => 'Client access',
-            'title' => 'A smoother IPTV space for clients, admins, and support.',
-            'description' => 'The account area follows the Amazigh color system, adapts to light and dark mode, and keeps subscription access clear on every device.',
+            'title' => 'A smoother workspace for clients, admins, and support.',
+            'description' => 'The account area follows the Amazigh color system, adapts to light and dark mode, and keeps service management clear on every device.',
         ],
     ],
     'phone_codes' => [
@@ -31,11 +31,11 @@ return [
     ],
     'auth' => [
         'login' => [
-            'title' => 'Sign in | RIF IPTV',
-            'meta_description' => 'Sign in to your RIF IPTV account to review your subscription, renewals, and support activity.',
+            'title' => 'Sign in | RIF Streaming',
+            'meta_description' => 'Sign in to your RIF Streaming account to review your service plan, renewals, and support activity.',
             'kicker' => 'Welcome back',
-            'headline' => 'Sign in to your RIF IPTV space',
-            'description' => 'Access your subscription, renewal options, support owner, and account activity from one clean dashboard.',
+            'headline' => 'Sign in to your RIF Streaming workspace',
+            'description' => 'Access your plan, renewal options, support owner, and account activity from one clean dashboard.',
             'email' => 'Email',
             'password' => 'Password',
             'remember' => 'Remember me on this device',
@@ -45,11 +45,11 @@ return [
             'switch_cta' => 'Create your client account',
         ],
         'register' => [
-            'title' => 'Register | RIF IPTV',
-            'meta_description' => 'Create your RIF IPTV client account and start managing subscriptions, support, and renewals.',
+            'title' => 'Register | RIF Streaming',
+            'meta_description' => 'Create your RIF Streaming client account and start managing service plans, support, and renewals.',
             'kicker' => 'Client registration',
             'headline' => 'Create your client account',
-            'description' => 'Registration creates a client account automatically. An admin can then manage your subscription, support, and renewals from the business dashboard.',
+            'description' => 'Registration creates a client account automatically. An admin can then manage your plan, support, and renewals from the business dashboard.',
             'name' => 'Full name',
             'email' => 'Email',
             'phone_country_code' => 'Country code',
@@ -63,17 +63,17 @@ return [
             'switch_cta' => 'Sign in',
         ],
         'forgot' => [
-            'title' => 'Forgot password | RIF IPTV',
-            'meta_description' => 'Request a password reset link for your RIF IPTV account.',
+            'title' => 'Forgot password | RIF Streaming',
+            'meta_description' => 'Request a password reset link for your RIF Streaming account.',
             'kicker' => 'Password recovery',
             'headline' => 'Reset your password',
-            'description' => 'Enter your email and we will send you a secure link so you can get back to your subscription dashboard quickly.',
+            'description' => 'Enter your email and we will send you a secure link so you can get back to your service dashboard quickly.',
             'email' => 'Email',
             'submit' => 'Email reset link',
         ],
         'reset' => [
-            'title' => 'Reset password | RIF IPTV',
-            'meta_description' => 'Choose a new password for your RIF IPTV client account.',
+            'title' => 'Reset password | RIF Streaming',
+            'meta_description' => 'Choose a new password for your RIF Streaming client account.',
             'kicker' => 'Secure update',
             'headline' => 'Choose a new password',
             'description' => 'Keep your client space protected with a strong password so your subscription and support history stay safe.',
@@ -83,8 +83,8 @@ return [
             'submit' => 'Reset password',
         ],
         'verify' => [
-            'title' => 'Verify email | RIF IPTV',
-            'meta_description' => 'Verify your RIF IPTV email address before continuing to the protected account area.',
+            'title' => 'Verify email | RIF Streaming',
+            'meta_description' => 'Verify your RIF Streaming email address before continuing to the protected account area.',
             'kicker' => 'Email verification',
             'headline' => 'Verify your email address',
             'description' => 'Before continuing, please confirm your email using the link we just sent. If it did not arrive, we can send another one.',
@@ -93,8 +93,8 @@ return [
             'logout' => 'Log out',
         ],
         'confirm' => [
-            'title' => 'Confirm password | RIF IPTV',
-            'meta_description' => 'Confirm your password before making sensitive changes in your RIF IPTV account.',
+            'title' => 'Confirm password | RIF Streaming',
+            'meta_description' => 'Confirm your password before making sensitive changes in your RIF Streaming account.',
             'kicker' => 'Confirmation',
             'headline' => 'Confirm your password',
             'description' => 'This extra check keeps your account changes and subscription information protected.',
@@ -103,8 +103,8 @@ return [
         ],
     ],
     'profile' => [
-        'title' => 'Profile & Security | RIF IPTV',
-        'meta_description' => 'Manage your RIF IPTV profile details, password, and account security settings.',
+        'title' => 'Profile & Security | RIF Streaming',
+        'meta_description' => 'Manage your RIF Streaming profile details, password, and account security settings.',
         'kicker' => 'Account center',
         'headline' => 'Profile and security',
         'description' => 'Update your personal information, change your password, and keep your client account secure.',
@@ -238,3 +238,4 @@ return [
         ],
     ],
 ];
+

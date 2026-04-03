@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'brand' => [
@@ -24,15 +24,15 @@ return [
         'about' => 'A propos',
         'terms' => 'Conditions de service',
         'contact' => 'Contact',
-        'copyright' => 'RIF IPTV Networks. Tous droits reserves.',
+        'copyright' => 'RIF Streaming. Tous droits reserves.',
     ],
     'home' => [
-        'title' => 'RIF IPTV | Streaming global. Qualite ultime.',
-        'meta_description' => 'Decouvrez un monde de divertissement avec RIF IPTV : chaines en direct, VOD premium, sport et acces multi-appareils.',
-        'eyebrow' => 'L AVANTAGE RIF IPTV',
+        'title' => 'RIF Streaming | Streaming global. Qualite ultime.',
+        'meta_description' => 'Decouvrez les services RIF Streaming pour la configuration des appareils, l assistance technique et un accompagnement clair sur plusieurs ecrans.',
+        'eyebrow' => 'L AVANTAGE RIF Streaming',
         'headline_top' => 'STREAMING GLOBAL.',
         'headline_bottom' => 'QUALITE ULTIME.',
-        'description' => 'Profitez de milliers de chaines en direct, d une VOD premium et d une couverture sportive incomparable. Regardez sur n importe quel appareil, ou que vous soyez.',
+        'description' => 'Profitez d un accompagnement professionnel pour la configuration des appareils, la mise en route du compte et le support technique sur tous vos ecrans.',
         'cta' => 'COMMENCEZ VOTRE ESSAI GRATUIT',
         'mini_points' => [
             'secure' => 'Acces securise',
@@ -41,9 +41,9 @@ return [
         ],
         'feature_highlights' => [
             ['icon' => 'badge-check', 'title' => '4K Ultra HD', 'text' => 'Une qualite d image nette avec une lecture stable et fluide.'],
-            ['icon' => 'globe', 'title' => 'Chaines internationales', 'text' => 'Des milliers de chaines du monde entier avec une large couverture.'],
-            ['icon' => 'trophy', 'title' => 'Sports premium', 'text' => 'Sports, evenements en direct et contenus premium en un seul service.'],
-            ['icon' => 'monitor-smartphone', 'title' => 'Multi-appareils', 'text' => 'Regardez facilement sur Smart TV, mobile, tablette et ordinateur.'],
+            ['icon' => 'globe', 'title' => 'Configuration multi-region', 'text' => 'Une assistance claire pour preparer vos appareils dans plusieurs langues et zones d utilisation.'],
+            ['icon' => 'trophy', 'title' => 'Support prioritaire', 'text' => 'Un suivi humain pour l installation, la verification et la prise en main.'],
+            ['icon' => 'monitor-smartphone', 'title' => 'Multi-appareils', 'text' => 'Configuration accompagnee sur Smart TV, mobile, tablette et ordinateur.'],
         ],
         'payments' => [
             'kicker' => 'Paiements',
@@ -65,7 +65,7 @@ return [
         'pricing' => [
             'kicker' => 'Tarifs',
             'title' => 'Choisissez le forfait adapte a votre rythme de streaming.',
-            'description' => 'Une presentation claire, des prix rassurants et une identite RIF IPTV fondee sur les couleurs amazighes.',
+            'description' => 'Une presentation claire, des prix rassurants et une identite RIF Streaming fondee sur les couleurs amazighes.',
             'label' => 'Forfait',
             'per_month' => 'MAD / mois',
             'cta' => 'Commencer',
@@ -74,13 +74,13 @@ return [
                     'name' => 'Starter',
                     'badge' => null,
                     'price' => '99',
-                    'features' => ['Activation rapide', 'Support WhatsApp', 'Acces aux chaines live', 'Compatible mobile et TV'],
+                    'features' => ['Configuration rapide', 'Support WhatsApp', 'Assistance a la mise en route', 'Compatible mobile et TV'],
                 ],
                 'premium' => [
                     'name' => 'Premium',
                     'badge' => 'Meilleure vente',
                     'price' => '149',
-                    'features' => ['Tout le contenu Starter', 'Acces sport premium', 'Support prioritaire', 'Meilleur rapport qualite prix'],
+                    'features' => ['Tout le support Starter', 'Aide technique renforcee', 'Support prioritaire', 'Meilleur rapport qualite prix'],
                 ],
                 'family' => [
                     'name' => 'Famille',
@@ -104,13 +104,13 @@ return [
         'support' => [
             'kicker' => 'Support',
             'title' => 'Besoin d aide avant de commander ?',
-            'description' => 'Contactez l equipe RIF IPTV pour l installation, la facturation, l activation ou le choix du bon forfait.',
+            'description' => 'Contactez l equipe RIF Streaming pour l installation, la facturation, l activation ou le choix du bon forfait.',
             'whatsapp' => 'Support WhatsApp',
             'plans' => 'Voir les forfaits',
         ],
     ],
     'dashboard' => [
-        'title' => 'Dashboard | RIF IPTV',
+        'title' => 'Dashboard | RIF Streaming',
         'space' => 'Espace client',
         'sidebar' => [
             'subscription' => 'Mon abonnement',
@@ -181,3 +181,4 @@ return [
         ],
     ],
 ];
+

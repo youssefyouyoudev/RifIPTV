@@ -1,12 +1,12 @@
-<?php
+﻿<?php
 
 return [
     'hub' => [
-        'title' => 'Centre legal et confiance | RIF IPTV',
-        'meta_description' => 'Consultez les politiques de confidentialite, securite, remboursement, cookies et conditions de service de RIF IPTV.',
+        'title' => 'Centre legal et confiance | RIF Streaming',
+        'meta_description' => 'Consultez les politiques de confidentialite, securite, remboursement, cookies et conditions de service de RIF Streaming.',
         'kicker' => 'Centre de confiance',
         'headline' => 'Des politiques claires pour une experience plus sure.',
-        'description' => 'Ce centre juridique explique comment RIF IPTV gere la confidentialite, la facturation, les cookies, la securite du compte et l usage raisonnable afin de commander en toute confiance.',
+        'description' => 'Ce centre juridique explique comment RIF Streaming gere la confidentialite, la facturation, les cookies, la securite du compte et l usage raisonnable afin de commander en toute confiance.',
     ],
     'common' => [
         'updated_label' => 'Derniere mise a jour',
@@ -21,7 +21,7 @@ return [
         'privacy' => [
             'label' => 'Confidentialite',
             'title' => 'Politique de confidentialite',
-            'meta_description' => 'Comprenez comment RIF IPTV collecte, utilise, conserve et protege les informations de compte et de support.',
+            'meta_description' => 'Comprenez comment RIF Streaming collecte, utilise, conserve et protege les informations de compte et de support.',
             'description' => 'La maniere dont nous collectons et protegeons les informations necessaires pour activer les abonnements et assister les clients.',
             'updated_at' => '1 avril 2026',
             'sections' => [
@@ -69,13 +69,13 @@ return [
         'terms' => [
             'label' => 'Conditions',
             'title' => 'Conditions de service',
-            'meta_description' => 'Consultez les regles de service, les conditions de paiement, l usage acceptable et les responsabilites du compte RIF IPTV.',
+            'meta_description' => 'Consultez les regles de service, les conditions de paiement, l usage acceptable et les responsabilites du compte RIF Streaming.',
             'description' => 'Les regles principales qui encadrent l utilisation du service, la facturation et le comportement acceptable.',
             'updated_at' => '1 avril 2026',
             'sections' => [
                 [
                     'title' => 'Perimetre du service',
-                    'body' => 'RIF IPTV fournit une gestion d acces basee sur abonnement, une assistance client et des operations liees au compte pour les clients eligibles.',
+                    'body' => 'RIF Streaming fournit une gestion d acces basee sur abonnement, une assistance client et des operations liees au compte pour les clients eligibles.',
                     'items' => [
                         'Les forfaits, tarifs, durees et avantages peuvent varier selon l offre ou la periode de renouvellement.',
                         'Les delais d activation sont estimatifs et peuvent dependre de la confirmation du paiement ou d une verification manuelle.',
@@ -115,7 +115,7 @@ return [
         'security' => [
             'label' => 'Securite',
             'title' => 'Securite et surete',
-            'meta_description' => 'Decouvrez les controles de securite, les pratiques de support et les standards de surete utilises par RIF IPTV.',
+            'meta_description' => 'Decouvrez les controles de securite, les pratiques de support et les standards de surete utilises par RIF Streaming.',
             'description' => 'Les controles et habitudes de fonctionnement utilises pour mieux proteger les comptes, paiements et echanges de support.',
             'updated_at' => '1 avril 2026',
             'sections' => [
@@ -139,7 +139,7 @@ return [
                 ],
                 [
                     'title' => 'Bonnes pratiques de support',
-                    'body' => 'Les echanges de support doivent rester professionnels, limites au necessaire et traçables lorsque possible.',
+                    'body' => 'Les echanges de support doivent rester professionnels, limites au necessaire et traÃ§ables lorsque possible.',
                     'items' => [
                         'Les clients doivent eviter d envoyer des informations sensibles non necessaires.',
                         'Le support doit confirmer l identifiant de commande, les informations du compte ou la reference de paiement avant toute modification importante.',
@@ -160,7 +160,7 @@ return [
         'refund' => [
             'label' => 'Remboursements',
             'title' => 'Politique de remboursement',
-            'meta_description' => 'Consultez les conditions d examen des remboursements, exclusions et processus de support des commandes RIF IPTV.',
+            'meta_description' => 'Consultez les conditions d examen des remboursements, exclusions et processus de support des commandes RIF Streaming.',
             'description' => 'Notre methode de traitement des demandes de remboursement, des problemes d activation et des erreurs de paiement.',
             'updated_at' => '1 avril 2026',
             'sections' => [
@@ -205,7 +205,7 @@ return [
         'cookies' => [
             'label' => 'Cookies',
             'title' => 'Politique relative aux cookies',
-            'meta_description' => 'Comprenez l utilisation des cookies et du stockage local pour la langue, le theme, les sessions et la securite sur RIF IPTV.',
+            'meta_description' => 'Comprenez l utilisation des cookies et du stockage local pour la langue, le theme, les sessions et la securite sur RIF Streaming.',
             'description' => 'Comment les cookies et stockages similaires aident le site a memoriser les preferences, proteger les sessions et garder une experience stable.',
             'updated_at' => '1 avril 2026',
             'sections' => [
@@ -240,3 +240,4 @@ return [
         ],
     ],
 ];
+

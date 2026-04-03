@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @php
     $page = trans("legal.pages.{$pageKey}");
@@ -11,7 +11,7 @@
     ];
 @endphp
 
-@section('title', data_get($page, 'title').' | RIF IPTV')
+@section('title', data_get($page, 'title').' | '.data_get(trans('site.brand'), 'name', 'RIF Streaming'))
 @section('meta_description', data_get($page, 'meta_description'))
 
 @section('structured_data')
@@ -104,3 +104,4 @@
         </div>
     </section>
 @endsection
+

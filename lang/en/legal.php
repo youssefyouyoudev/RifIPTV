@@ -1,12 +1,12 @@
-<?php
+﻿<?php
 
 return [
     'hub' => [
-        'title' => 'Legal & Trust Center | RIF IPTV',
-        'meta_description' => 'Read the privacy, security, refund, cookie, and service policies that support the RIF IPTV experience.',
+        'title' => 'Legal & Trust Center | RIF Streaming',
+        'meta_description' => 'Read the privacy, security, refund, cookie, and service policies that support the RIF Streaming experience.',
         'kicker' => 'Trust center',
         'headline' => 'Clear policies for a safer streaming experience.',
-        'description' => 'This legal hub explains how RIF IPTV handles privacy, billing, cookies, account security, and fair use so clients can order with confidence.',
+        'description' => 'This legal hub explains how RIF Streaming handles privacy, billing, cookies, account security, and fair use so clients can order with confidence.',
     ],
     'common' => [
         'updated_label' => 'Last updated',
@@ -21,7 +21,7 @@ return [
         'privacy' => [
             'label' => 'Privacy Policy',
             'title' => 'Privacy Policy',
-            'meta_description' => 'Learn how RIF IPTV collects, uses, stores, and protects account and support information.',
+            'meta_description' => 'Learn how RIF Streaming collects, uses, stores, and protects account and support information.',
             'description' => 'How we collect and protect the information needed to activate subscriptions and support clients responsibly.',
             'updated_at' => 'April 1, 2026',
             'sections' => [
@@ -69,13 +69,13 @@ return [
         'terms' => [
             'label' => 'Terms of Service',
             'title' => 'Terms of Service',
-            'meta_description' => 'Review the service rules, payment terms, acceptable use, and account responsibilities for RIF IPTV.',
+            'meta_description' => 'Review the service rules, payment terms, acceptable use, and account responsibilities for RIF Streaming.',
             'description' => 'The core service rules that define account use, billing expectations, and fair platform behavior.',
             'updated_at' => 'April 1, 2026',
             'sections' => [
                 [
                     'title' => 'Service scope',
-                    'body' => 'RIF IPTV provides subscription-based access management, customer support, and account-related service operations for eligible clients.',
+                    'body' => 'RIF Streaming provides subscription-based access management, customer support, and account-related service operations for eligible clients.',
                     'items' => [
                         'Plans, pricing, durations, and benefits may vary by offer or renewal period.',
                         'Activation times are estimates and may depend on payment confirmation or manual review.',
@@ -87,7 +87,7 @@ return [
                     'body' => 'Each client is responsible for keeping account credentials secure and using the service lawfully.',
                     'items' => [
                         'Provide accurate registration and billing information.',
-                        'Do not share credentials, misuse support channels, or attempt unauthorized access.',
+                        'Do not share credentials, misuse support methods, or attempt unauthorized access.',
                         'Follow device and usage limits when they apply to the selected subscription.',
                         'Report suspicious access or account problems quickly through support.',
                     ],
@@ -97,7 +97,7 @@ return [
                     'body' => 'By placing an order, you confirm that the selected plan, pricing, and renewal expectations are understood before activation.',
                     'items' => [
                         'Payments must be confirmed before activation or renewal is finalized.',
-                        'Renewal reminders, support responses, and payment instructions may be provided through the website or assigned support channels.',
+                        'Renewal reminders, support responses, and payment instructions may be provided through the website or assigned support methods.',
                         'Unpaid, abusive, or high-risk orders may be delayed, reviewed, or rejected.',
                     ],
                 ],
@@ -115,7 +115,7 @@ return [
         'security' => [
             'label' => 'Security & Safety',
             'title' => 'Security & Safety',
-            'meta_description' => 'Understand the security controls, support practices, and account safety standards used by RIF IPTV.',
+            'meta_description' => 'Understand the security controls, support practices, and account safety standards used by RIF Streaming.',
             'description' => 'The controls and operating habits we use to keep accounts, payments, and support interactions safer.',
             'updated_at' => 'April 1, 2026',
             'sections' => [
@@ -160,7 +160,7 @@ return [
         'refund' => [
             'label' => 'Refund Policy',
             'title' => 'Refund Policy',
-            'meta_description' => 'Read the refund review conditions, exclusions, and support process for RIF IPTV orders.',
+            'meta_description' => 'Read the refund review conditions, exclusions, and support process for RIF Streaming orders.',
             'description' => 'Our review approach for refund requests, activation issues, duplicate payments, and service disputes.',
             'updated_at' => 'April 1, 2026',
             'sections' => [
@@ -205,7 +205,7 @@ return [
         'cookies' => [
             'label' => 'Cookie Policy',
             'title' => 'Cookie Policy',
-            'meta_description' => 'Understand the cookies and local storage settings used for language, theme, sessions, and security on RIF IPTV.',
+            'meta_description' => 'Understand the cookies and local storage settings used for language, theme, sessions, and security on RIF Streaming.',
             'description' => 'How cookies and similar storage help the website remember preferences, protect sessions, and keep the experience stable.',
             'updated_at' => 'April 1, 2026',
             'sections' => [
@@ -240,3 +240,4 @@ return [
         ],
     ],
 ];
+

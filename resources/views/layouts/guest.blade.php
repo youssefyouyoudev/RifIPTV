@@ -5,11 +5,14 @@
 >
     @php
         $portalCopy = trans('portal.guest');
+        $brandName = data_get(trans('site.brand'), 'name', 'RIF Streaming');
+        $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Streaming Solutions & Media Setup Services');
+        $brandLogo = asset('images/streaming-logo.png');
         $supportedLocales = config('app.supported_locales', ['en']);
         $localeLabels = trans('site.locales');
         $footer = trans('site.footer');
         $nav = trans('site.nav');
-        $metaTitle = trim($__env->yieldContent('title')) ?: config('app.name', 'RIF IPTV');
+        $metaTitle = trim($__env->yieldContent('title')) ?: $brandName;
         $metaDescription = trim($__env->yieldContent('meta_description')) ?: __('portal.auth.login.meta_description');
         $metaRobots = trim($__env->yieldContent('meta_robots')) ?: 'noindex,nofollow';
         $localizedBaseUrl = request()->url();
@@ -24,7 +27,7 @@
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F8FAFC">
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617">
         <link rel="canonical" href="{{ $localizedBaseUrl.'?lang='.app()->getLocale() }}">
-        <link rel="icon" href="{{ asset('images/rifiptv-logo.png') }}" type="image/png">
+        <link rel="icon" href="{{ $brandLogo }}" type="image/png">
         <title>{{ $metaTitle }}</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,11 +52,11 @@
                     <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
                         <a href="{{ route('home') }}" class="brand-link">
                             <span class="brand-logo">
-                                <img src="{{ asset('images/rifiptv-logo.png') }}" alt="RIF IPTV logo" class="img-fluid">
+                                <img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid">
                             </span>
                             <span class="min-w-0">
-                                <span class="brand-name d-block">{{ config('app.name', 'RIF IPTV') }}</span>
-                                <span class="brand-subtitle">{{ data_get(trans('site.brand'), 'subtitle', 'Premium IPTV') }}</span>
+                                <span class="brand-name d-block">{{ $brandName }}</span>
+                                <span class="brand-subtitle">{{ $brandSubtitle }}</span>
                             </span>
                         </a>
 
@@ -134,15 +137,16 @@
                         <div class="col-lg-5">
                             <div class="d-flex align-items-center gap-3 mb-3">
                                 <span class="brand-logo">
-                                    <img src="{{ asset('images/rifiptv-logo.png') }}" alt="RIF IPTV logo" class="img-fluid">
+                                    <img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid">
                                 </span>
                                 <div>
-                                    <div class="brand-name">{{ config('app.name', 'RIF IPTV') }}</div>
-                                    <div class="brand-subtitle">{{ data_get(trans('site.brand'), 'subtitle', 'Premium IPTV') }}</div>
+                                    <div class="brand-name">{{ $brandName }}</div>
+                                    <div class="brand-subtitle">{{ $brandSubtitle }}</div>
                                 </div>
                             </div>
                             <p class="text-soft-rif mb-3">{{ trans('legal.hub.description') }}</p>
-                            <p class="text-soft-rif small mb-0">{{ data_get($footer, 'copyright', 'RIF IPTV Networks. All Rights Reserved.') }}</p>
+                            <p class="text-soft-rif small mb-0">{{ data_get($footer, 'copyright', 'RIF Streaming. All rights reserved.') }}</p>
+                            <p class="text-soft-rif small mt-3 mb-0">{{ data_get($footer, 'disclaimer') }}</p>
                         </div>
 
                         <div class="col-md-6 col-lg-4">

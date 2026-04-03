@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'guest' => [
@@ -12,7 +12,7 @@ return [
         ],
         'panel' => [
             'kicker' => 'Acces client',
-            'title' => 'Un espace IPTV plus fluide pour les clients, les admins et le support.',
+            'title' => 'Un espace plus fluide pour les clients, les admins et le support.',
             'description' => 'L espace compte suit les couleurs amazighes, s adapte au mode clair et sombre et garde l acces a l abonnement lisible sur chaque appareil.',
         ],
     ],
@@ -31,10 +31,10 @@ return [
     ],
     'auth' => [
         'login' => [
-            'title' => 'Connexion | RIF IPTV',
-            'meta_description' => 'Connectez-vous a votre compte RIF IPTV pour consulter abonnement, renouvellements et support.',
+            'title' => 'Connexion | RIF Streaming',
+            'meta_description' => 'Connectez-vous a votre compte RIF Streaming pour consulter abonnement, renouvellements et support.',
             'kicker' => 'Bon retour',
-            'headline' => 'Connectez-vous a votre espace RIF IPTV',
+            'headline' => 'Connectez-vous a votre espace RIF Streaming',
             'description' => 'Retrouvez votre abonnement, vos options de renouvellement, votre responsable support et l activite du compte dans un tableau de bord clair.',
             'email' => 'Email',
             'password' => 'Mot de passe',
@@ -45,8 +45,8 @@ return [
             'switch_cta' => 'Creer votre compte client',
         ],
         'register' => [
-            'title' => 'Inscription | RIF IPTV',
-            'meta_description' => 'Creez votre compte client RIF IPTV pour gerer abonnement, support et renouvellements.',
+            'title' => 'Inscription | RIF Streaming',
+            'meta_description' => 'Creez votre compte client RIF Streaming pour gerer abonnement, support et renouvellements.',
             'kicker' => 'Inscription client',
             'headline' => 'Creer votre compte client',
             'description' => 'L inscription cree automatiquement un compte client. Un administrateur pourra ensuite gerer votre abonnement, votre support et vos renouvellements.',
@@ -63,8 +63,8 @@ return [
             'switch_cta' => 'Se connecter',
         ],
         'forgot' => [
-            'title' => 'Mot de passe oublie | RIF IPTV',
-            'meta_description' => 'Demandez un lien de reinitialisation du mot de passe pour votre compte RIF IPTV.',
+            'title' => 'Mot de passe oublie | RIF Streaming',
+            'meta_description' => 'Demandez un lien de reinitialisation du mot de passe pour votre compte RIF Streaming.',
             'kicker' => 'Recuperation du mot de passe',
             'headline' => 'Reinitialiser votre mot de passe',
             'description' => 'Entrez votre email et nous vous enverrons un lien securise pour revenir rapidement a votre tableau de bord.',
@@ -72,8 +72,8 @@ return [
             'submit' => 'Envoyer le lien',
         ],
         'reset' => [
-            'title' => 'Nouveau mot de passe | RIF IPTV',
-            'meta_description' => 'Choisissez un nouveau mot de passe pour votre compte client RIF IPTV.',
+            'title' => 'Nouveau mot de passe | RIF Streaming',
+            'meta_description' => 'Choisissez un nouveau mot de passe pour votre compte client RIF Streaming.',
             'kicker' => 'Mise a jour securisee',
             'headline' => 'Choisissez un nouveau mot de passe',
             'description' => 'Gardez votre espace client protege avec un mot de passe fort afin de securiser votre abonnement et votre historique de support.',
@@ -83,8 +83,8 @@ return [
             'submit' => 'Reinitialiser le mot de passe',
         ],
         'verify' => [
-            'title' => 'Verification email | RIF IPTV',
-            'meta_description' => 'Verifiez votre adresse email RIF IPTV avant de continuer vers l espace protege.',
+            'title' => 'Verification email | RIF Streaming',
+            'meta_description' => 'Verifiez votre adresse email RIF Streaming avant de continuer vers l espace protege.',
             'kicker' => 'Verification email',
             'headline' => 'Verifiez votre adresse email',
             'description' => 'Avant de continuer, veuillez confirmer votre email avec le lien envoye. Si vous ne l avez pas recu, nous pouvons en envoyer un autre.',
@@ -93,8 +93,8 @@ return [
             'logout' => 'Se deconnecter',
         ],
         'confirm' => [
-            'title' => 'Confirmation du mot de passe | RIF IPTV',
-            'meta_description' => 'Confirmez votre mot de passe avant d effectuer une modification sensible sur votre compte RIF IPTV.',
+            'title' => 'Confirmation du mot de passe | RIF Streaming',
+            'meta_description' => 'Confirmez votre mot de passe avant d effectuer une modification sensible sur votre compte RIF Streaming.',
             'kicker' => 'Confirmation',
             'headline' => 'Confirmez votre mot de passe',
             'description' => 'Cette verification supplementaire protege les changements de compte et les informations d abonnement.',
@@ -103,8 +103,8 @@ return [
         ],
     ],
     'profile' => [
-        'title' => 'Profil et securite | RIF IPTV',
-        'meta_description' => 'Gerez vos informations de profil, votre mot de passe et les reglages de securite de votre compte RIF IPTV.',
+        'title' => 'Profil et securite | RIF Streaming',
+        'meta_description' => 'Gerez vos informations de profil, votre mot de passe et les reglages de securite de votre compte RIF Streaming.',
         'kicker' => 'Centre de compte',
         'headline' => 'Profil et securite',
         'description' => 'Mettez a jour vos informations personnelles, changez votre mot de passe et gardez votre compte client securise.',
@@ -229,3 +229,4 @@ return [
         ],
     ],
 ];
+

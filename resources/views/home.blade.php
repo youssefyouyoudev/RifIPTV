@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', __('site.home.title'))
 @section('meta_description', __('site.home.meta_description'))
@@ -24,64 +24,64 @@
 
         $hero = match (app()->getLocale()) {
             'ar' => [
-                'eyebrow' => 'أكثر من 10,000 قناة مشهورة',
-                'title_top' => 'شاهد العالم كله',
-                'title_bottom' => 'من شاشة واحدة',
-                'description' => 'واجهة أبسط وأكثر فخامة تعرض قوة RIF IPTV مع قنوات مشهورة ورياضة وأفلام وترفيه، بتجربة مشاهدة مريحة على كل الأجهزة.',
-                'device_text' => 'يعمل على التلفاز والتابلت والهاتف والويب',
-                'note' => 'تصميم أكثر هدوءًا ووضوحًا ليظهر الخدمة بشكل احترافي في العربية وباقي اللغات.',
+                'eyebrow' => 'Ø£ÙƒØ«Ø± Ù…Ù† 10,000 Ù‚Ù†Ø§Ø© Ù…Ø´Ù‡ÙˆØ±Ø©',
+                'title_top' => 'Ø´Ø§Ù‡Ø¯ Ø§Ù„Ø¹Ø§Ù„Ù… ÙƒÙ„Ù‡',
+                'title_bottom' => 'Ù…Ù† Ø´Ø§Ø´Ø© ÙˆØ§Ø­Ø¯Ø©',
+                'description' => 'ÙˆØ§Ø¬Ù‡Ø© Ø£Ø¨Ø³Ø· ÙˆØ£ÙƒØ«Ø± ÙØ®Ø§Ù…Ø© ØªØ¹Ø±Ø¶ Ù‚ÙˆØ© RIF Streaming Ù…Ø¹ Ù‚Ù†ÙˆØ§Øª Ù…Ø´Ù‡ÙˆØ±Ø© ÙˆØ±ÙŠØ§Ø¶Ø© ÙˆØ£ÙÙ„Ø§Ù… ÙˆØªØ±ÙÙŠÙ‡ØŒ Ø¨ØªØ¬Ø±Ø¨Ø© Ù…Ø´Ø§Ù‡Ø¯Ø© Ù…Ø±ÙŠØ­Ø© Ø¹Ù„Ù‰ ÙƒÙ„ Ø§Ù„Ø£Ø¬Ù‡Ø²Ø©.',
+                'device_text' => 'ÙŠØ¹Ù…Ù„ Ø¹Ù„Ù‰ Ø§Ù„ØªÙ„ÙØ§Ø² ÙˆØ§Ù„ØªØ§Ø¨Ù„Øª ÙˆØ§Ù„Ù‡Ø§ØªÙ ÙˆØ§Ù„ÙˆÙŠØ¨',
+                'note' => 'ØªØµÙ…ÙŠÙ… Ø£ÙƒØ«Ø± Ù‡Ø¯ÙˆØ¡Ù‹Ø§ ÙˆÙˆØ¶ÙˆØ­Ù‹Ø§ Ù„ÙŠØ¸Ù‡Ø± Ø§Ù„Ø®Ø¯Ù…Ø© Ø¨Ø´ÙƒÙ„ Ø§Ø­ØªØ±Ø§ÙÙŠ ÙÙŠ Ø§Ù„Ø¹Ø±Ø¨ÙŠØ© ÙˆØ¨Ø§Ù‚ÙŠ Ø§Ù„Ù„ØºØ§Øª.',
                 'chips' => [
-                    ['icon' => 'trophy', 'label' => 'رياضة'],
-                    ['icon' => 'calendar-range', 'label' => 'أحداث مباشرة'],
-                    ['icon' => 'film', 'label' => 'أفلام'],
-                    ['icon' => 'tv', 'label' => 'ترفيه'],
+                    ['icon' => 'trophy', 'label' => 'Ø±ÙŠØ§Ø¶Ø©'],
+                    ['icon' => 'calendar-range', 'label' => 'Ø£Ø­Ø¯Ø§Ø« Ù…Ø¨Ø§Ø´Ø±Ø©'],
+                    ['icon' => 'film', 'label' => 'Ø£ÙÙ„Ø§Ù…'],
+                    ['icon' => 'tv', 'label' => 'ØªØ±ÙÙŠÙ‡'],
                 ],
-                'stats' => ['10,000+ قناة', 'بث 24/7', 'TV / Mobile / Tablet'],
+                'stats' => ['10,000+ Ù‚Ù†Ø§Ø©', 'Ø¨Ø« 24/7', 'TV / Mobile / Tablet'],
             ],
             'fr' => [
-                'eyebrow' => 'Plus de 10 000 chaines connues',
+                'eyebrow' => 'Solutions de streaming fiables',
                 'title_top' => 'Le monde entier',
                 'title_bottom' => 'sur un seul ecran',
-                'description' => 'Une hero plus propre et premium qui met en valeur RIF IPTV avec des chaines connues, du sport, des films et une lecture fluide sur tous les appareils.',
+                'description' => 'Une hero plus propre et plus sure qui presente RIF Streaming comme un service de configuration, d assistance technique et de mise en place multi-appareils.',
                 'device_text' => 'Compatible TV, tablette, mobile et web',
                 'note' => 'Une presentation plus douce, plus claire et mieux equilibree sur toutes les langues.',
                 'chips' => [
-                    ['icon' => 'trophy', 'label' => 'Sports'],
-                    ['icon' => 'calendar-range', 'label' => 'Evenements'],
-                    ['icon' => 'film', 'label' => 'Films'],
-                    ['icon' => 'tv', 'label' => 'Divertissement'],
+                    ['icon' => 'settings-2', 'label' => 'Configuration'],
+                    ['icon' => 'shield-check', 'label' => 'Securite'],
+                    ['icon' => 'monitor-smartphone', 'label' => 'Appareils'],
+                    ['icon' => 'messages-square', 'label' => 'Support'],
                 ],
-                'stats' => ['10,000+ chaines', 'Streaming 24/7', 'TV / Mobile / Tablette'],
+                'stats' => ['Support guide', 'Assistance 24/7', 'TV / Mobile / Tablette'],
             ],
             'es' => [
-                'eyebrow' => 'Mas de 10,000 canales famosos',
+                'eyebrow' => 'Soluciones de streaming fiables',
                 'title_top' => 'Todo un mundo',
                 'title_bottom' => 'en una pantalla',
-                'description' => 'Una hero mas limpia y premium que presenta RIF IPTV con canales famosos, deportes, peliculas y una experiencia fluida en todos los dispositivos.',
+                'description' => 'Una hero mas limpia y segura que presenta RIF Streaming como servicio de configuracion, soporte tecnico y preparacion multi-dispositivo.',
                 'device_text' => 'Funciona en TV, tablet, movil y web',
                 'note' => 'Una presentacion mas clara, equilibrada y profesional en todos los idiomas.',
                 'chips' => [
-                    ['icon' => 'trophy', 'label' => 'Deportes'],
-                    ['icon' => 'calendar-range', 'label' => 'Eventos'],
-                    ['icon' => 'film', 'label' => 'Peliculas'],
-                    ['icon' => 'tv', 'label' => 'Entretenimiento'],
+                    ['icon' => 'settings-2', 'label' => 'Configuracion'],
+                    ['icon' => 'shield-check', 'label' => 'Seguridad'],
+                    ['icon' => 'monitor-smartphone', 'label' => 'Dispositivos'],
+                    ['icon' => 'messages-square', 'label' => 'Soporte'],
                 ],
-                'stats' => ['10,000+ canales', 'Streaming 24/7', 'TV / Movil / Tablet'],
+                'stats' => ['Guias claras', 'Soporte 24/7', 'TV / Movil / Tablet'],
             ],
             default => [
-                'eyebrow' => 'Over 10,000 famous channels',
+                'eyebrow' => 'Trusted Streaming Solutions',
                 'title_top' => 'The whole world',
                 'title_bottom' => 'on one screen',
-                'description' => 'A cleaner, more premium hero that presents RIF IPTV with famous channels, sports, movies, and a smooth multi-device viewing experience.',
+                'description' => 'A cleaner, safer hero that presents RIF Streaming as a technical setup and support service for multi-device digital entertainment environments.',
                 'device_text' => 'Works on TV, tablet, phone, and web',
                 'note' => 'A softer, more balanced presentation that stays clean across every language and device size.',
                 'chips' => [
-                    ['icon' => 'trophy', 'label' => 'Sports'],
-                    ['icon' => 'calendar-range', 'label' => 'Live Events'],
-                    ['icon' => 'film', 'label' => 'Movies'],
-                    ['icon' => 'tv', 'label' => 'Entertainment'],
+                    ['icon' => 'settings-2', 'label' => 'Device Setup'],
+                    ['icon' => 'shield-check', 'label' => 'Safe Process'],
+                    ['icon' => 'monitor-smartphone', 'label' => 'Multi-Device'],
+                    ['icon' => 'messages-square', 'label' => 'Support'],
                 ],
-                'stats' => ['10,000+ channels', '24/7 streaming', 'TV / Mobile / Tablet'],
+                'stats' => ['Clear setup steps', '24/7 support', 'TV / Mobile / Tablet'],
             ],
         };
 
@@ -91,24 +91,24 @@
                     'name' => 'MAX OTT',
                     'slug' => 'max-ott',
                     'logo' => asset('images/plan-max-ott.png'),
-                    'description' => 'باقة مرنة واقتصادية للمشاهدة اليومية بجودة ممتازة.',
+                    'description' => 'Ø¨Ø§Ù‚Ø© Ù…Ø±Ù†Ø© ÙˆØ§Ù‚ØªØµØ§Ø¯ÙŠØ© Ù„Ù„Ù…Ø´Ø§Ù‡Ø¯Ø© Ø§Ù„ÙŠÙˆÙ…ÙŠØ© Ø¨Ø¬ÙˆØ¯Ø© Ù…Ù…ØªØ§Ø²Ø©.',
                     'plans' => [
-                        ['name' => 'شهر واحد', 'price' => '70', 'badge' => null, 'subtitle' => 'دخول سريع للبداية', 'benefits' => ['قنوات مباشرة مشهورة', 'أفلام ومسلسلات', 'بث مستقر', 'دعم واتساب']],
-                        ['name' => '3 أشهر', 'price' => '149', 'badge' => 'الأكثر طلبًا', 'subtitle' => 'أفضل توازن في السعر', 'benefits' => ['قنوات مباشرة مشهورة', 'أفلام ومسلسلات', 'جودة Full HD و 4K', 'دعم سريع']],
-                        ['name' => '6 أشهر', 'price' => '249', 'badge' => null, 'subtitle' => 'راحة أكثر وتوفير أفضل', 'benefits' => ['مشاهدة طويلة المدى', 'رياضة وترفيه', 'أجهزة متعددة', 'متابعة الدعم']],
-                        ['name' => '12 شهرًا', 'price' => '449', 'badge' => 'أفضل قيمة', 'subtitle' => 'الخيار السنوي الاقتصادي', 'benefits' => ['أفضل سعر سنوي', 'استقرار أعلى', 'أولوية أفضل', 'طمأنينة طوال السنة']],
+                        ['name' => 'Ø´Ù‡Ø± ÙˆØ§Ø­Ø¯', 'price' => '70', 'badge' => null, 'subtitle' => 'Ø¯Ø®ÙˆÙ„ Ø³Ø±ÙŠØ¹ Ù„Ù„Ø¨Ø¯Ø§ÙŠØ©', 'benefits' => ['Ù‚Ù†ÙˆØ§Øª Ù…Ø¨Ø§Ø´Ø±Ø© Ù…Ø´Ù‡ÙˆØ±Ø©', 'Ø£ÙÙ„Ø§Ù… ÙˆÙ…Ø³Ù„Ø³Ù„Ø§Øª', 'Ø¨Ø« Ù…Ø³ØªÙ‚Ø±', 'Ø¯Ø¹Ù… ÙˆØ§ØªØ³Ø§Ø¨']],
+                        ['name' => '3 Ø£Ø´Ù‡Ø±', 'price' => '149', 'badge' => 'Ø§Ù„Ø£ÙƒØ«Ø± Ø·Ù„Ø¨Ù‹Ø§', 'subtitle' => 'Ø£ÙØ¶Ù„ ØªÙˆØ§Ø²Ù† ÙÙŠ Ø§Ù„Ø³Ø¹Ø±', 'benefits' => ['Ù‚Ù†ÙˆØ§Øª Ù…Ø¨Ø§Ø´Ø±Ø© Ù…Ø´Ù‡ÙˆØ±Ø©', 'Ø£ÙÙ„Ø§Ù… ÙˆÙ…Ø³Ù„Ø³Ù„Ø§Øª', 'Ø¬ÙˆØ¯Ø© Full HD Ùˆ 4K', 'Ø¯Ø¹Ù… Ø³Ø±ÙŠØ¹']],
+                        ['name' => '6 Ø£Ø´Ù‡Ø±', 'price' => '249', 'badge' => null, 'subtitle' => 'Ø±Ø§Ø­Ø© Ø£ÙƒØ«Ø± ÙˆØªÙˆÙÙŠØ± Ø£ÙØ¶Ù„', 'benefits' => ['Ù…Ø´Ø§Ù‡Ø¯Ø© Ø·ÙˆÙŠÙ„Ø© Ø§Ù„Ù…Ø¯Ù‰', 'Ø±ÙŠØ§Ø¶Ø© ÙˆØªØ±ÙÙŠÙ‡', 'Ø£Ø¬Ù‡Ø²Ø© Ù…ØªØ¹Ø¯Ø¯Ø©', 'Ù…ØªØ§Ø¨Ø¹Ø© Ø§Ù„Ø¯Ø¹Ù…']],
+                        ['name' => '12 Ø´Ù‡Ø±Ù‹Ø§', 'price' => '449', 'badge' => 'Ø£ÙØ¶Ù„ Ù‚ÙŠÙ…Ø©', 'subtitle' => 'Ø§Ù„Ø®ÙŠØ§Ø± Ø§Ù„Ø³Ù†ÙˆÙŠ Ø§Ù„Ø§Ù‚ØªØµØ§Ø¯ÙŠ', 'benefits' => ['Ø£ÙØ¶Ù„ Ø³Ø¹Ø± Ø³Ù†ÙˆÙŠ', 'Ø§Ø³ØªÙ‚Ø±Ø§Ø± Ø£Ø¹Ù„Ù‰', 'Ø£ÙˆÙ„ÙˆÙŠØ© Ø£ÙØ¶Ù„', 'Ø·Ù…Ø£Ù†ÙŠÙ†Ø© Ø·ÙˆØ§Ù„ Ø§Ù„Ø³Ù†Ø©']],
                     ],
                 ],
                 [
                     'name' => 'T-REX',
                     'slug' => 't-rex',
                     'logo' => asset('images/plan-trex.png'),
-                    'description' => 'باقة أقوى لعشاق الجودة العالية والقنوات الرياضية والمحتوى المميز.',
+                    'description' => 'Ø¨Ø§Ù‚Ø© Ø£Ù‚ÙˆÙ‰ Ù„Ø¹Ø´Ø§Ù‚ Ø§Ù„Ø¬ÙˆØ¯Ø© Ø§Ù„Ø¹Ø§Ù„ÙŠØ© ÙˆØ§Ù„Ù‚Ù†ÙˆØ§Øª Ø§Ù„Ø±ÙŠØ§Ø¶ÙŠØ© ÙˆØ§Ù„Ù…Ø­ØªÙˆÙ‰ Ø§Ù„Ù…Ù…ÙŠØ².',
                     'plans' => [
-                        ['name' => 'شهر واحد', 'price' => '99', 'badge' => null, 'subtitle' => 'نسخة قوية للاستخدام المكثف', 'benefits' => ['قنوات رياضية أقوى', 'أفلام وسلاسل', 'خوادم مميزة', 'دعم سريع']],
-                        ['name' => '3 أشهر', 'price' => '249', 'badge' => 'الأكثر مبيعًا', 'subtitle' => 'الخيار المفضل لعشاق T-REX', 'benefits' => ['رياضة ومحتوى بريميوم', 'جودة عالية', 'دعم ذو أولوية', 'قيمة متوازنة']],
-                        ['name' => '6 أشهر', 'price' => '349', 'badge' => null, 'subtitle' => 'قوة أكثر مع توفير أفضل', 'benefits' => ['مشاهدة مريحة', 'خوادم مستقرة', 'أجهزة متعددة', 'تجديد أسهل']],
-                        ['name' => '12 شهرًا', 'price' => '599', 'badge' => 'الخيار السنوي', 'subtitle' => 'أفضل التزام طويل الأمد', 'benefits' => ['أفضل قيمة سنوية', 'أولوية أعلى', 'استقرار قوي', 'دعم مستمر']],
+                        ['name' => 'Ø´Ù‡Ø± ÙˆØ§Ø­Ø¯', 'price' => '99', 'badge' => null, 'subtitle' => 'Ù†Ø³Ø®Ø© Ù‚ÙˆÙŠØ© Ù„Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù… Ø§Ù„Ù…ÙƒØ«Ù', 'benefits' => ['Ù‚Ù†ÙˆØ§Øª Ø±ÙŠØ§Ø¶ÙŠØ© Ø£Ù‚ÙˆÙ‰', 'Ø£ÙÙ„Ø§Ù… ÙˆØ³Ù„Ø§Ø³Ù„', 'Ø®ÙˆØ§Ø¯Ù… Ù…Ù…ÙŠØ²Ø©', 'Ø¯Ø¹Ù… Ø³Ø±ÙŠØ¹']],
+                        ['name' => '3 Ø£Ø´Ù‡Ø±', 'price' => '249', 'badge' => 'Ø§Ù„Ø£ÙƒØ«Ø± Ù…Ø¨ÙŠØ¹Ù‹Ø§', 'subtitle' => 'Ø§Ù„Ø®ÙŠØ§Ø± Ø§Ù„Ù…ÙØ¶Ù„ Ù„Ø¹Ø´Ø§Ù‚ T-REX', 'benefits' => ['Ø±ÙŠØ§Ø¶Ø© ÙˆÙ…Ø­ØªÙˆÙ‰ Ø¨Ø±ÙŠÙ…ÙŠÙˆÙ…', 'Ø¬ÙˆØ¯Ø© Ø¹Ø§Ù„ÙŠØ©', 'Ø¯Ø¹Ù… Ø°Ùˆ Ø£ÙˆÙ„ÙˆÙŠØ©', 'Ù‚ÙŠÙ…Ø© Ù…ØªÙˆØ§Ø²Ù†Ø©']],
+                        ['name' => '6 Ø£Ø´Ù‡Ø±', 'price' => '349', 'badge' => null, 'subtitle' => 'Ù‚ÙˆØ© Ø£ÙƒØ«Ø± Ù…Ø¹ ØªÙˆÙÙŠØ± Ø£ÙØ¶Ù„', 'benefits' => ['Ù…Ø´Ø§Ù‡Ø¯Ø© Ù…Ø±ÙŠØ­Ø©', 'Ø®ÙˆØ§Ø¯Ù… Ù…Ø³ØªÙ‚Ø±Ø©', 'Ø£Ø¬Ù‡Ø²Ø© Ù…ØªØ¹Ø¯Ø¯Ø©', 'ØªØ¬Ø¯ÙŠØ¯ Ø£Ø³Ù‡Ù„']],
+                        ['name' => '12 Ø´Ù‡Ø±Ù‹Ø§', 'price' => '599', 'badge' => 'Ø§Ù„Ø®ÙŠØ§Ø± Ø§Ù„Ø³Ù†ÙˆÙŠ', 'subtitle' => 'Ø£ÙØ¶Ù„ Ø§Ù„ØªØ²Ø§Ù… Ø·ÙˆÙŠÙ„ Ø§Ù„Ø£Ù…Ø¯', 'benefits' => ['Ø£ÙØ¶Ù„ Ù‚ÙŠÙ…Ø© Ø³Ù†ÙˆÙŠØ©', 'Ø£ÙˆÙ„ÙˆÙŠØ© Ø£Ø¹Ù„Ù‰', 'Ø§Ø³ØªÙ‚Ø±Ø§Ø± Ù‚ÙˆÙŠ', 'Ø¯Ø¹Ù… Ù…Ø³ØªÙ…Ø±']],
                     ],
                 ],
             ],
@@ -169,11 +169,11 @@
                     'name' => 'MAX OTT',
                     'slug' => 'max-ott',
                     'logo' => asset('images/plan-max-ott.png'),
-                    'description' => 'A flexible, affordable pack for everyday streaming with a smooth premium feel.',
+                    'description' => 'A flexible service plan for everyday setup assistance and simple ongoing support.',
                     'plans' => [
-                        ['name' => '1 Month', 'price' => '70', 'badge' => null, 'subtitle' => 'Quick access to get started', 'benefits' => ['Known live channels', 'Movies and series', 'Stable playback', 'WhatsApp support']],
-                        ['name' => '3 Months', 'price' => '149', 'badge' => 'Popular', 'subtitle' => 'The best balance of value and duration', 'benefits' => ['Known live channels', 'Movies and series', 'Full HD and 4K quality', 'Fast support']],
-                        ['name' => '6 Months', 'price' => '249', 'badge' => null, 'subtitle' => 'More comfort and better savings', 'benefits' => ['Longer access', 'Sports and entertainment', 'Multi-device use', 'Support follow-up']],
+                        ['name' => '1 Month', 'price' => '70', 'badge' => null, 'subtitle' => 'Quick start for initial setup', 'benefits' => ['Device configuration help', 'Setup guidance', 'Stable process', 'WhatsApp support']],
+                        ['name' => '3 Months', 'price' => '149', 'badge' => 'Popular', 'subtitle' => 'The best balance of value and duration', 'benefits' => ['Device configuration help', 'Account setup support', 'Higher quality assistance', 'Fast response']],
+                        ['name' => '6 Months', 'price' => '249', 'badge' => null, 'subtitle' => 'More comfort and better savings', 'benefits' => ['Longer support window', 'Technical follow-up', 'Multi-device help', 'Support tracking']],
                         ['name' => '12 Months', 'price' => '449', 'badge' => 'Best Value', 'subtitle' => 'The smartest yearly option', 'benefits' => ['Best yearly price', 'More stability', 'Higher priority', 'Peace of mind all year']],
                     ],
                 ],
@@ -181,11 +181,11 @@
                     'name' => 'T-REX',
                     'slug' => 't-rex',
                     'logo' => asset('images/plan-trex.png'),
-                    'description' => 'A stronger premium line for bigger sports, premium content, and more power users.',
+                    'description' => 'A stronger service line for advanced setup cases, power users, and longer technical follow-up.',
                     'plans' => [
-                        ['name' => '1 Month', 'price' => '99', 'badge' => null, 'subtitle' => 'A stronger version for heavier streaming', 'benefits' => ['Premium sports', 'Movies and series', 'Stronger servers', 'Fast support']],
-                        ['name' => '3 Months', 'price' => '249', 'badge' => 'Best Seller', 'subtitle' => 'The favorite T-REX choice', 'benefits' => ['Sports and premium content', 'High quality playback', 'Priority support', 'Balanced value']],
-                        ['name' => '6 Months', 'price' => '349', 'badge' => null, 'subtitle' => 'More power with better savings', 'benefits' => ['Long-term comfort', 'Stable servers', 'Multi-device support', 'Easy renewal']],
+                        ['name' => '1 Month', 'price' => '99', 'badge' => null, 'subtitle' => 'Advanced setup help for heavier usage', 'benefits' => ['Advanced support', 'Configuration review', 'Stronger follow-up', 'Fast response']],
+                        ['name' => '3 Months', 'price' => '249', 'badge' => 'Best Seller', 'subtitle' => 'The favorite T-REX choice', 'benefits' => ['Advanced setup support', 'Higher quality assistance', 'Priority support', 'Balanced value']],
+                        ['name' => '6 Months', 'price' => '349', 'badge' => null, 'subtitle' => 'More power with better savings', 'benefits' => ['Long-term comfort', 'Stable follow-up', 'Multi-device support', 'Easy renewal']],
                         ['name' => '12 Months', 'price' => '599', 'badge' => 'Annual Pick', 'subtitle' => 'The best long-term commitment', 'benefits' => ['Best yearly price', 'Higher priority', 'Strong stability', 'Continuous support']],
                     ],
                 ],
@@ -237,13 +237,13 @@
                         <div class="col-xl-7">
                             <div class="hero-visual-panel">
                                 <div class="hero-visual-media">
-                                    <img src="{{ asset('images/hero-light.png') }}" alt="RIF IPTV premium streaming hero" class="hero-showcase-image-light">
-                                    <img src="{{ asset('images/hero-dark.png') }}" alt="RIF IPTV premium streaming hero" class="hero-showcase-image-dark">
+                                    <img src="{{ asset('images/hero-light.png') }}" alt="RIF Streaming hero illustration" class="hero-showcase-image-light">
+                                    <img src="{{ asset('images/hero-dark.png') }}" alt="RIF Streaming hero illustration" class="hero-showcase-image-dark">
                                     <div class="hero-visual-scrim"></div>
 
                                     <div class="hero-visual-top">
                                         <span class="hero-visual-badge">{{ $hero['eyebrow'] }}</span>
-                                        <span class="hero-visual-badge hero-visual-brand">RIF IPTV</span>
+                                        <span class="hero-visual-badge hero-visual-brand">RIF Streaming</span>
                                     </div>
 
                                     <div class="hero-device-card">
@@ -483,3 +483,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
+

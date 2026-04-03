@@ -90,7 +90,16 @@
                             <div><span>Reference</span><strong>{{ $latestTransaction?->reference ?: '-' }}</strong></div>
                         </div>
                         @if ($latestTransaction?->proof_path)
-                            <a href="/public/{{ $latestTransaction->proof_path }}" target="_blank" class="btn-rif-outline w-100 mt-4">{{ __('workflow.admin.clients_table.view_proof') }}</a>
+                            @php
+                                $extension = pathinfo($latestTransaction->proof_path, PATHINFO_EXTENSION);
+                                $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+                            @endphp
+                            @if ($isImage)
+                                <img src="/public/{{ $latestTransaction->proof_path }}" alt="Payment Proof" class="img-fluid mt-4">
+                            @else
+                                <p class="mt-4 text-soft-rif">File type: {{ strtoupper($extension) }}</p>
+                                <a href="/public/{{ $latestTransaction->proof_path }}" target="_blank" class="btn-rif-outline w-100 mt-2">{{ __('workflow.admin.clients_table.view_proof') }}</a>
+                            @endif
                         @endif
                     </article>
 

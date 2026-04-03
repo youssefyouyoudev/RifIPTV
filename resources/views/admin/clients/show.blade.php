@@ -95,7 +95,7 @@
                                 $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
                             @endphp
                             @if ($isImage)
-                                <img src="/public/{{ $latestTransaction->proof_path }}" alt="Payment Proof" class="img-fluid mt-4">
+                                <img src="/public/{{ $latestTransaction->proof_path }}" alt="Payment Proof" class="img-fluid mt-4" data-bs-toggle="modal" data-bs-target="#proofModal" style="cursor: pointer;">
                             @else
                                 <p class="mt-4 text-soft-rif">File type: {{ strtoupper($extension) }}</p>
                                 <a href="/public/{{ $latestTransaction->proof_path }}" target="_blank" class="btn-rif-outline w-100 mt-2">{{ __('workflow.admin.clients_table.view_proof') }}</a>
@@ -280,4 +280,20 @@
         </div>
     </div>
 </section>
+
+<!-- Proof Modal -->
+<div class="modal fade" id="proofModal" tabindex="-1" aria-labelledby="proofModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="proofModalLabel">Payment Proof</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="/public/{{ $latestTransaction->proof_path }}" alt="Payment Proof" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

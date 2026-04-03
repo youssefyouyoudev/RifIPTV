@@ -24,12 +24,6 @@ Route::get('/locale/{locale}', function (string $locale, Request $request) {
         ->withCookie(cookie()->forever('locale', $locale));
 })->name('locale.switch');
 
-Route::get('/checkout', function () {
-    return auth()->check()
-        ? redirect()->route('onboarding.show')
-        : redirect()->route('register');
-})->name('checkout');
-
 Route::get('/legal', function () {
     return view('legal.index');
 })->name('legal.index');
@@ -86,11 +80,13 @@ Route::get('/robots.txt', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/onboarding', [OnboardingController::class, 'show'])->name('onboarding.show');
+    Route::get('/checkout', [OnboardingController::class, 'checkout'])->name('checkout');
     Route::post('/onboarding/plan', [OnboardingController::class, 'storePlan'])->name('onboarding.plan');
     Route::post('/onboarding/payment', [OnboardingController::class, 'storePayment'])->name('onboarding.payment');
     Route::get('/checkout/card', [OnboardingController::class, 'cardCheckout'])->name('checkout.card');
     Route::post('/checkout/card/confirm', [OnboardingController::class, 'confirmCardCheckout'])->name('checkout.card.confirm');
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/admin/clients/{client}', [DashboardController::class, 'showAdminClient'])->name('admin.clients.show');
 });
 
 Route::middleware('auth')->group(function () {

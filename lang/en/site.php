@@ -2,8 +2,8 @@
 
 return [
     'brand' => [
-        'name' => 'RIF Streaming',
-        'subtitle' => 'Streaming Solutions & Media Setup Services',
+        'name' => 'RIF Media',
+        'subtitle' => 'Device Setup & Technical Support',
     ],
     'locales' => [
         'en' => 'EN',
@@ -14,7 +14,7 @@ return [
     'nav' => [
         'home' => 'Home',
         'features' => 'Services',
-        'pricing' => 'Plans',
+        'pricing' => 'Packages',
         'support' => 'Support',
         'dashboard' => 'Dashboard',
         'sign_up' => 'SIGN UP',
@@ -25,13 +25,13 @@ return [
         'about' => 'About',
         'terms' => 'Terms of Service',
         'contact' => 'Contact',
-        'copyright' => 'RIF Streaming. All rights reserved.',
+        'copyright' => 'RIF Media. All rights reserved.',
         'disclaimer' => 'We do not host, provide, or distribute any media content. We only offer technical setup and support services. Users are responsible for compliance with local laws.',
     ],
     'home' => [
-        'title' => 'RIF Streaming | Streaming Solutions & Media Setup Services',
-        'meta_description' => 'RIF Streaming provides Streaming Solutions, Media Setup Services, Device Configuration, and Technical Support for digital entertainment environments.',
-        'cta' => 'Start Setup',
+        'title' => 'RIF Media | Device Setup & Technical Support',
+        'meta_description' => 'RIF Media provides device setup, app guidance, troubleshooting, and technical support for smart screens and connected devices.',
+        'cta' => 'Start Service',
         'mini_points' => [
             'secure' => 'Secure process',
             'activation' => 'Fast setup guidance',
@@ -39,7 +39,7 @@ return [
         ],
         'feature_highlights' => [
             ['icon' => 'badge-check', 'title' => 'Device Configuration', 'text' => 'Structured setup assistance for smart displays, mobile devices, tablets, and desktop environments.'],
-            ['icon' => 'globe', 'title' => 'Streaming Solutions', 'text' => 'A neutral service flow for account setup, environment checks, and technical guidance.'],
+            ['icon' => 'globe', 'title' => 'Guided Setup', 'text' => 'A clear service flow for account setup, environment checks, and practical technical guidance.'],
             ['icon' => 'shield-check', 'title' => 'Safe Account Handling', 'text' => 'Clear onboarding, payment follow-up, and support ownership with practical status tracking.'],
             ['icon' => 'messages-square', 'title' => 'Technical Support', 'text' => 'Human WhatsApp and dashboard follow-up for setup, billing, and troubleshooting questions.'],
         ],
@@ -58,10 +58,10 @@ return [
             ],
         ],
         'pricing' => [
-            'kicker' => 'Plans',
-            'title' => 'Choose the service period that fits your setup and support needs.',
-            'description' => 'Transparent pricing for technical onboarding, service follow-up, and digital entertainment setup assistance.',
-            'label' => 'Service plan',
+            'kicker' => 'Service Packages',
+            'title' => 'Choose the service package that fits your setup and support needs.',
+            'description' => 'Transparent pricing for device setup, guided installation, troubleshooting, and ongoing technical assistance.',
+            'label' => 'Service package',
             'per_month' => 'MAD / period',
             'cta' => 'Continue',
             'plans' => [],
@@ -74,7 +74,7 @@ return [
                 ['icon' => 'sparkles', 'title' => 'Professional onboarding', 'text' => 'A calmer first impression with clearer language and lower support friction.'],
                 ['icon' => 'messages-square', 'title' => 'Real human support', 'text' => 'Assigned support follow-up through dashboard status, WhatsApp guidance, and practical next steps.'],
                 ['icon' => 'shield-check', 'title' => 'Compliance-minded wording', 'text' => 'Public pages focus on setup, device configuration, and support services instead of risky content claims.'],
-                ['icon' => 'refresh-cw', 'title' => 'Simple renewals', 'text' => 'Clients can return, review their status, and continue service management without confusion.'],
+                ['icon' => 'refresh-cw', 'title' => 'Simple follow-up', 'text' => 'Clients can return, review their status, and continue service support without confusion.'],
             ],
         ],
         'support' => [
@@ -82,14 +82,14 @@ return [
             'title' => 'Need help before placing an order?',
             'description' => 'Contact the RIF Streaming team for Media Setup Services, Device Configuration, billing support, or general Technical Support.',
             'whatsapp' => 'WhatsApp Support',
-            'plans' => 'View Plans',
+            'plans' => 'View Packages',
         ],
     ],
     'dashboard' => [
         'title' => 'Dashboard | RIF Streaming',
         'space' => 'Client area',
         'sidebar' => [
-            'subscription' => 'My plan',
+            'subscription' => 'My package',
             'history' => 'History',
             'invoices' => 'Invoices',
             'support' => 'Support',
@@ -103,8 +103,8 @@ return [
             'status' => 'Service active',
         ],
         'stats' => [
-            'plan' => 'Active plan',
-            'plan_meta' => 'Current service period and support coverage.',
+            'plan' => 'Active package',
+            'plan_meta' => 'Current service window and support coverage.',
             'expires' => 'Expires on',
             'status' => 'Status',
             'status_meta' => 'Current operational state.',
@@ -116,7 +116,7 @@ return [
             'archived' => 'Archived',
         ],
         'subscription' => [
-            'title' => 'Active service plan',
+            'title' => 'Active service package',
             'description' => ':plan remains available for :days more days.',
             'renew' => 'Renew now',
             'progress' => 'Cycle progress',

@@ -1,12 +1,12 @@
-﻿<?php
+<?php
 
 return [
     'hub' => [
         'title' => 'Legal & Trust Center | RIF Streaming',
         'meta_description' => 'Read the privacy, security, refund, cookie, and service policies that support the RIF Streaming experience.',
         'kicker' => 'Trust center',
-        'headline' => 'Clear policies for a safer streaming experience.',
-        'description' => 'This legal hub explains how RIF Streaming handles privacy, billing, cookies, account security, and fair use so clients can order with confidence.',
+        'headline' => 'Clear policies for a safer technical support experience.',
+        'description' => 'This legal hub explains how RIF Streaming handles privacy, billing, cookies, account security, and service operations so clients can order with confidence.',
     ],
     'common' => [
         'updated_label' => 'Last updated',
@@ -22,25 +22,25 @@ return [
             'label' => 'Privacy Policy',
             'title' => 'Privacy Policy',
             'meta_description' => 'Learn how RIF Streaming collects, uses, stores, and protects account and support information.',
-            'description' => 'How we collect and protect the information needed to activate subscriptions and support clients responsibly.',
-            'updated_at' => 'April 1, 2026',
+            'description' => 'How we collect and protect the information needed to manage service packages and support clients responsibly.',
+            'updated_at' => 'April 3, 2026',
             'sections' => [
                 [
                     'title' => 'Information we collect',
-                    'body' => 'We only collect the information needed to operate the service, manage subscriptions, and respond to support requests.',
+                    'body' => 'We only collect the information needed to operate the service, manage orders, and respond to support requests.',
                     'items' => [
                         'Account details such as name, email address, preferred language, and login credentials.',
-                        'Subscription and billing records such as selected plan, activation state, renewal history, and payment confirmation details.',
+                        'Order and billing records such as selected package, setup state, renewal history, and payment confirmation details.',
                         'Support information you share through contact forms, WhatsApp, email, or account-related assistance requests.',
                         'Basic technical data used to prevent abuse, troubleshoot access issues, and secure the website.',
                     ],
                 ],
                 [
                     'title' => 'How we use your information',
-                    'body' => 'Your information is processed to deliver the service safely and clearly, not to build unrelated advertising profiles.',
+                    'body' => 'Your information is processed to deliver technical setup and support clearly and safely.',
                     'items' => [
-                        'Create, verify, and maintain your account and subscription access.',
-                        'Confirm orders, communicate renewal status, and deliver support responses.',
+                        'Create, verify, and maintain your account and service access.',
+                        'Confirm orders, communicate service status, and deliver support responses.',
                         'Detect fraud, abuse, suspicious login behavior, and payment-related risks.',
                         'Improve service quality, page clarity, and support workflows.',
                     ],
@@ -71,15 +71,16 @@ return [
             'title' => 'Terms of Service',
             'meta_description' => 'Review the service rules, payment terms, acceptable use, and account responsibilities for RIF Streaming.',
             'description' => 'The core service rules that define account use, billing expectations, and fair platform behavior.',
-            'updated_at' => 'April 1, 2026',
+            'updated_at' => 'April 3, 2026',
             'sections' => [
                 [
                     'title' => 'Service scope',
-                    'body' => 'RIF Streaming provides subscription-based access management, customer support, and account-related service operations for eligible clients.',
+                    'body' => 'RIF Streaming provides device configuration services, media setup guidance, customer support, and account-related service operations for eligible clients.',
                     'items' => [
-                        'Plans, pricing, durations, and benefits may vary by offer or renewal period.',
-                        'Activation times are estimates and may depend on payment confirmation or manual review.',
+                        'Packages, pricing, support periods, and benefits may vary by offer or renewal period.',
+                        'Completion times are estimates and may depend on payment confirmation or manual review.',
                         'Service availability can change because of maintenance, provider dependencies, or abuse prevention controls.',
+                        'We do not host, provide, or distribute any media content. We only offer technical setup and support services.',
                     ],
                 ],
                 [
@@ -88,15 +89,15 @@ return [
                     'items' => [
                         'Provide accurate registration and billing information.',
                         'Do not share credentials, misuse support methods, or attempt unauthorized access.',
-                        'Follow device and usage limits when they apply to the selected subscription.',
+                        'Follow device and usage guidance when it applies to the selected service package.',
                         'Report suspicious access or account problems quickly through support.',
                     ],
                 ],
                 [
                     'title' => 'Billing and renewals',
-                    'body' => 'By placing an order, you confirm that the selected plan, pricing, and renewal expectations are understood before activation.',
+                    'body' => 'By placing an order, you confirm that the selected package, pricing, and follow-up expectations are understood before service delivery starts.',
                     'items' => [
-                        'Payments must be confirmed before activation or renewal is finalized.',
+                        'Payments must be confirmed before a setup request or renewal is finalized.',
                         'Renewal reminders, support responses, and payment instructions may be provided through the website or assigned support methods.',
                         'Unpaid, abusive, or high-risk orders may be delayed, reviewed, or rejected.',
                     ],
@@ -117,7 +118,7 @@ return [
             'title' => 'Security & Safety',
             'meta_description' => 'Understand the security controls, support practices, and account safety standards used by RIF Streaming.',
             'description' => 'The controls and operating habits we use to keep accounts, payments, and support interactions safer.',
-            'updated_at' => 'April 1, 2026',
+            'updated_at' => 'April 3, 2026',
             'sections' => [
                 [
                     'title' => 'Website and account protection',
@@ -151,7 +152,7 @@ return [
                     'body' => 'Security is stronger when the website and the client both follow safe habits.',
                     'items' => [
                         'Use a strong unique password and update it if you suspect account exposure.',
-                        'Review billing and renewal records inside the dashboard whenever possible.',
+                        'Review billing and service records inside the dashboard whenever possible.',
                         'Contact support quickly if you notice unfamiliar activity or failed access attempts.',
                     ],
                 ],
@@ -161,15 +162,15 @@ return [
             'label' => 'Refund Policy',
             'title' => 'Refund Policy',
             'meta_description' => 'Read the refund review conditions, exclusions, and support process for RIF Streaming orders.',
-            'description' => 'Our review approach for refund requests, activation issues, duplicate payments, and service disputes.',
-            'updated_at' => 'April 1, 2026',
+            'description' => 'Our review approach for refund requests, setup issues, duplicate payments, and service disputes.',
+            'updated_at' => 'April 3, 2026',
             'sections' => [
                 [
                     'title' => 'General policy',
                     'body' => 'Refund requests are reviewed case by case to balance client fairness, payment risk, and service delivery status.',
                     'items' => [
                         'Requests should be submitted as soon as the issue appears and before unnecessary delay.',
-                        'Approved refunds depend on activation state, payment confirmation, duplicate charges, or verified service failure.',
+                        'Approved refunds depend on delivery state, payment confirmation, duplicate charges, or verified service failure.',
                         'A request may require order details, payment proof, and a short explanation of the problem.',
                     ],
                 ],
@@ -178,7 +179,7 @@ return [
                     'body' => 'We may consider a refund when the order cannot be delivered or when a clear billing mistake is confirmed.',
                     'items' => [
                         'Duplicate payments for the same service period.',
-                        'Confirmed activation failure that cannot be resolved within a reasonable support window.',
+                        'Confirmed setup failure that cannot be resolved within a reasonable support window.',
                         'Incorrect charges caused by a billing or administrative error.',
                     ],
                 ],
@@ -186,7 +187,7 @@ return [
                     'title' => 'Situations that may not qualify',
                     'body' => 'Some cases are not refundable because the service was delivered, consumed, or violated platform rules.',
                     'items' => [
-                        'Refund requests after successful activation and normal use without a verified service defect.',
+                        'Refund requests after successful service delivery without a verified service defect.',
                         'Cases involving abuse, fraud, chargebacks, or policy violations.',
                         'Issues caused by incompatible devices, unsupported setups, or missing client-side requirements when these were explained in advance.',
                     ],
@@ -207,7 +208,7 @@ return [
             'title' => 'Cookie Policy',
             'meta_description' => 'Understand the cookies and local storage settings used for language, theme, sessions, and security on RIF Streaming.',
             'description' => 'How cookies and similar storage help the website remember preferences, protect sessions, and keep the experience stable.',
-            'updated_at' => 'April 1, 2026',
+            'updated_at' => 'April 3, 2026',
             'sections' => [
                 [
                     'title' => 'Why we use cookies',
@@ -240,4 +241,3 @@ return [
         ],
     ],
 ];
-

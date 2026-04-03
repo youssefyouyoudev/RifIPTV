@@ -199,18 +199,56 @@ html[data-theme="light"] .auth-shell {
     color: inherit;
 }
 
+.brand-link-logo-only {
+    gap: 0;
+}
+
 .brand-logo {
-    width: 46px;
-    height: 46px;
+    width: 68px;
+    height: 52px;
     border-radius: 16px;
-    padding: 0.55rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.06);
+    padding: 0.5rem;
+    border: 1px solid rgba(219, 229, 240, 0.9);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(239, 246, 255, 0.95));
+    object-fit: contain;
+    object-position: center;
+    box-shadow: 0 12px 24px rgba(148, 163, 184, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.brand-logo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+}
+
+.brand-logo-header {
+    width: 96px;
+    height: 74px;
+    padding: 0.35rem;
+}
+
+.brand-logo-footer {
+    width: 112px;
+    height: 88px;
+    padding: 0.4rem;
+}
+
+.brand-logo-header img,
+.brand-logo-footer img {
+    transform: scale(1.18);
+    transform-origin: center;
 }
 
 html[data-theme="light"] .brand-logo {
-    border-color: var(--rif-light-border);
-    background: #eff6ff;
+    border-color: rgba(15, 23, 42, 0.14);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(239, 246, 255, 0.95));
+}
+
+html[data-theme="dark"] .brand-logo {
+    border-color: rgba(255, 255, 255, 0.14);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(239, 246, 255, 0.9));
 }
 
 .brand-name {
@@ -241,6 +279,56 @@ html[data-theme="light"] .brand-logo {
 
 html[data-theme="light"] .nav-link-rif {
     color: var(--rif-light-muted);
+}
+
+.header-nav {
+    flex: 1 1 auto;
+    justify-content: center;
+}
+
+.header-action-cluster,
+.guest-auth-actions,
+.auth-header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.dashboard-shortcut {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 3rem;
+    padding: 0.8rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(122, 199, 12, 0.18);
+    background: linear-gradient(135deg, rgba(122, 199, 12, 0.14), rgba(30, 152, 215, 0.12));
+    color: var(--rif-text);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.dashboard-shortcut:hover,
+.dashboard-shortcut:focus {
+    color: var(--rif-text);
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(30, 152, 215, 0.16);
+    border-color: rgba(122, 199, 12, 0.3);
+}
+
+html[data-theme="light"] .dashboard-shortcut {
+    color: var(--rif-light-text);
+    border-color: rgba(122, 199, 12, 0.22);
+    background: linear-gradient(135deg, rgba(122, 199, 12, 0.1), rgba(30, 152, 215, 0.08));
+}
+
+.header-utility-link {
+    min-height: 3rem;
+    padding-inline: 1rem;
+    white-space: nowrap;
 }
 
 .locale-pills {
@@ -434,6 +522,16 @@ html[data-theme="light"] .user-menu-dropdown {
     background: rgba(255, 255, 255, 0.98);
 }
 
+.user-menu-summary {
+    padding: 0.7rem 0.95rem 0.95rem;
+    margin-bottom: 0.35rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+html[data-theme="light"] .user-menu-summary {
+    border-bottom-color: rgba(148, 163, 184, 0.18);
+}
+
 .user-menu-item {
     display: flex;
     align-items: center;
@@ -482,6 +580,13 @@ html[data-theme="light"] .user-menu-item:focus {
 html[data-theme="light"] .mobile-user-card {
     border-color: var(--rif-light-border);
     background: #f8fafc;
+}
+
+.auth-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
 .theme-toggle,
@@ -607,6 +712,11 @@ html[data-theme="light"] .floating-theme-toggle {
 
 html[data-theme="light"] .mobile-menu a:hover {
     background: #f8fafc;
+}
+
+.mobile-menu .btn-rif-outline,
+.mobile-menu .btn-rif-secondary {
+    min-height: 3rem;
 }
 
 .hero-shell {
@@ -779,40 +889,58 @@ html[data-theme="light"] .text-muted-rif {
     position: relative;
 }
 
-.hero-visual-media {
+.hero-brand-stage {
     position: relative;
     overflow: hidden;
     min-height: 35rem;
     border-radius: 28px;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.03);
+    background:
+        radial-gradient(circle at 16% 18%, rgba(30, 152, 215, 0.16), transparent 22%),
+        radial-gradient(circle at 84% 80%, rgba(122, 199, 12, 0.14), transparent 20%),
+        linear-gradient(145deg, rgba(5, 10, 20, 0.92), rgba(17, 24, 39, 0.88));
     box-shadow: var(--rif-shadow);
 }
 
-html[data-theme="light"] .hero-visual-media {
+html[data-theme="light"] .hero-brand-stage {
     border-color: var(--rif-light-border);
-    background: rgba(255, 255, 255, 0.92);
+    background:
+        radial-gradient(circle at 16% 18%, rgba(30, 152, 215, 0.12), transparent 24%),
+        radial-gradient(circle at 84% 80%, rgba(122, 199, 12, 0.12), transparent 22%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(239, 246, 255, 0.94));
     box-shadow: var(--rif-shadow-soft);
 }
 
-.hero-visual-media img {
+.hero-brand-orb {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    border-radius: 999px;
+    filter: blur(0);
+    opacity: 0.9;
+    pointer-events: none;
 }
 
-.hero-visual-scrim {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(6, 10, 18, 0.12), rgba(6, 10, 18, 0.56));
-    z-index: 1;
+.hero-brand-orb-blue {
+    top: 3rem;
+    right: 4rem;
+    width: 11rem;
+    height: 11rem;
+    background: radial-gradient(circle, rgba(30, 152, 215, 0.3), transparent 72%);
 }
 
-html[data-theme="light"] .hero-visual-scrim {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(241, 245, 249, 0.48));
+.hero-brand-orb-green {
+    left: -2rem;
+    bottom: 4rem;
+    width: 12rem;
+    height: 12rem;
+    background: radial-gradient(circle, rgba(122, 199, 12, 0.24), transparent 72%);
+}
+
+.hero-brand-orb-yellow {
+    right: 9rem;
+    bottom: -2rem;
+    width: 9rem;
+    height: 9rem;
+    background: radial-gradient(circle, rgba(255, 213, 0, 0.18), transparent 72%);
 }
 
 .hero-visual-top {
@@ -850,28 +978,118 @@ html[data-theme="light"] .hero-visual-badge {
     color: var(--rif-blue);
 }
 
-.hero-device-card {
-    position: absolute;
-    inset-inline: 1.25rem;
-    bottom: 1.25rem;
+.hero-brand-grid {
+    position: relative;
     z-index: 2;
-    max-width: 28rem;
-    padding: 1.2rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(17rem, 0.78fr);
+    gap: 1rem;
+    height: 100%;
+    min-height: 35rem;
+    padding: 5rem 1.25rem 1.25rem;
+}
+
+.hero-brand-card,
+.hero-brand-side {
+    position: relative;
     border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(6, 10, 18, 0.48);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(18px);
 }
 
-html[data-theme="light"] .hero-device-card {
-    border-color: rgba(255, 255, 255, 0.86);
-    background: rgba(255, 255, 255, 0.84);
+html[data-theme="light"] .hero-brand-card,
+html[data-theme="light"] .hero-brand-side {
+    border-color: rgba(255, 255, 255, 0.84);
+    background: rgba(255, 255, 255, 0.74);
 }
 
-.hero-device-pill {
+.hero-brand-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.2rem;
+    overflow: hidden;
+}
+
+.hero-brand-screen {
+    flex: 1;
+    min-height: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at top, rgba(30, 152, 215, 0.16), transparent 38%),
+        linear-gradient(180deg, rgba(2, 6, 23, 0.94), rgba(15, 23, 42, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="light"] .hero-brand-screen {
+    background:
+        radial-gradient(circle at top, rgba(30, 152, 215, 0.1), transparent 40%),
+        linear-gradient(180deg, rgba(5, 10, 20, 0.96), rgba(15, 23, 42, 0.94));
+}
+
+.hero-brand-logo {
+    width: min(100%, 23rem);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 18px 36px rgba(15, 23, 42, 0.24));
+}
+
+.hero-brand-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.hero-brand-meta-item {
+    padding: 0.9rem 1rem;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="light"] .hero-brand-meta-item {
+    border-color: var(--rif-light-border);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.hero-brand-meta-item span {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--rif-text-soft);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.hero-brand-meta-item strong {
+    color: var(--rif-text);
+    font-size: 0.96rem;
+    font-weight: 700;
+}
+
+html[data-theme="light"] .hero-brand-meta-item strong {
+    color: var(--rif-light-text);
+}
+
+.hero-brand-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.2rem;
+}
+
+.hero-brand-pill {
     display: inline-flex;
     align-items: center;
-    margin-bottom: 0.85rem;
+    align-self: flex-start;
     padding: 0.68rem 0.95rem;
     border-radius: 999px;
     background: rgba(122, 199, 12, 0.16);
@@ -882,13 +1100,42 @@ html[data-theme="light"] .hero-device-card {
     text-transform: uppercase;
 }
 
-.hero-device-copy {
+.hero-brand-note {
     color: rgba(248, 250, 252, 0.88);
     line-height: 1.75;
 }
 
-html[data-theme="light"] .hero-device-copy {
+html[data-theme="light"] .hero-brand-note {
     color: var(--rif-light-muted);
+}
+
+.hero-brand-stack {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.hero-brand-stack-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem 1rem;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="light"] .hero-brand-stack-item {
+    border-color: var(--rif-light-border);
+    background: rgba(255, 255, 255, 0.88);
+}
+
+.hero-brand-stack-item strong {
+    color: var(--rif-text);
+    font-size: 0.95rem;
+}
+
+html[data-theme="light"] .hero-brand-stack-item strong {
+    color: var(--rif-light-text);
 }
 
 .hero-chip-grid {
@@ -1335,6 +1582,11 @@ html[data-theme="light"] .progress-rif {
     color: var(--rif-text);
 }
 
+.table-rif-compact th,
+.table-rif-compact td {
+    padding: 0.85rem 0.9rem;
+}
+
 html[data-theme="light"] .table-rif th {
     border-bottom-color: var(--rif-light-border);
     color: var(--rif-light-muted);
@@ -1526,6 +1778,288 @@ html[data-theme="light"] .payment-featured-inner {
     display: none;
 }
 
+.reveal-up {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.reveal-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.home-hero-stage {
+    padding: 1.9rem;
+}
+
+.home-brand-stage {
+    min-height: 35rem;
+}
+
+.home-brand-layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
+    gap: 1.1rem;
+    padding: 5.5rem 1.25rem 1.25rem;
+}
+
+.home-brand-card,
+.home-brand-tile,
+.service-plan-card {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    background: rgba(15, 23, 42, 0.68);
+    box-shadow: var(--rif-shadow);
+}
+
+.home-brand-card {
+    padding: 1.4rem;
+    min-height: 100%;
+}
+
+.home-brand-logo-shell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 18rem;
+    padding: 1.5rem;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at top, rgba(30, 152, 215, 0.14), transparent 35%),
+        linear-gradient(135deg, rgba(2, 6, 23, 0.9), rgba(15, 23, 42, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.home-brand-logo {
+    width: min(100%, 340px);
+    max-height: 340px;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 35px rgba(15, 23, 42, 0.35));
+}
+
+.home-brand-tagline {
+    margin-top: 1rem;
+    color: var(--rif-text-soft);
+    font-size: 0.98rem;
+    line-height: 1.75;
+}
+
+.home-brand-service-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.home-brand-tile {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    padding: 1.15rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.home-brand-tile:hover,
+.home-feature-card:hover,
+.service-plan-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(30, 152, 215, 0.28);
+    box-shadow: 0 20px 40px rgba(30, 152, 215, 0.14);
+}
+
+.home-feature-card {
+    height: 100%;
+}
+
+.payment-featured-note {
+    margin-top: 1rem;
+    text-align: center;
+    color: var(--rif-text-soft);
+    font-size: 0.95rem;
+}
+
+.payment-partners-head {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.payment-partners-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    border-radius: 999px;
+    background: rgba(30, 152, 215, 0.12);
+    color: var(--rif-blue);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.payment-trust-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+}
+
+.payment-trust-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.8rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--rif-text-soft);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.payment-trust-pill i {
+    color: var(--rif-green);
+}
+
+.service-plan-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+.service-plan-card-featured {
+    border-color: rgba(30, 152, 215, 0.32);
+    background:
+        radial-gradient(circle at top right, rgba(30, 152, 215, 0.12), transparent 38%),
+        rgba(15, 23, 42, 0.75);
+    box-shadow: 0 22px 44px rgba(30, 152, 215, 0.18);
+}
+
+.service-plan-badge,
+.service-plan-label {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.service-plan-badge {
+    padding: 0.45rem 0.8rem;
+    background: rgba(214, 0, 58, 0.12);
+    color: var(--rif-red);
+}
+
+.service-plan-label {
+    padding: 0.35rem 0.65rem;
+    background: rgba(30, 152, 215, 0.1);
+    color: var(--rif-blue);
+    margin-bottom: 0.65rem;
+}
+
+.service-plan-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.service-plan-name {
+    margin: 0;
+    color: var(--rif-text);
+    font-size: 1.55rem;
+    font-weight: 700;
+}
+
+.service-plan-duration {
+    color: var(--rif-text-soft);
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.service-plan-summary {
+    min-height: 3.2rem;
+    color: var(--rif-text-soft);
+    font-size: 0.96rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.service-plan-price {
+    font-family: "Syne", sans-serif;
+    color: var(--rif-text);
+    font-size: clamp(2.1rem, 4vw, 2.8rem);
+    line-height: 1;
+}
+
+.service-plan-price span {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.92rem;
+    color: var(--rif-green);
+    margin-inline-start: 0.25rem;
+}
+
+.service-plan-features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.8rem;
+}
+
+.service-plan-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: var(--rif-text);
+    font-size: 0.94rem;
+    line-height: 1.6;
+}
+
+html[data-theme="light"] .home-brand-card,
+html[data-theme="light"] .home-brand-tile,
+html[data-theme="light"] .service-plan-card,
+html[data-theme="light"] .payment-trust-pill {
+    border-color: var(--rif-light-border);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--rif-shadow-soft);
+}
+
+html[data-theme="light"] .service-plan-card-featured {
+    border-color: rgba(30, 152, 215, 0.3);
+    background:
+        radial-gradient(circle at top right, rgba(30, 152, 215, 0.1), transparent 38%),
+        rgba(255, 255, 255, 0.99);
+}
+
+html[data-theme="light"] .home-brand-logo-shell {
+    border-color: rgba(219, 229, 240, 0.9);
+    background:
+        radial-gradient(circle at top, rgba(30, 152, 215, 0.1), transparent 35%),
+        linear-gradient(135deg, rgba(248, 250, 252, 1), rgba(239, 246, 255, 0.95));
+}
+
+html[data-theme="light"] .home-brand-tagline,
+html[data-theme="light"] .payment-featured-note,
+html[data-theme="light"] .payment-trust-pill,
+html[data-theme="light"] .service-plan-summary,
+html[data-theme="light"] .service-plan-duration {
+    color: var(--rif-light-muted);
+}
+
+html[data-theme="light"] .service-plan-name,
+html[data-theme="light"] .service-plan-price,
+html[data-theme="light"] .service-plan-features li {
+    color: var(--rif-light-text);
+}
+
 html[data-theme="dark"] .hero-showcase-image-dark,
 html[data-theme="light"] .hero-showcase-image-light {
     display: block;
@@ -1560,8 +2094,27 @@ html[data-theme="light"] .hero-showcase-image-light {
         font-size: clamp(2.3rem, 9vw, 3.6rem);
     }
 
-    .hero-visual-media {
-        min-height: 28rem;
+    .hero-brand-stage {
+        min-height: auto;
+    }
+
+    .home-brand-layout {
+        grid-template-columns: 1fr;
+        padding-top: 5rem;
+    }
+
+    .home-brand-logo-shell {
+        min-height: 14rem;
+    }
+
+    .service-plan-head {
+        flex-direction: column;
+    }
+
+    .hero-brand-grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding-top: 5.4rem;
     }
 
     .narrative-title {
@@ -1579,12 +2132,30 @@ html[data-theme="light"] .hero-showcase-image-light {
         grid-template-columns: 1fr;
     }
 
-    .hero-visual-media {
-        min-height: 24rem;
+    .hero-brand-grid {
+        padding-inline: 1rem;
+        padding-bottom: 1rem;
     }
 
-    .hero-device-card {
-        max-width: none;
+    .hero-brand-screen {
+        min-height: 15.5rem;
+    }
+
+    .home-hero-stage {
+        padding: 1.25rem;
+    }
+
+    .home-brand-layout {
+        padding-inline: 0.9rem;
+        padding-bottom: 0.9rem;
+    }
+
+    .service-plan-card {
+        padding: 1.2rem;
+    }
+
+    .hero-brand-meta {
+        grid-template-columns: 1fr;
     }
 
     .floating-theme-toggle {
@@ -1623,6 +2194,90 @@ html[data-theme="light"] .hero-showcase-image-light {
 .workflow-steps {
     display: grid;
     gap: 1rem;
+}
+
+.workflow-topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.8fr);
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.workflow-topbar-copy {
+    min-width: 0;
+}
+
+.workflow-step-stack {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.workflow-step-card {
+    display: flex;
+    gap: 0.875rem;
+    align-items: flex-start;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--rif-border);
+    border-radius: 1.15rem;
+    background: rgba(255, 255, 255, 0.04);
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.workflow-step-card.is-active {
+    border-color: rgba(122, 199, 12, 0.34);
+    box-shadow: 0 16px 32px rgba(122, 199, 12, 0.12);
+    background: linear-gradient(135deg, rgba(122, 199, 12, 0.1), rgba(30, 152, 215, 0.08));
+}
+
+.workflow-step-card.is-complete {
+    border-color: rgba(30, 152, 215, 0.22);
+    background: linear-gradient(135deg, rgba(30, 152, 215, 0.08), rgba(122, 199, 12, 0.05));
+}
+
+.workflow-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.workflow-sidebar {
+    display: grid;
+    gap: 1.5rem;
+    position: sticky;
+    top: 8.75rem;
+}
+
+.workflow-sidebar-card {
+    overflow: hidden;
+}
+
+.workflow-main {
+    min-width: 0;
+}
+
+.workflow-section-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.workflow-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--rif-border);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--rif-text-soft);
+    white-space: nowrap;
+}
+
+.workflow-meta-grid.workflow-meta-grid-single {
+    grid-template-columns: 1fr;
 }
 
 .workflow-step {
@@ -1709,6 +2364,14 @@ html[data-theme="light"] .hero-showcase-image-light {
         var(--rif-surface);
 }
 
+.plan-selector-card-compact {
+    padding: 1.25rem;
+}
+
+.plan-selector-card-compact .family-plan-subtitle {
+    min-height: auto;
+}
+
 .plan-selector-card.is-selected::after,
 .payment-choice-card.is-selected::after {
     content: "";
@@ -1770,6 +2433,29 @@ html[data-theme="light"] .hero-showcase-image-light {
     color: var(--rif-text);
 }
 
+.workflow-journey-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--rif-border);
+    border-radius: 1.25rem;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.workflow-journey-note-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 999px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--rif-blue), var(--rif-green));
+    box-shadow: 0 12px 24px rgba(30, 152, 215, 0.18);
+}
+
 .workflow-card {
     border: 1px solid var(--rif-border);
     border-radius: 1.5rem;
@@ -1780,6 +2466,132 @@ html[data-theme="light"] .hero-showcase-image-light {
 .workflow-actions {
     display: grid;
     gap: 0.8rem;
+}
+
+.btn-rif-sm {
+    min-height: 2.5rem;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.82rem;
+}
+
+.admin-step-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(30, 152, 215, 0.1);
+    color: var(--rif-blue);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.admin-step-pill-active {
+    background: rgba(122, 199, 12, 0.14);
+    color: var(--rif-green);
+}
+
+.admin-detail-list {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.admin-detail-list > div {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px dashed var(--rif-border);
+}
+
+.admin-detail-list > div:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.admin-detail-list span {
+    color: var(--rif-text-soft);
+    font-size: 0.82rem;
+}
+
+.admin-detail-list strong {
+    color: var(--rif-text);
+    text-align: end;
+}
+
+.admin-progress-grid {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.admin-progress-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.95rem 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--rif-border);
+    background: var(--rif-surface-soft);
+}
+
+.admin-progress-item strong {
+    color: var(--rif-text-soft);
+    font-size: 0.95rem;
+}
+
+.admin-progress-item.is-active {
+    border-color: rgba(122, 199, 12, 0.34);
+    background: linear-gradient(135deg, rgba(122, 199, 12, 0.12), rgba(30, 152, 215, 0.08));
+}
+
+.admin-progress-item.is-active strong,
+.admin-progress-item.is-done strong {
+    color: var(--rif-text);
+}
+
+.admin-progress-item.is-done {
+    border-color: rgba(30, 152, 215, 0.22);
+}
+
+.admin-progress-dot {
+    width: 0.95rem;
+    height: 0.95rem;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.35);
+    flex-shrink: 0;
+}
+
+.admin-progress-item.is-active .admin-progress-dot {
+    background: var(--rif-green);
+    box-shadow: 0 0 0 6px rgba(122, 199, 12, 0.12);
+}
+
+.admin-progress-item.is-done .admin-progress-dot {
+    background: var(--rif-blue);
+}
+
+.admin-action-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.2rem 1.25rem;
+    border-radius: 1.25rem;
+    border: 1px solid var(--rif-border);
+    background: var(--rif-surface-soft);
+}
+
+.admin-action-panel-form {
+    align-items: flex-end;
+}
+
+html[data-theme="light"] .admin-detail-list > div,
+html[data-theme="light"] .admin-progress-item,
+html[data-theme="light"] .admin-action-panel {
+    border-color: var(--rif-light-border);
 }
 
 .workflow-proof-form,
@@ -2207,6 +3019,75 @@ html[data-theme="light"] .payment-choice-card.is-selected {
     letter-spacing: 0.08em;
 }
 
+.payment-choice-badge-bank {
+    background: rgba(30, 152, 215, 0.1);
+    color: var(--rif-blue);
+}
+
+.payment-choice-card-large {
+    padding: 1.5rem;
+}
+
+.workflow-feature-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.workflow-feature-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.72rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--rif-text-soft);
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.workflow-bank-panel {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: max-height 0.28s ease, opacity 0.24s ease, transform 0.24s ease, margin-top 0.24s ease;
+}
+
+.workflow-bank-panel.is-visible {
+    max-height: 260px;
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.workflow-submit-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid var(--rif-border);
+    padding-top: 1.15rem;
+}
+
+html[data-theme="light"] .workflow-step-card,
+html[data-theme="light"] .workflow-pill,
+html[data-theme="light"] .workflow-feature-pill,
+html[data-theme="light"] .workflow-bank-panel.is-visible,
+html[data-theme="light"] .workflow-journey-note {
+    border-color: var(--rif-light-border);
+    background: rgba(255, 255, 255, 0.92);
+}
+
+html[data-theme="light"] .workflow-step-card.is-active {
+    background: linear-gradient(135deg, rgba(122, 199, 12, 0.12), rgba(30, 152, 215, 0.08));
+}
+
+html[data-theme="light"] .workflow-step-card.is-complete {
+    background: linear-gradient(135deg, rgba(30, 152, 215, 0.08), rgba(122, 199, 12, 0.05));
+}
+
 .checkout-brand-panel {
     display: flex;
     justify-content: space-between;
@@ -2262,6 +3143,35 @@ html[data-theme="light"] .payment-choice-card.is-selected {
 }
 
 @media (max-width: 991.98px) {
+    .admin-action-panel,
+    .admin-detail-list > div {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-detail-list strong {
+        text-align: start;
+    }
+
+    .workflow-topbar,
+    .workflow-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .workflow-sidebar {
+        position: static;
+    }
+
+    .workflow-section-head,
+    .workflow-submit-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .workflow-journey-note {
+        flex-direction: column;
+    }
+
     .workflow-meta-grid {
         grid-template-columns: 1fr;
     }

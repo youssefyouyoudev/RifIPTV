@@ -6,13 +6,13 @@ use App\Models\Subscription;
 use App\Models\Transaction;
 use App\Models\User;
 
-test('home route renders the rif iptv homepage', function () {
+test('home route renders the safer services homepage', function () {
     $response = $this->get('/');
 
     $response
         ->assertOk()
-        ->assertSee('RIF IPTV', false)
-        ->assertSee('Over 10,000 famous channels', false);
+        ->assertSee('Professional device setup service', false)
+        ->assertSee('Setup done right.', false);
 });
 
 test('client dashboard shows subscription-focused experience', function () {
@@ -58,7 +58,7 @@ test('client dashboard shows subscription-focused experience', function () {
         ->assertOk()
         ->assertSee('Client dashboard')
         ->assertSee('Premium')
-        ->assertSee('Payment details')
+        ->assertSee('Payment summary')
         ->assertDontSee('Total revenue');
 });
 

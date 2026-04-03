@@ -36,7 +36,7 @@
                     <form method="POST" action="{{ route('checkout.card.confirm') }}" class="d-grid gap-3">
                         @csrf
                         <button type="submit" class="btn-rif-secondary w-100">{{ __('workflow.checkout.confirm') }}</button>
-                        <a href="{{ route('onboarding.show') }}" class="btn-rif-outline w-100">{{ __('workflow.checkout.back') }}</a>
+                        <a href="{{ route('checkout') }}" class="btn-rif-outline w-100">{{ __('workflow.checkout.back') }}</a>
                     </form>
                 </article>
             </div>

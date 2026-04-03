@@ -3,7 +3,7 @@
 return [
     'common' => [
         'live_space' => 'Operations space',
-        'plan' => 'Plan',
+        'plan' => 'Service package',
         'payment' => 'Payment',
         'bank' => 'Bank',
         'provider' => 'Provider',
@@ -17,7 +17,7 @@ return [
     ],
     'statuses' => [
         'new' => 'New',
-        'plan_selected' => 'Plan selected',
+        'plan_selected' => 'Package selected',
         'card_checkout' => 'Card checkout',
         'awaiting_whatsapp' => 'Waiting for WhatsApp contact',
         'awaiting_support' => 'Waiting for support',
@@ -37,24 +37,24 @@ return [
         'failed' => 'Failed',
     ],
     'flash' => [
-        'plan-selected' => 'Plan selected. Choose your payment method to continue.',
+        'plan-selected' => 'Package selected. Choose your payment method to continue.',
         'bank-transfer-waiting' => 'Your bank transfer request is recorded. Our team will contact you on WhatsApp to continue.',
         'card-paid' => 'Card payment confirmed. Your admin will now complete setup and send your access details.',
         'client-workflow-updated' => 'Client workflow updated successfully.',
     ],
     'onboarding' => [
         'title' => 'Checkout setup | RIF Streaming',
-        'meta_description' => 'Choose your RIF Streaming service plan, select card or national bank transfer, and continue the onboarding flow.',
+        'meta_description' => 'Choose your RIF Streaming service package, select card or bank transfer, and continue the onboarding flow.',
         'kicker' => 'Client onboarding',
-        'headline' => 'Choose your plan and finish payment the smooth way',
-        'description' => 'Register once, choose the right plan, pick your payment method, and let the team continue the activation with you.',
+        'headline' => 'Choose your service package and continue the setup smoothly',
+        'description' => 'Register once, choose the right support window, pick your payment method, and let the team continue the technical setup with you.',
         'steps' => [
-            ['title' => 'Choose plan', 'text' => 'Pick the duration that fits your usage and budget.'],
+            ['title' => 'Choose package', 'text' => 'Pick the support window that fits your needs and budget.'],
             ['title' => 'Pick payment', 'text' => 'Use Paddle card checkout or national bank transfer.'],
             ['title' => 'Get activated', 'text' => 'Support follows up on WhatsApp and delivers your setup.'],
         ],
         'plan_kicker' => 'Step 1',
-        'plan_title' => 'Select your service plan',
+        'plan_title' => 'Select your service package',
         'payment_kicker' => 'Step 2',
         'payment_title' => 'Choose how you want to pay',
         'summary_kicker' => 'Order summary',
@@ -62,7 +62,7 @@ return [
         'next_kicker' => 'Need help?',
         'next_title' => 'Support stays with you through the whole setup',
         'next_text' => 'If you choose bank transfer, an admin follows up manually. If you choose card payment, you continue to the secure Paddle checkout step.',
-        'family_label' => 'Pack',
+        'family_label' => 'Service line',
         'duration_caption' => ':months month access',
         'durations' => [
             1 => '1 Month',
@@ -71,10 +71,10 @@ return [
             12 => '12 Months',
         ],
         'families' => [
-            'max_ott' => 'Flexible and affordable for smooth everyday streaming.',
+            'max_ott' => 'A practical service line for everyday device setup and guided assistance.',
             't_rex' => 'A stronger service line for advanced setup help and longer support coverage.',
         ],
-        'select_plan' => 'Save selected plan',
+        'select_plan' => 'Save selected package',
         'card_title' => 'Pay by card with Paddle',
         'card_text' => 'Best for international clients and fast secure checkout.',
         'bank_title' => 'Pay by national transfer',
@@ -100,11 +100,11 @@ return [
     'client' => [
         'eyebrow' => 'Client dashboard',
         'headline' => 'Hello, :name',
-        'description' => 'Follow your plan, payment status, assigned admin, and technical setup progress from one clear space.',
+        'description' => 'Follow your package, payment status, assigned admin, and technical setup progress from one clear space.',
         'live_badge' => 'Client account live',
         'metrics' => [
-            'plan' => 'Selected plan',
-            'plan_meta' => 'The plan currently attached to your order.',
+            'plan' => 'Selected package',
+            'plan_meta' => 'The service package currently attached to your order.',
             'payment' => 'Payment method',
             'payment_meta' => 'Choose a method to continue your order.',
             'status' => 'Setup status',
@@ -112,7 +112,7 @@ return [
             'pending' => 'Pending',
         ],
         'subscription' => [
-            'kicker' => 'Subscription',
+            'kicker' => 'Service package',
             'waiting_title' => 'Waiting for activation',
             'waiting_text' => 'Your admin will activate the service after payment review and setup delivery.',
             'active_text' => 'Your service is active and has :days days remaining in the current cycle.',
@@ -135,7 +135,7 @@ return [
         ],
         'payment' => [
             'kicker' => 'Payment details',
-            'title' => 'Order payment summary',
+            'title' => 'Payment summary',
             'view_proof' => 'View payment proof',
         ],
         'credentials' => [
@@ -151,7 +151,7 @@ return [
             'empty' => 'No transactions yet.',
             'columns' => [
                 'date' => 'Date',
-                'plan' => 'Plan',
+            'plan' => 'Package',
                 'amount' => 'Amount',
                 'method' => 'Method',
                 'status' => 'Status',

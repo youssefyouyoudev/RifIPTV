@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -21,6 +22,39 @@ class DashboardController extends Controller
         }
 
         return $this->clientDashboard($user);
+    }
+
+    public function showAdminClient(Request $request, Client $client): View|RedirectResponse
+    {
+        $admin = $request->user();
+
+        abort_unless($admin->isAdmin(), 403);
+
+        $client->load([
+            'user',
+            'assignedAdmin',
+            'subscriptions.plan',
+            'transactions.subscription.plan',
+            'transactions.assignedAdmin',
+        ]);
+
+        $client->latest_subscription = $client->subscriptions->sortByDesc('id')->first();
+        $client->latest_transaction = $client->transactions->sortByDesc('id')->first();
+
+        if ($client->assigned_admin_id && (int) $client->assigned_admin_id !== (int) $admin->id) {
+            return redirect()->route('dashboard');
+        }
+
+        $actionState = $this->actionStateForClient($client);
+
+        return view('admin.clients.show', [
+            'clientRecord' => $client,
+            'latestSubscription' => $client->latest_subscription,
+            'latestTransaction' => $client->latest_transaction,
+            'actionState' => $actionState,
+            'nextAction' => $this->nextActionLabel($actionState),
+            'statusLabel' => __('workflow.statuses.'.$this->clientWorkflowStatus($client)),
+        ]);
     }
 
     protected function adminDashboard(User $user): View
@@ -37,6 +71,9 @@ class DashboardController extends Controller
             ->each(function (Client $client): void {
                 $client->latest_subscription = $client->subscriptions->sortByDesc('id')->first();
                 $client->latest_transaction = $client->transactions->sortByDesc('id')->first();
+                $client->action_state = $this->actionStateForClient($client);
+                $client->next_action = $this->nextActionLabel($client->action_state);
+                $client->workflow_status = $this->clientWorkflowStatus($client);
             });
 
         $managedClients = $clients
@@ -203,5 +240,55 @@ class DashboardController extends Controller
             'chartLabels' => $chartLabels,
             'chartValues' => $chartValues,
         ]);
+    }
+
+    protected function clientWorkflowStatus(Client $client): string
+    {
+        return $client->onboarding_status ?: 'new';
+    }
+
+    protected function actionStateForClient(Client $client): array
+    {
+        $transaction = $client->latest_transaction;
+        $paymentMethod = $transaction?->payment_method;
+
+        if ($paymentMethod === 'bank_transfer') {
+            $paymentConfirmed = ($transaction?->status === 'paid') || filled($transaction?->proof_path);
+
+            return [
+                'assign' => ! $client->assigned_admin_id,
+                'start_support' => (bool) $client->assigned_admin_id && ! $client->support_started_at,
+                'confirm_payment' => (bool) $client->support_started_at && ! $paymentConfirmed,
+                'send_tutorial' => $paymentConfirmed && ! $client->setup_tutorial_sent_at,
+                'save_credentials' => $paymentConfirmed && (bool) $client->setup_tutorial_sent_at && ! $client->completed_at,
+                'mark_completed' => ! $client->completed_at && filled($client->iptv_username) && filled($client->iptv_password),
+                'payment_confirmed' => $paymentConfirmed,
+            ];
+        }
+
+        $paymentConfirmed = $transaction?->status === 'paid';
+
+        return [
+            'assign' => ! $client->assigned_admin_id,
+            'start_support' => (bool) $client->assigned_admin_id && ! $client->support_started_at,
+            'confirm_payment' => false,
+            'send_tutorial' => $paymentConfirmed && (bool) $client->support_started_at && ! $client->setup_tutorial_sent_at,
+            'save_credentials' => $paymentConfirmed && (bool) $client->setup_tutorial_sent_at && ! $client->completed_at,
+            'mark_completed' => ! $client->completed_at && filled($client->iptv_username) && filled($client->iptv_password),
+            'payment_confirmed' => $paymentConfirmed,
+        ];
+    }
+
+    protected function nextActionLabel(array $actionState): string
+    {
+        return match (true) {
+            $actionState['assign'] => 'assign',
+            $actionState['start_support'] => 'start_support',
+            $actionState['confirm_payment'] => 'confirm_payment',
+            $actionState['send_tutorial'] => 'send_tutorial',
+            $actionState['save_credentials'] => 'save_credentials',
+            $actionState['mark_completed'] => 'mark_completed',
+            default => 'completed',
+        };
     }
 }

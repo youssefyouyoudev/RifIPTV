@@ -17,11 +17,18 @@ class OnboardingController extends Controller
     {
         $user = $request->user();
         $client = $this->clientFor($user->id);
+        $familyOrder = ['sup' => 1, 'max' => 2, 'trex' => 3];
         $plans = Plan::query()
-            ->orderBy('sort_order')
-            ->orderBy('family')
-            ->orderBy('duration_months')
-            ->get();
+            ->whereIn('family_slug', array_keys($familyOrder))
+            ->whereIn('duration_months', [3, 6, 12])
+            ->get()
+            ->sortBy(fn (Plan $plan) => sprintf(
+                '%02d-%02d-%06d',
+                $familyOrder[$plan->family_slug] ?? 99,
+                $plan->duration_months,
+                $plan->sort_order ?? 0
+            ))
+            ->values();
         $subscription = $this->currentDraftSubscription($client);
         $transaction = $this->currentDraftTransaction($client, $subscription);
         $planFamilies = $plans->groupBy(fn (Plan $plan) => $plan->family_slug ?: 'other');
@@ -31,6 +38,26 @@ class OnboardingController extends Controller
             'plans' => $plans,
             'planFamilies' => $planFamilies,
             'selectedSubscription' => $subscription,
+            'selectedTransaction' => $transaction,
+            'bankOptions' => $this->bankOptions(),
+        ]);
+    }
+
+    public function checkout(Request $request): View|RedirectResponse
+    {
+        $user = $request->user();
+        $client = $this->clientFor($user->id);
+        $subscription = $this->currentDraftSubscription($client);
+
+        if (! $subscription?->plan) {
+            return redirect()->route('onboarding.show');
+        }
+
+        $transaction = $this->currentDraftTransaction($client, $subscription);
+
+        return view('checkout.show', [
+            'client' => $client,
+            'subscription' => $subscription,
             'selectedTransaction' => $transaction,
             'bankOptions' => $this->bankOptions(),
         ]);
@@ -65,7 +92,7 @@ class OnboardingController extends Controller
             'onboarding_status' => 'plan_selected',
         ]);
 
-        return redirect()->route('onboarding.show')->with('status', 'plan-selected');
+        return redirect()->route('checkout')->with('status', 'plan-selected');
     }
 
     public function storePayment(Request $request): RedirectResponse

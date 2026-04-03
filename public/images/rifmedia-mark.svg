@@ -1,0 +1,42 @@
+<svg width="96" height="72" viewBox="0 0 96 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rif-blue" x1="19" y1="44" x2="70" y2="19" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E98D7"/>
+      <stop offset="1" stop-color="#46B7F2"/>
+    </linearGradient>
+    <linearGradient id="rif-green" x1="18" y1="47" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1AAE4B"/>
+      <stop offset="1" stop-color="#7AC70C"/>
+    </linearGradient>
+    <linearGradient id="rif-yellow" x1="55" y1="20" x2="81" y2="45" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE36A"/>
+      <stop offset="1" stop-color="#F5C316"/>
+    </linearGradient>
+    <linearGradient id="rif-red" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F43F5E"/>
+      <stop offset="1" stop-color="#D6003A"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1.5" y="1.5" width="93" height="69" rx="20" fill="transparent"/>
+  <path d="M21 44C21 29.5 33.3 18 48.4 18C55.3 18 61.6 20.4 66.6 24.4" stroke="url(#rif-blue)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M22 46C28.7 55.1 39.7 60.9 52 60.9C58.9 60.9 65.3 59 70.6 55.7" stroke="url(#rif-green)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M61.5 20.7C71.2 24.7 78 34.1 78 45.2" stroke="url(#rif-yellow)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M71.5 18.5L83 17L79.9 28.2" fill="url(#rif-yellow)"/>
+  <path d="M34.5 11C38.1 11.9 41.3 14.4 43.1 17.7" stroke="url(#rif-green)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M29 16.3C32.6 17.2 35.8 19.7 37.6 23" stroke="url(#rif-green)" stroke-width="4.5" stroke-linecap="round"/>
+
+  <rect x="40" y="29.2" width="16.8" height="12.9" rx="3.4" fill="#1E293B"/>
+  <rect x="42" y="31.1" width="12.8" height="9" rx="2.1" fill="#E5F3FF"/>
+  <path d="M46.5 27.3L48.9 29.7L51.3 27.3" stroke="#1E293B" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <path d="M45.3 48.6C47.5 46.7 50.9 46.7 53.1 48.6" stroke="url(#rif-red)" stroke-width="2.7" stroke-linecap="round"/>
+  <path d="M42.5 52C46.3 48.6 52.1 48.6 55.9 52" stroke="url(#rif-red)" stroke-width="2.7" stroke-linecap="round"/>
+  <circle cx="49.2" cy="55.4" r="1.9" fill="url(#rif-red)"/>
+
+  <path d="M19 60.2H30.4V63.5H22.8V67.8H30V71H19V60.2Z" fill="#1E98D7"/>
+  <path d="M33 60.2H37V71H33V60.2Z" fill="#1E98D7"/>
+  <path d="M39.8 71V60.2H48.2C50.5 60.2 52.4 60.7 53.6 61.7C54.9 62.7 55.5 64.1 55.5 65.9C55.5 67.7 54.9 69.1 53.6 70.1C52.4 70.7 50.6 71 48.4 71H39.8ZM43.9 67.8H48.1C49.2 67.8 50.1 67.6 50.7 67.1C51.4 66.6 51.7 65.9 51.7 65.1C51.7 64.2 51.4 63.6 50.7 63.1C50.1 62.7 49.2 62.5 48.1 62.5H43.9V67.8Z" fill="#1E98D7"/>
+  <path d="M58.7 60.2H63.1V67.6H70.7V71H58.7V60.2Z" fill="#F5C316"/>
+  <path d="M72.5 60.2H83.9V63.5H76.3V67.8H83.5V71H72.5V60.2Z" fill="#F5C316"/>
+</svg>

@@ -90,7 +90,7 @@
                             <div><span>Reference</span><strong>{{ $latestTransaction?->reference ?: '-' }}</strong></div>
                         </div>
                         @if ($latestTransaction?->proof_path)
-                            <a href="{{ asset($latestTransaction->proof_path) }}" target="_blank" class="btn-rif-outline w-100 mt-4">{{ __('workflow.admin.clients_table.view_proof') }}</a>
+                            <a href="/public/{{ $latestTransaction->proof_path }}" target="_blank" class="btn-rif-outline w-100 mt-4">{{ __('workflow.admin.clients_table.view_proof') }}</a>
                         @endif
                     </article>
 

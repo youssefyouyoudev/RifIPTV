@@ -50,7 +50,6 @@ class RegisteredUserController extends Controller
 
         Client::create([
             'user_id' => $user->id,
-            'assigned_admin_id' => User::query()->where('role', 'admin')->value('id'),
             'phone' => $request->phone_country_code.preg_replace('/\s+/', '', (string) $request->phone_number),
             'onboarding_status' => 'new',
         ]);

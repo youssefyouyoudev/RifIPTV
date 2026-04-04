@@ -56,6 +56,15 @@
             document.documentElement.setAttribute('data-bs-theme', theme);
         }());
     </script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LXMHC9NGBP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LXMHC9NGBP');
+</script>
 </head>
 <body>
     <header class="app-header">

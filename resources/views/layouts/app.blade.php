@@ -112,6 +112,15 @@
     @foreach ($localeUrls as $locale => $localeUrl)
         <link rel="alternate" hreflang="{{ $locale }}" href="{{ $localeUrl }}">
     @endforeach
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LXMHC9NGBP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LXMHC9NGBP');
+</script>
     <link rel="alternate" hreflang="x-default" href="{{ $localizedBaseUrl }}">
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:site_name" content="{{ $brandName }}">

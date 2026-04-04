@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ClientSubscribedMail;
 use App\Models\Client;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AdminClientWorkflowController extends Controller
@@ -102,6 +105,10 @@ class AdminClientWorkflowController extends Controller
             'last_contacted_at' => now(),
             'onboarding_status' => 'payment_confirmed',
         ]);
+
+        // Send email to all admins
+        $admins = User::where('role', 'admin')->get();
+        Mail::to($admins)->send(new ClientSubscribedMail($client));
     }
 
     protected function sendTutorial(Client $client, int $adminId): void

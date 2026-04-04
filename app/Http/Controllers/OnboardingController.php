@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ClientSubscribedMail;
 use App\Models\Client;
 use App\Models\Plan;
 use App\Models\Subscription;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -201,6 +204,10 @@ class OnboardingController extends Controller
         $subscription->update([
             'status' => 'awaiting_setup',
         ]);
+
+        // Send email to all admins
+        $admins = User::where('role', 'admin')->get();
+        Mail::to($admins)->send(new ClientSubscribedMail($client));
 
         return redirect()->route('dashboard')->with('status', 'card-paid');
     }

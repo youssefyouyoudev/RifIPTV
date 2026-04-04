@@ -115,4 +115,19 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Internal Notification Recipients
+    |--------------------------------------------------------------------------
+    |
+    | Operational emails such as new client onboarding alerts are sent to
+    | these recipients. Configure them as a comma-separated list in the env.
+    |
+    */
+
+    'admin_recipients' => array_values(array_filter(array_map(
+        static fn (string $email) => trim($email),
+        explode(',', (string) env('MAIL_ADMIN_RECIPIENTS', ''))
+    ))),
+
 ];

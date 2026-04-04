@@ -65,7 +65,9 @@
 
   gtag('config', 'G-LXMHC9NGBP');
 </script>
+@if(request()->getHost() !== '127.0.0.1' && request()->getHost() !== 'localhost')
 <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1c1a8441-b356-4d54-ab00-36a0d40490f1" type="text/javascript" async></script>
+@endif
 </head>
 <body>
     <header class="app-header">

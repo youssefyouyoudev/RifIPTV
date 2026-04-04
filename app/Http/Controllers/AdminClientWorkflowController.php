@@ -6,14 +6,20 @@ use App\Mail\ClientSubscribedMail;
 use App\Models\Client;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Services\TelegramBotService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AdminClientWorkflowController extends Controller
 {
+    public function __construct(protected TelegramBotService $telegram)
+    {
+    }
+
     public function update(Request $request, Client $client): RedirectResponse
     {
         $admin = $request->user();
@@ -106,9 +112,21 @@ class AdminClientWorkflowController extends Controller
             'onboarding_status' => 'payment_confirmed',
         ]);
 
-        // Send email to all admins
-        $admins = User::where('role', 'admin')->get();
-        Mail::to($admins)->send(new ClientSubscribedMail($client));
+        $recipients = $this->adminNotificationRecipients();
+        \Log::info('About to send mail for client ' . $client->id . ', recipient count: ' . $recipients->count());
+
+        if ($recipients->isNotEmpty()) {
+            Mail::to($recipients->all())->send(new ClientSubscribedMail($client));
+        }
+
+        $this->telegram->sendToSubscribers(
+            sprintf(
+                "Payment confirmed\nClient: %s\nAmount: %s MAD\nMethod: %s\nStatus: Paid",
+                $client->user->name,
+                number_format((float) $transaction->amount_mad, 2, '.', ''),
+                $transaction->payment_method === 'bank_transfer' ? 'Bank transfer' : 'Card'
+            )
+        );
     }
 
     protected function sendTutorial(Client $client, int $adminId): void
@@ -160,5 +178,26 @@ class AdminClientWorkflowController extends Controller
             'last_contacted_at' => $now,
             'onboarding_status' => 'completed',
         ]);
+    }
+
+    protected function adminNotificationRecipients(): Collection
+    {
+        $configured = collect(config('mail.admin_recipients', []))
+            ->filter()
+            ->map(fn (string $email) => trim($email))
+            ->unique()
+            ->values();
+
+        if ($configured->isNotEmpty()) {
+            return $configured;
+        }
+
+        return User::query()
+            ->where('role', 'admin')
+            ->pluck('email')
+            ->filter()
+            ->map(fn (string $email) => trim($email))
+            ->unique()
+            ->values();
     }
 }

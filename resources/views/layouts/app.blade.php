@@ -112,7 +112,9 @@
     @foreach ($localeUrls as $locale => $localeUrl)
         <link rel="alternate" hreflang="{{ $locale }}" href="{{ $localeUrl }}">
     @endforeach
+    @if(request()->getHost() !== '127.0.0.1' && request()->getHost() !== 'localhost')
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1c1a8441-b356-4d54-ab00-36a0d40490f1" type="text/javascript" async></script>
+    @endif
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LXMHC9NGBP"></script>
 <script>

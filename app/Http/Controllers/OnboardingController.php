@@ -8,14 +8,20 @@ use App\Models\Plan;
 use App\Models\Subscription;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Services\TelegramBotService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class OnboardingController extends Controller
 {
+    public function __construct(protected TelegramBotService $telegram)
+    {
+    }
+
     public function show(Request $request): View
     {
         $user = $request->user();
@@ -183,6 +189,7 @@ class OnboardingController extends Controller
 
     public function confirmCardCheckout(Request $request): RedirectResponse
     {
+        \Log::info('confirmCardCheckout called for user ' . $request->user()->id);
         $client = $this->clientFor($request->user()->id);
         $subscription = $this->currentDraftSubscription($client);
         $transaction = $this->currentDraftTransaction($client, $subscription);
@@ -205,9 +212,21 @@ class OnboardingController extends Controller
             'status' => 'awaiting_setup',
         ]);
 
-        // Send email to all admins
-        $admins = User::where('role', 'admin')->get();
-        Mail::to($admins)->send(new ClientSubscribedMail($client));
+        $recipients = $this->adminNotificationRecipients();
+        \Log::info('About to send mail for client ' . $client->id . ', recipient count: ' . $recipients->count());
+
+        if ($recipients->isNotEmpty()) {
+            Mail::to($recipients->all())->send(new ClientSubscribedMail($client));
+        }
+
+        $this->telegram->sendToSubscribers(
+            sprintf(
+                "New paid order\nClient: %s\nPlan: %s\nAmount: %s MAD\nMethod: Card / Paddle",
+                $client->user->name,
+                $subscription->plan->name,
+                number_format((float) $transaction->amount_mad, 2, '.', '')
+            )
+        );
 
         return redirect()->route('dashboard')->with('status', 'card-paid');
     }
@@ -260,5 +279,26 @@ class OnboardingController extends Controller
     protected function reference(string $prefix): string
     {
         return $prefix.'-'.now()->format('Ymd').'-'.Str::upper(Str::random(6));
+    }
+
+    protected function adminNotificationRecipients(): Collection
+    {
+        $configured = collect(config('mail.admin_recipients', []))
+            ->filter()
+            ->map(fn (string $email) => trim($email))
+            ->unique()
+            ->values();
+
+        if ($configured->isNotEmpty()) {
+            return $configured;
+        }
+
+        return User::query()
+            ->where('role', 'admin')
+            ->pluck('email')
+            ->filter()
+            ->map(fn (string $email) => trim($email))
+            ->unique()
+            ->values();
     }
 }

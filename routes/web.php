@@ -4,9 +4,11 @@ use App\Http\Controllers\AdminClientWorkflowController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TelegramWebhookController;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 Route::get('/', function () {
     return view('home');
@@ -77,6 +79,10 @@ Route::get('/robots.txt', function () {
         'Content-Type' => 'text/plain; charset=UTF-8',
     ]);
 })->name('robots');
+
+Route::post('/telegram/webhook/{secret}', TelegramWebhookController::class)
+    ->withoutMiddleware([VerifyCsrfToken::class])
+    ->name('telegram.webhook');
 
 Route::middleware('auth')->group(function () {
     Route::get('/onboarding', [OnboardingController::class, 'show'])->name('onboarding.show');

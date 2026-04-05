@@ -38,6 +38,10 @@ return [
     'telegram' => [
         'bot_token' => env('TELEGRAM_BOT_TOKEN'),
         'webhook_secret' => env('TELEGRAM_WEBHOOK_SECRET'),
+        'admin_chat_ids' => array_values(array_filter(array_map(
+            static fn (string $chatId) => trim($chatId),
+            explode(',', (string) env('TELEGRAM_ADMIN_CHAT_IDS', ''))
+        ))),
     ],
 
 ];

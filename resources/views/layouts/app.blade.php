@@ -76,6 +76,15 @@
         'url' => rtrim(config('app.url'), '/'),
         'logo' => $brandLogo,
         'description' => $metaDescription,
+        'email' => 'contact@rifimedia.com',
+        'contactPoint' => [
+            [
+                '@type' => 'ContactPoint',
+                'contactType' => 'customer support',
+                'email' => 'contact@rifimedia.com',
+                'availableLanguage' => $supportedLocales,
+            ],
+        ],
     ];
     $websiteSchema = [
         '@context' => 'https://schema.org',
@@ -175,9 +184,10 @@
 
                         <nav class="header-nav d-none d-lg-flex align-items-center gap-4">
                             <a href="{{ route('home') }}" class="nav-link-rif">{{ data_get($nav, 'home', 'Home') }}</a>
-                            <a href="{{ route('home') }}#features" class="nav-link-rif">{{ data_get($nav, 'features', 'Services') }}</a>
+                            <a href="{{ route('pages.services') }}" class="nav-link-rif">{{ data_get($nav, 'features', 'Services') }}</a>
+                            <a href="{{ route('pages.about') }}" class="nav-link-rif">{{ data_get($nav, 'about', 'About') }}</a>
                             <a href="{{ route('home') }}#plans" class="nav-link-rif">{{ data_get($nav, 'pricing', 'Packages') }}</a>
-                            <a href="{{ route('home') }}#support" class="nav-link-rif">{{ data_get($nav, 'support', 'Support') }}</a>
+                            <a href="{{ route('pages.contact') }}" class="nav-link-rif">{{ data_get($nav, 'support', 'Contact') }}</a>
                             <a href="{{ route('legal.index') }}" class="nav-link-rif">{{ $legalUi['hub_kicker'] }}</a>
                         </nav>
 
@@ -257,9 +267,10 @@
 
                 <div class="header-shell mobile-menu d-xl-none" data-mobile-menu>
                     <a href="{{ route('home') }}">{{ data_get($nav, 'home', 'Home') }}</a>
-                    <a href="{{ route('home') }}#features">{{ data_get($nav, 'features', 'Services') }}</a>
+                    <a href="{{ route('pages.services') }}">{{ data_get($nav, 'features', 'Services') }}</a>
+                    <a href="{{ route('pages.about') }}">{{ data_get($nav, 'about', 'About') }}</a>
                     <a href="{{ route('home') }}#plans">{{ data_get($nav, 'pricing', 'Packages') }}</a>
-                    <a href="{{ route('home') }}#support">{{ data_get($nav, 'support', 'Support') }}</a>
+                    <a href="{{ route('pages.contact') }}">{{ data_get($nav, 'support', 'Contact') }}</a>
                     <a href="{{ route('legal.index') }}">{{ $legalUi['hub_kicker'] }}</a>
 
                     @auth
@@ -333,8 +344,11 @@
 
                         <div class="col-md-6 col-lg-4">
                             <p class="section-kicker mb-3">{{ $legalUi['browse'] }}</p>
-                            <div class="footer-links d-flex flex-column gap-2">
-                                <a href="{{ route('legal.index') }}">{{ $legalUi['hub_headline'] }}</a>
+                        <div class="footer-links d-flex flex-column gap-2">
+                            <a href="{{ route('pages.services') }}">{{ data_get($nav, 'features', 'Services') }}</a>
+                            <a href="{{ route('pages.about') }}">{{ data_get($nav, 'about', 'About') }}</a>
+                            <a href="{{ route('pages.contact') }}">{{ data_get($nav, 'support', 'Contact') }}</a>
+                            <a href="{{ route('legal.index') }}">{{ $legalUi['hub_headline'] }}</a>
                                 <a href="{{ route('legal.privacy') }}">{{ $legalUi['privacy'] }}</a>
                                 <a href="{{ route('legal.terms') }}">{{ $legalUi['terms'] }}</a>
                                 <a href="{{ route('legal.security') }}">{{ $legalUi['security'] }}</a>

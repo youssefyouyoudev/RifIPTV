@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminClientWorkflowController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TelegramWebhookController;
 use Illuminate\Http\Response;
@@ -13,6 +14,10 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 Route::get('/', function () {
     return view('home');
 })->name('home');
+
+Route::get('/services', [PageController::class, 'services'])->name('pages.services');
+Route::get('/about', [PageController::class, 'about'])->name('pages.about');
+Route::get('/contact', [PageController::class, 'contact'])->name('pages.contact');
 
 Route::get('/locale/{locale}', function (string $locale, Request $request) {
     abort_unless(in_array($locale, config('app.supported_locales', ['en']), true), 404);
@@ -50,6 +55,9 @@ Route::get('/sitemap.xml', function () use ($legalRoutes) {
     $supportedLocales = config('app.supported_locales', ['en']);
     $paths = [
         route('home', absolute: false),
+        route('pages.services', absolute: false),
+        route('pages.about', absolute: false),
+        route('pages.contact', absolute: false),
         route('legal.index', absolute: false),
         ...array_map(fn (string $pageKey) => route("legal.{$pageKey}", absolute: false), array_values($legalRoutes)),
     ];

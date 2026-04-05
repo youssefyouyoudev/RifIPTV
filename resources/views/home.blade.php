@@ -563,6 +563,72 @@
         </div>
     </section>
 
+    @php
+        $resourceLinks = match ($locale) {
+            'fr' => [
+                'kicker' => 'Explorer le site',
+                'title' => 'Pages utiles pour comprendre nos services, notre approche et nos politiques.',
+                'items' => [
+                    ['title' => 'Services', 'text' => 'Decouvrez nos services de configuration et d assistance.', 'url' => route('pages.services')],
+                    ['title' => 'A propos', 'text' => 'Comprenez notre approche, notre ton et notre methode de support.', 'url' => route('pages.about')],
+                    ['title' => 'Contact', 'text' => 'Contactez l equipe pour une aide avant ou apres la commande.', 'url' => route('pages.contact')],
+                    ['title' => 'Centre de confiance', 'text' => 'Consultez les politiques de confidentialite, securite et remboursement.', 'url' => route('legal.index')],
+                ],
+            ],
+            'es' => [
+                'kicker' => 'Explorar el sitio',
+                'title' => 'Paginas utiles para entender nuestros servicios, nuestro enfoque y nuestras politicas.',
+                'items' => [
+                    ['title' => 'Servicios', 'text' => 'Descubre nuestros servicios de configuracion y asistencia.', 'url' => route('pages.services')],
+                    ['title' => 'Nosotros', 'text' => 'Conoce nuestro enfoque, tono y metodo de soporte.', 'url' => route('pages.about')],
+                    ['title' => 'Contacto', 'text' => 'Habla con el equipo antes o despues de tu pedido.', 'url' => route('pages.contact')],
+                    ['title' => 'Centro legal', 'text' => 'Consulta privacidad, seguridad, reembolsos y reglas del servicio.', 'url' => route('legal.index')],
+                ],
+            ],
+            'ar' => [
+                'kicker' => 'استكشف الموقع',
+                'title' => 'صفحات مفيدة لفهم الخدمات وطريقة العمل والسياسات بشكل أوضح.',
+                'items' => [
+                    ['title' => 'الخدمات', 'text' => 'تعرف على خدمات الإعداد والمساعدة التقنية.', 'url' => route('pages.services')],
+                    ['title' => 'من نحن', 'text' => 'اقرأ عن نهج الفريق وطريقة المتابعة والدعم.', 'url' => route('pages.about')],
+                    ['title' => 'التواصل', 'text' => 'تواصل مع الفريق قبل الطلب أو بعده.', 'url' => route('pages.contact')],
+                    ['title' => 'مركز الثقة', 'text' => 'راجع الخصوصية والأمان وشروط الخدمة والاسترجاع.', 'url' => route('legal.index')],
+                ],
+            ],
+            default => [
+                'kicker' => 'Explore the site',
+                'title' => 'Useful pages that explain our services, team approach, and trust policies more clearly.',
+                'items' => [
+                    ['title' => 'Services', 'text' => 'Review our setup, guidance, and technical support services.', 'url' => route('pages.services')],
+                    ['title' => 'About', 'text' => 'Learn how the team approaches setup, support, and follow-up.', 'url' => route('pages.about')],
+                    ['title' => 'Contact', 'text' => 'Talk to the team before or after placing an order.', 'url' => route('pages.contact')],
+                    ['title' => 'Trust center', 'text' => 'Read our privacy, security, refund, and service policies.', 'url' => route('legal.index')],
+                ],
+            ],
+        };
+    @endphp
+
+    <section class="section-space">
+        <div class="container-xxl px-3 px-md-4 px-lg-5">
+            <div class="surface-card p-4 p-lg-5 reveal-up">
+                <div class="text-center mx-auto mb-4" style="max-width: 760px;">
+                    <span class="section-kicker mb-3">{{ $resourceLinks['kicker'] }}</span>
+                    <h2 class="section-title text-body-rif mb-0">{{ $resourceLinks['title'] }}</h2>
+                </div>
+                <div class="row g-3">
+                    @foreach ($resourceLinks['items'] as $item)
+                        <div class="col-md-6 col-xl-3">
+                            <a href="{{ $item['url'] }}" class="surface-card benefit-card d-block h-100 p-4 text-decoration-none reveal-up">
+                                <h3 class="h4 text-body-rif mb-2">{{ $item['title'] }}</h3>
+                                <p class="text-soft-rif mb-0">{{ $item['text'] }}</p>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="support" class="section-space pb-5">
         <div class="container-xxl px-3 px-md-4 px-lg-5">
             <div class="support-banner p-4 p-lg-5 reveal-up">

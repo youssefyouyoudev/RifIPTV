@@ -167,6 +167,9 @@
                     <div class="col-md-6 col-lg-4">
                         <p class="section-kicker mb-3">{{ trans('legal.common.browse') }}</p>
                         <div class="footer-links d-flex flex-column gap-2">
+                            <a href="{{ route('pages.services') }}">{{ data_get(trans('site.nav'), 'features', 'Services') }}</a>
+                            <a href="{{ route('pages.about') }}">{{ data_get(trans('site.nav'), 'about', 'About') }}</a>
+                            <a href="{{ route('pages.contact') }}">{{ data_get(trans('site.nav'), 'support', 'Contact') }}</a>
                             <a href="{{ route('legal.index') }}">{{ trans('legal.hub.headline') }}</a>
                             <a href="{{ route('legal.privacy') }}">{{ trans('legal.pages.privacy.label') }}</a>
                             <a href="{{ route('legal.terms') }}">{{ trans('legal.pages.terms.label') }}</a>

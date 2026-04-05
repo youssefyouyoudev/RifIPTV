@@ -1,13 +1,13 @@
 {
-  "name": "RIF Streaming",
-  "short_name": "RIF Streaming",
-  "start_url": "/",
+  "name": "RIF Media",
+  "short_name": "RIF Media",
+  "start_url": "/?lang=en",
   "display": "standalone",
   "background_color": "#F8FAFC",
   "theme_color": "#0D0D0D",
   "icons": [
     {
-      "src": "/images/streaming-logo.png",
+      "src": "/images/rifmedia-logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }

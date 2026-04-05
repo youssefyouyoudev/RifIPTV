@@ -14,8 +14,9 @@ return [
     'nav' => [
         'home' => 'Home',
         'features' => 'Services',
+        'about' => 'About',
         'pricing' => 'Packages',
-        'support' => 'Support',
+        'support' => 'Contact',
         'dashboard' => 'Dashboard',
         'sign_up' => 'SIGN UP',
         'choose_plan' => 'CHOOSE PLAN',

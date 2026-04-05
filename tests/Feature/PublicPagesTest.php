@@ -18,11 +18,27 @@ it('renders the legal hub and policy pages', function () {
         ->assertSee('Security & Safety', false);
 });
 
+it('renders the new public seo pages', function () {
+    $this->get('/services')
+        ->assertSuccessful()
+        ->assertSee('Device Setup Services', false);
+
+    $this->get('/about')
+        ->assertSuccessful()
+        ->assertSee('About RIF Media', false);
+
+    $this->get('/contact')
+        ->assertSuccessful()
+        ->assertSee('Contact and Support', false);
+});
+
 it('renders seo helper files', function () {
     $this->get('/sitemap.xml')
         ->assertSuccessful()
         ->assertHeader('Content-Type', 'application/xml')
-        ->assertSee('?lang=en', false);
+        ->assertSee('/services?lang=en', false)
+        ->assertSee('/about?lang=en', false)
+        ->assertSee('/contact?lang=en', false);
 
     $this->get('/robots.txt')
         ->assertSuccessful()

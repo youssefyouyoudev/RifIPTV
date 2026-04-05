@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ClientSubscribedMail;
 use App\Models\Client;
 use App\Models\Plan;
 use App\Models\Subscription;
 use App\Models\Transaction;
-use App\Models\User;
-use App\Services\TelegramBotService;
+use App\Services\OperationalAlertService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class OnboardingController extends Controller
 {
-    public function __construct(protected TelegramBotService $telegram)
+    public function __construct(protected OperationalAlertService $alerts)
     {
     }
 
@@ -169,6 +165,10 @@ class OnboardingController extends Controller
             'status' => 'awaiting_payment',
         ]);
 
+        $transaction->loadMissing('subscription.plan');
+        $client->loadMissing('user');
+        $this->alerts->notifyCheckoutSubmitted($client, $transaction);
+
         return redirect()->route('dashboard')->with('status', 'bank-transfer-waiting');
     }
 
@@ -212,21 +212,9 @@ class OnboardingController extends Controller
             'status' => 'awaiting_setup',
         ]);
 
-        $recipients = $this->adminNotificationRecipients();
-        \Log::info('About to send mail for client ' . $client->id . ', recipient count: ' . $recipients->count());
-
-        if ($recipients->isNotEmpty()) {
-            Mail::to($recipients->all())->send(new ClientSubscribedMail($client));
-        }
-
-        $this->telegram->sendToSubscribers(
-            sprintf(
-                "New paid order\nClient: %s\nPlan: %s\nAmount: %s MAD\nMethod: Card / Paddle",
-                $client->user->name,
-                $subscription->plan->name,
-                number_format((float) $transaction->amount_mad, 2, '.', '')
-            )
-        );
+        $transaction->loadMissing('subscription.plan');
+        $client->loadMissing('user');
+        $this->alerts->notifyPaymentConfirmed($client, $transaction);
 
         return redirect()->route('dashboard')->with('status', 'card-paid');
     }
@@ -279,26 +267,5 @@ class OnboardingController extends Controller
     protected function reference(string $prefix): string
     {
         return $prefix.'-'.now()->format('Ymd').'-'.Str::upper(Str::random(6));
-    }
-
-    protected function adminNotificationRecipients(): Collection
-    {
-        $configured = collect(config('mail.admin_recipients', []))
-            ->filter()
-            ->map(fn (string $email) => trim($email))
-            ->unique()
-            ->values();
-
-        if ($configured->isNotEmpty()) {
-            return $configured;
-        }
-
-        return User::query()
-            ->where('role', 'admin')
-            ->pluck('email')
-            ->filter()
-            ->map(fn (string $email) => trim($email))
-            ->unique()
-            ->values();
     }
 }

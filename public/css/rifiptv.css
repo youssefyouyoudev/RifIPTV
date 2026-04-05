@@ -3208,3 +3208,52 @@ html[data-theme="light"] .workflow-step-card.is-complete {
         width: 100%;
     }
 }
+
+.page-hero-shell {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2rem, 4vw, 3.75rem);
+    border-radius: 2rem;
+    background:
+        radial-gradient(circle at 12% 18%, rgba(30, 152, 215, 0.14), transparent 30%),
+        radial-gradient(circle at 88% 22%, rgba(122, 199, 12, 0.14), transparent 28%),
+        linear-gradient(135deg, var(--rif-surface), var(--rif-surface-soft));
+    border: 1px solid var(--rif-border);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+}
+
+.page-summary-card {
+    padding: 1.25rem;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(30, 152, 215, 0.16);
+    backdrop-filter: blur(12px);
+}
+
+[data-theme="dark"] .page-summary-card {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(148, 163, 184, 0.18);
+}
+
+.page-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.page-action-card {
+    background:
+        radial-gradient(circle at top left, rgba(122, 199, 12, 0.16), transparent 34%),
+        linear-gradient(180deg, var(--rif-surface), var(--rif-surface-soft));
+}
+
+.benefit-card-emphasis {
+    border-color: rgba(30, 152, 215, 0.24);
+    box-shadow: 0 18px 36px rgba(30, 152, 215, 0.08);
+}
+
+@media (max-width: 767.98px) {
+    .page-summary-grid {
+        grid-template-columns: 1fr;
+    }
+}

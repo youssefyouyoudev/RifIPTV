@@ -14,13 +14,17 @@ class ClientSubscribedMail extends Mailable
     use Queueable, SerializesModels;
 
     public Client $client;
+    public string $subjectLine;
+    public string $summary;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Client $client)
+    public function __construct(Client $client, string $subjectLine = 'New Client Subscription - Support Needed', string $summary = 'A client needs support follow-up.')
     {
         $this->client = $client;
+        $this->subjectLine = $subjectLine;
+        $this->summary = $summary;
     }
 
     /**
@@ -29,7 +33,7 @@ class ClientSubscribedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Client Subscription - Support Needed',
+            subject: $this->subjectLine,
         );
     }
 
@@ -42,6 +46,8 @@ class ClientSubscribedMail extends Mailable
             view: 'emails.client_subscribed',
             with: [
                 'client' => $this->client,
+                'subjectLine' => $this->subjectLine,
+                'summary' => $this->summary,
             ],
         );
     }

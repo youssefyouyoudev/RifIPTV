@@ -4,9 +4,9 @@
     $isArabic = app()->isLocale('ar');
     $brandName = data_get(trans('site.brand'), 'name', 'Rifi Media');
     $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
-    $brandLogo = asset('images/rifmedia-logo-128.png');
-    $schemaLogo = asset('images/rifmedia-logo-512.png');
-    $themeCss = app()->environment('production') ? asset('css/rifiptv.min.css') : asset('css/rifiptv.css');
+    $brandLogo = asset('/public/images/rifmedia-logo-128.png');
+    $schemaLogo = asset('/public/images/rifmedia-logo-512.png');
+    $themeCss = app()->environment('production') ? asset('/public/css/rifiptv.min.css') : asset('/public/css/rifiptv.css');
     $seoConfig = config('seo');
     $brandEmail = data_get($seoConfig, 'contact_email', 'contact@rifimedia.com');
     $brandPhone = data_get($seoConfig, 'contact_phone');
@@ -168,6 +168,7 @@
     <link href="{{ $themeCss }}" rel="stylesheet">
     <script>
         (function () {
+            document.documentElement.classList.add('js');
             const storedTheme = localStorage.getItem('rif-theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const theme = storedTheme ?? (prefersDark ? 'dark' : 'light');
@@ -199,7 +200,7 @@
                             <a href="{{ route('home') }}" class="nav-link-rif">{{ data_get($nav, 'home', 'Home') }}</a>
                             <a href="{{ route('pages.services') }}" class="nav-link-rif">{{ data_get($nav, 'features', 'Services') }}</a>
                             <a href="{{ route('pages.about') }}" class="nav-link-rif">{{ data_get($nav, 'about', 'About') }}</a>
-                            <a href="{{ route('home') }}#plans" class="nav-link-rif">{{ data_get($nav, 'pricing', 'Packages') }}</a>
+                            <a href="{{ route('pages.packages') }}" class="nav-link-rif">{{ data_get($nav, 'pricing', 'Packages') }}</a>
                             <a href="{{ route('pages.contact') }}" class="nav-link-rif">{{ data_get($nav, 'support', 'Contact') }}</a>
                             <a href="{{ route('pages.trust') }}" class="nav-link-rif">{{ $legalUi['hub_kicker'] }}</a>
                         </nav>
@@ -282,7 +283,7 @@
                     <a href="{{ route('home') }}">{{ data_get($nav, 'home', 'Home') }}</a>
                     <a href="{{ route('pages.services') }}">{{ data_get($nav, 'features', 'Services') }}</a>
                     <a href="{{ route('pages.about') }}">{{ data_get($nav, 'about', 'About') }}</a>
-                    <a href="{{ route('home') }}#plans">{{ data_get($nav, 'pricing', 'Packages') }}</a>
+                    <a href="{{ route('pages.packages') }}">{{ data_get($nav, 'pricing', 'Packages') }}</a>
                     <a href="{{ route('pages.contact') }}">{{ data_get($nav, 'support', 'Contact') }}</a>
                     <a href="{{ route('pages.trust') }}">{{ $legalUi['hub_kicker'] }}</a>
 

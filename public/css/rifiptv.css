@@ -3734,3 +3734,37 @@ html[data-theme="light"] .page-feature-card {
         grid-column: span 1;
     }
 }
+
+html.js .reveal-up {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+html.js .reveal-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-up {
+    opacity: 1;
+    transform: none;
+}
+
+.internal-page-shell {
+    padding: 1.35rem 0 3rem;
+}
+
+.faq-item-card summary::after {
+    color: var(--rif-blue);
+}
+
+.faq-item-card[open] summary::after {
+    content: "-";
+}
+
+@media (max-width: 991.98px) {
+    .internal-page-shell {
+        padding: 1rem 0 2.5rem;
+    }
+}

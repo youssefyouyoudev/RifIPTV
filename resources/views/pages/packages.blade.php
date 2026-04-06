@@ -25,6 +25,56 @@
     ];
 @endphp
 
+@php
+    $locale = app()->getLocale();
+    $ui = match ($locale) {
+        'fr' => [
+            'service_area' => 'Zone de service',
+            'support_hours' => 'Horaires du support',
+            'whatsapp' => 'WhatsApp',
+            'scope' => 'Portee',
+            'devices' => 'Appareils',
+            'response' => 'Reponse',
+            'follow_up' => 'Suivi',
+            'months' => 'mois',
+            'get_started' => 'Commencer',
+        ],
+        'es' => [
+            'service_area' => 'Zona de servicio',
+            'support_hours' => 'Horario de soporte',
+            'whatsapp' => 'WhatsApp',
+            'scope' => 'Cobertura',
+            'devices' => 'Dispositivos',
+            'response' => 'Respuesta',
+            'follow_up' => 'Seguimiento',
+            'months' => 'meses',
+            'get_started' => 'Comenzar',
+        ],
+        'ar' => [
+            'service_area' => 'منطقة الخدمة',
+            'support_hours' => 'ساعات الدعم',
+            'whatsapp' => 'واتساب',
+            'scope' => 'النطاق',
+            'devices' => 'الأجهزة',
+            'response' => 'الاستجابة',
+            'follow_up' => 'المتابعة',
+            'months' => 'أشهر',
+            'get_started' => 'ابدأ الآن',
+        ],
+        default => [
+            'service_area' => 'Service area',
+            'support_hours' => 'Support hours',
+            'whatsapp' => 'WhatsApp',
+            'scope' => 'Scope',
+            'devices' => 'Devices',
+            'response' => 'Response',
+            'follow_up' => 'Follow-up',
+            'months' => 'months',
+            'get_started' => 'Get started',
+        ],
+    };
+@endphp
+
 @section('structured_data')
     <script type="application/ld+json">
         {!! json_encode($pageSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
@@ -61,9 +111,9 @@
                     <div class="col-lg-4">
                         <div class="page-quickfacts-card h-100">
                             <div class="page-quickfacts-list">
-                                <div><span>Service area</span><strong>{{ config('seo.service_region', 'Morocco') }}</strong></div>
-                                <div><span>Support hours</span><strong>{{ config('seo.support_hours', 'Monday to Saturday, 09:00 to 22:00') }}</strong></div>
-                                <div><span>WhatsApp</span><strong>+212 663 323 824</strong></div>
+                                <div><span>{{ $ui['service_area'] }}</span><strong>{{ config('seo.service_region', 'Morocco') }}</strong></div>
+                                <div><span>{{ $ui['support_hours'] }}</span><strong>{{ config('seo.support_hours', 'Monday to Saturday, 09:00 to 22:00') }}</strong></div>
+                                <div><span>{{ $ui['whatsapp'] }}</span><strong>+212 663 323 824</strong></div>
                             </div>
                         </div>
                     </div>
@@ -82,15 +132,15 @@
                             <h2 class="family-plan-name">{{ $plan['name'] }}</h2>
                             <p class="family-plan-subtitle">{{ $plan['summary'] }}</p>
                             <div class="service-plan-meta-grid">
-                                <div><span>Scope</span><strong>{{ $plan['scope'] }}</strong></div>
-                                <div><span>Devices</span><strong>{{ $plan['devices'] }}</strong></div>
-                                <div><span>Response</span><strong>{{ $plan['response'] }}</strong></div>
-                                <div><span>Follow-up</span><strong>{{ $plan['follow_up'] }}</strong></div>
+                                <div><span>{{ $ui['scope'] }}</span><strong>{{ $plan['scope'] }}</strong></div>
+                                <div><span>{{ $ui['devices'] }}</span><strong>{{ $plan['devices'] }}</strong></div>
+                                <div><span>{{ $ui['response'] }}</span><strong>{{ $plan['response'] }}</strong></div>
+                                <div><span>{{ $ui['follow_up'] }}</span><strong>{{ $plan['follow_up'] }}</strong></div>
                             </div>
                             <div class="family-plan-price">{{ $featuredPrice['price'] }}<span>MAD</span></div>
                             <div class="duration-chip-row">
                                 @foreach ($plan['prices'] as $price)
-                                    <span class="duration-chip {{ $price['featured'] ? 'is-featured' : '' }}">{{ $price['months'] }} months</span>
+                                    <span class="duration-chip {{ $price['featured'] ? 'is-featured' : '' }}">{{ $price['duration_label'] ?? ($price['months'].' '.$ui['months']) }}</span>
                                 @endforeach
                             </div>
                             <ul class="family-plan-benefits">
@@ -103,11 +153,11 @@
                             </ul>
                             <div class="d-flex flex-column gap-3 mt-auto">
                                 @auth
-                                    <a href="{{ route('onboarding.show') }}" class="btn-rif-secondary w-100">Get started</a>
+                                    <a href="{{ route('onboarding.show') }}" class="btn-rif-secondary w-100">{{ $ui['get_started'] }}</a>
                                 @else
-                                    <a href="{{ route('register') }}" class="btn-rif-secondary w-100">Get started</a>
+                                    <a href="{{ route('register') }}" class="btn-rif-secondary w-100">{{ $ui['get_started'] }}</a>
                                 @endauth
-                                <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-outline w-100" target="_blank" rel="noopener">Talk to support</a>
+                                <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-outline w-100" target="_blank" rel="noopener">{{ $plan['talk_cta'] }}</a>
                             </div>
                         </article>
                     </div>

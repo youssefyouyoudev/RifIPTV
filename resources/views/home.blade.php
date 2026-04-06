@@ -12,8 +12,7 @@
     $heroLogoCompact = asset('/public/images/rifmedia-logo-320.png');
     $whatsappUrl = config('seo.whatsapp_url', 'https://wa.me/212663323824');
     $primaryCta = auth()->check() && Route::has('onboarding.show') ? route('onboarding.show') : route('register');
-    $plans = collect(config('support_plans.plans', []));
-    $packageCodes = ['basic' => 'SUP', 'advanced' => 'MAX', 'premium' => 'TREX'];
+    $plans = collect(\App\Support\SupportPlanLocalizer::localize(config('support_plans.plans', []), $locale));
     $paymentLogos = [
         ['src' => asset('/public/images/payment-paddle.jpg'), 'alt' => 'Paddle logo', 'width' => 600, 'height' => 315, 'featured' => true],
         ['src' => asset('/public/images/payment-cih-bank.jpg'), 'alt' => 'CIH Bank logo', 'width' => 569, 'height' => 429],
@@ -243,41 +242,39 @@
             <div class="pack-switcher reveal-up" data-pack-switcher data-pack-default="basic">
                 <div class="pack-toggle-bar mb-4" role="tablist" aria-label="Package families">
                     @foreach ($plans as $plan)
-                        @php($code = $packageCodes[$plan['slug']] ?? strtoupper($plan['slug']))
                         <button type="button" class="pack-toggle-btn {{ $loop->first ? 'is-active' : '' }}" data-pack-toggle="{{ $plan['slug'] }}">
-                            <span class="pack-toggle-logo-wrap"><strong>{{ $code }}</strong></span>
+                            <span class="pack-toggle-logo-wrap"><strong>{{ $plan['code'] }}</strong></span>
                             <span class="pack-toggle-copy">
-                                <strong>{{ $plan['label'] }} / {{ $code }}</strong>
+                                <strong>{{ $plan['label'] }} / {{ $plan['code'] }}</strong>
                                 <small>{{ $plan['summary'] }}</small>
                             </span>
                         </button>
                     @endforeach
                 </div>
                 @foreach ($plans as $plan)
-                    @php($code = $packageCodes[$plan['slug']] ?? strtoupper($plan['slug']))
                     <article class="surface-card family-pricing-shell p-4 p-lg-5 pack-panel {{ $loop->first ? 'is-active' : '' }}" data-pack-panel="{{ $plan['slug'] }}">
                         <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-4 mb-4">
                             <div class="family-pricing-brand">
-                                <span class="family-pricing-logo-wrap d-inline-flex align-items-center justify-content-center">{{ $code }}</span>
+                                <span class="family-pricing-logo-wrap d-inline-flex align-items-center justify-content-center">{{ $plan['code'] }}</span>
                                 <div>
                                     <div class="text-soft-rif small text-uppercase fw-bold mb-2">{{ $copy['plans_kicker'] }}</div>
                                     <h2 class="h2 text-body-rif mb-2">{{ $plan['name'] }}</h2>
                                     <p class="text-soft-rif mb-0">{{ $plan['summary'] }}</p>
                                 </div>
                             </div>
-                            <a href="{{ $primaryCta }}" class="btn-rif-outline family-pricing-cta">{{ $isArabic ? 'اختيار' : 'Choose' }}</a>
+                            <a href="{{ $primaryCta }}" class="btn-rif-outline family-pricing-cta">{{ $plan['choose_cta'] }}</a>
                         </div>
                         <div class="row g-3">
                             @foreach ($plan['prices'] as $price)
                                 <div class="col-md-6 col-xl-4">
                                     <article class="service-plan-card {{ $price['featured'] ? 'service-plan-card-featured' : '' }}">
                                         @if ($price['featured'])
-                                            <span class="service-plan-badge">{{ $isArabic ? 'الأكثر طلبًا' : 'Popular' }}</span>
+                                            <span class="service-plan-badge">{{ $plan['featured_badge'] }}</span>
                                         @endif
                                         <div class="service-plan-head">
                                             <div>
-                                                <span class="service-plan-label">{{ $code }}</span>
-                                                <h3 class="service-plan-name">{{ $price['months'] }} {{ $isArabic ? 'أشهر' : 'Months' }}</h3>
+                                                <span class="service-plan-label">{{ $plan['code'] }}</span>
+                                                <h3 class="service-plan-name">{{ $price['duration_label'] }}</h3>
                                             </div>
                                         </div>
                                         <div class="service-plan-price">{{ $price['price'] }} <span>MAD</span></div>
@@ -286,7 +283,7 @@
                                                 <li><span class="family-plan-check"><i data-lucide="check" class="icon-sm"></i></span><span>{{ $feature }}</span></li>
                                             @endforeach
                                         </ul>
-                                        <a href="{{ $primaryCta }}" class="{{ $price['featured'] ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100 mt-auto">{{ $isArabic ? 'متابعة' : 'Continue' }}</a>
+                                        <a href="{{ $primaryCta }}" class="{{ $price['featured'] ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100 mt-auto">{{ $plan['continue_cta'] }}</a>
                                     </article>
                                 </div>
                             @endforeach

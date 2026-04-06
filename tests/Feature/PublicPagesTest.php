@@ -99,4 +99,33 @@ class PublicPagesTest extends TestCase
             ->assertSee('Inicia sesi', false)
             ->assertSee('noindex,nofollow', false);
     }
+
+    public function test_arabic_public_pages_render_in_rtl_without_visible_mojibake_markers(): void
+    {
+        $this->get('/?lang=ar')
+            ->assertSuccessful()
+            ->assertSee('dir="rtl"', false)
+            ->assertSee('الدعم الأساسي', false)
+            ->assertDontSee('Basic Support', false)
+            ->assertDontSee('Ã˜', false)
+            ->assertDontSee('Ã™', false);
+
+        $this->get('/faq?lang=ar')
+            ->assertSuccessful()
+            ->assertSee('dir="rtl"', false)
+            ->assertDontSee('Ã˜', false)
+            ->assertDontSee('Ã™', false);
+
+        $this->get('/packages?lang=ar')
+            ->assertSuccessful()
+            ->assertSee('الدعم الأساسي', false)
+            ->assertDontSee('Basic Support', false)
+            ->assertDontSee('Ã˜', false)
+            ->assertDontSee('Ã™', false);
+
+        $this->get('/about?lang=ar')
+            ->assertSuccessful()
+            ->assertDontSee('Ã˜', false)
+            ->assertDontSee('Ã™', false);
+    }
 }

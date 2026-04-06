@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\SupportPlanLocalizer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
@@ -16,7 +17,7 @@ class PageController extends Controller
     {
         return view('pages.packages', [
             'page' => $this->packagesPage(),
-            'plans' => config('support_plans.plans', []),
+            'plans' => SupportPlanLocalizer::localize(config('support_plans.plans', []), app()->getLocale()),
             'breadcrumbs' => [
                 ['label' => __('site.nav.home'), 'url' => route('home')],
                 ['label' => __('site.nav.pricing'), 'url' => route('pages.packages')],

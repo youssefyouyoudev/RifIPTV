@@ -1,63 +1,73 @@
 <?php
 
+namespace Tests\Feature;
+
 use App\Models\Client;
 use App\Models\Plan;
 use App\Models\Subscription;
 use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-test('admin can open a separate client detail view', function () {
-    $admin = User::factory()->create([
-        'role' => 'admin',
-        'name' => 'Admin User',
-    ]);
+class AdminClientDetailTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $clientUser = User::factory()->create([
-        'role' => 'client',
-        'name' => 'Client Detail',
-        'email' => 'client-detail@example.com',
-    ]);
+    public function test_admin_can_open_a_separate_client_detail_view(): void
+    {
+        $admin = User::factory()->create([
+            'role' => 'admin',
+            'name' => 'Admin User',
+        ]);
 
-    $client = Client::create([
-        'user_id' => $clientUser->id,
-        'assigned_admin_id' => $admin->id,
-        'city' => 'Tangier',
-        'onboarding_status' => 'support_in_progress',
-    ]);
+        $clientUser = User::factory()->create([
+            'role' => 'client',
+            'name' => 'Client Detail',
+            'email' => 'client-detail@example.com',
+        ]);
 
-    $plan = Plan::create([
-        'name' => 'SUP 6 Months',
-        'family' => 'Basic / SUP',
-        'family_slug' => 'sup',
-        'duration_months' => 6,
-        'price_mad' => 149,
-        'features' => ['Support'],
-        'sort_order' => 1,
-    ]);
+        $client = Client::create([
+            'user_id' => $clientUser->id,
+            'assigned_admin_id' => $admin->id,
+            'city' => 'Tangier',
+            'onboarding_status' => 'support_in_progress',
+        ]);
 
-    $subscription = Subscription::create([
-        'user_id' => $clientUser->id,
-        'client_id' => $client->id,
-        'plan_id' => $plan->id,
-        'status' => 'awaiting_setup',
-    ]);
+        $plan = Plan::create([
+            'name' => 'SUP 6 Months',
+            'family' => 'Basic / SUP',
+            'family_slug' => 'sup',
+            'duration_months' => 6,
+            'price_mad' => 149,
+            'features' => ['Support'],
+            'sort_order' => 1,
+        ]);
 
-    Transaction::create([
-        'user_id' => $clientUser->id,
-        'client_id' => $client->id,
-        'subscription_id' => $subscription->id,
-        'amount_mad' => 149,
-        'payment_method' => 'bank_transfer',
-        'bank_name' => 'CIH Bank',
-        'status' => 'awaiting_transfer',
-        'reference' => 'TX-DETAIL-1',
-    ]);
+        $subscription = Subscription::create([
+            'user_id' => $clientUser->id,
+            'client_id' => $client->id,
+            'plan_id' => $plan->id,
+            'status' => 'awaiting_setup',
+        ]);
 
-    $response = $this->actingAs($admin)->get(route('admin.clients.show', $client));
+        Transaction::create([
+            'user_id' => $clientUser->id,
+            'client_id' => $client->id,
+            'subscription_id' => $subscription->id,
+            'amount_mad' => 149,
+            'payment_method' => 'bank_transfer',
+            'bank_name' => 'CIH Bank',
+            'status' => 'awaiting_transfer',
+            'reference' => 'TX-DETAIL-1',
+        ]);
 
-    $response
-        ->assertOk()
-        ->assertSee('Client Detail')
-        ->assertSee('CIH Bank')
-        ->assertSee('Handle this client');
-});
+        $response = $this->actingAs($admin)->get(route('admin.clients.show', $client));
+
+        $response
+            ->assertOk()
+            ->assertSee('Client Detail')
+            ->assertSee('CIH Bank')
+            ->assertSee('Handle this client');
+    }
+}

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'common' => [
@@ -43,8 +43,8 @@ return [
         'client-workflow-updated' => 'El flujo del cliente se actualizo correctamente.',
     ],
     'onboarding' => [
-        'title' => 'Configuracion del pedido | RIF Streaming',
-        'meta_description' => 'Elige tu paquete de servicio RIF Streaming, selecciona tarjeta o transferencia nacional y continua el proceso.',
+        'title' => 'Configuracion del pedido | Rifi Media',
+        'meta_description' => 'Elige tu paquete de servicio Rifi Media, selecciona tarjeta o transferencia nacional y continua el proceso.',
         'kicker' => 'Onboarding cliente',
         'headline' => 'Elige tu paquete y continua la instalacion sin complicaciones',
         'description' => 'Registrate una vez, elige el periodo de soporte correcto, selecciona tu pago y deja que el equipo complete la configuracion contigo.',
@@ -86,8 +86,8 @@ return [
         'dashboard' => 'Ir al panel',
     ],
     'checkout' => [
-        'title' => 'Pago Paddle | RIF Streaming',
-        'meta_description' => 'Asegura tu pedido de RIF Streaming con el pago seguro de Paddle.',
+        'title' => 'Pago Paddle | Rifi Media',
+        'meta_description' => 'Asegura tu pedido de Rifi Media con el pago seguro de Paddle.',
         'kicker' => 'Pago con tarjeta seguro',
         'headline' => 'Checkout Paddle',
         'description' => 'Esta pantalla representa el paso de pago seguro antes de que el admin complete la configuracion final del servicio.',
@@ -241,3 +241,4 @@ return [
         ],
     ],
 ];
+

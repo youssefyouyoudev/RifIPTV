@@ -2,7 +2,7 @@
 
 return [
     'brand' => [
-        'name' => 'RIF Media',
+        'name' => 'Rifi Media',
         'subtitle' => 'Configuracion de dispositivos y soporte tecnico',
     ],
     'locales' => [
@@ -25,12 +25,12 @@ return [
         'about' => 'Sobre nosotros',
         'terms' => 'Condiciones de servicio',
         'contact' => 'Contacto',
-        'copyright' => 'RIF Media. Todos los derechos reservados.',
+        'copyright' => 'Rifi Media. Todos los derechos reservados.',
         'disclaimer' => 'No alojamos, proporcionamos ni distribuimos contenido multimedia. Solo ofrecemos servicios de configuracion tecnica y soporte.',
     ],
     'home' => [
-        'title' => 'RIF Media | Configuracion de dispositivos y soporte tecnico',
-        'meta_description' => 'Servicios de RIF Media para configuracion de dispositivos, ayuda con aplicaciones y soporte tecnico continuo.',
+        'title' => 'Rifi Media | Configuracion de dispositivos y soporte tecnico',
+        'meta_description' => 'Servicios de Rifi Media para configuracion de dispositivos, ayuda con aplicaciones y soporte tecnico continuo en todo Marruecos.',
         'cta' => 'Iniciar servicio',
         'mini_points' => [
             'secure' => 'Proceso seguro',
@@ -80,13 +80,13 @@ return [
         'support' => [
             'kicker' => 'Soporte',
             'title' => 'Necesitas ayuda antes de hacer tu pedido?',
-            'description' => 'Contacta al equipo de RIF Streaming para configuracion de dispositivos, facturacion, instalacion de aplicaciones o para elegir el paquete adecuado.',
+            'description' => 'Contacta al equipo de Rifi Media para configuracion de dispositivos, facturacion y ayuda tecnica en todo Marruecos.',
             'whatsapp' => 'Soporte por WhatsApp',
             'plans' => 'Ver paquetes',
         ],
     ],
     'dashboard' => [
-        'title' => 'Panel | RIF Streaming',
+        'title' => 'Panel | Rifi Media',
         'space' => 'Area del cliente',
         'sidebar' => [
             'subscription' => 'Mi paquete',

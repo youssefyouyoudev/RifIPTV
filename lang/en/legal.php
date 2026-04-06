@@ -1,12 +1,12 @@
-<?php
+﻿<?php
 
 return [
     'hub' => [
-        'title' => 'Legal & Trust Center | RIF Streaming',
-        'meta_description' => 'Read the privacy, security, refund, cookie, and service policies that support the RIF Streaming experience.',
+        'title' => 'Legal & Trust Center | Rifi Media',
+        'meta_description' => 'Read the privacy, security, refund, cookie, and service policies that support the Rifi Media experience.',
         'kicker' => 'Trust center',
         'headline' => 'Clear policies for a safer technical support experience.',
-        'description' => 'This legal hub explains how RIF Streaming handles privacy, billing, cookies, account security, and service operations so clients can order with confidence.',
+        'description' => 'This legal hub explains how Rifi Media handles privacy, billing, cookies, account security, and service operations so clients can order with confidence.',
     ],
     'common' => [
         'updated_label' => 'Last updated',
@@ -21,7 +21,7 @@ return [
         'privacy' => [
             'label' => 'Privacy Policy',
             'title' => 'Privacy Policy',
-            'meta_description' => 'Learn how RIF Streaming collects, uses, stores, and protects account and support information.',
+            'meta_description' => 'Learn how Rifi Media collects, uses, stores, and protects account and support information.',
             'description' => 'How we collect and protect the information needed to manage service packages and support clients responsibly.',
             'updated_at' => 'April 3, 2026',
             'sections' => [
@@ -69,13 +69,13 @@ return [
         'terms' => [
             'label' => 'Terms of Service',
             'title' => 'Terms of Service',
-            'meta_description' => 'Review the service rules, payment terms, acceptable use, and account responsibilities for RIF Streaming.',
+            'meta_description' => 'Review the service rules, payment terms, acceptable use, and account responsibilities for Rifi Media.',
             'description' => 'The core service rules that define account use, billing expectations, and fair platform behavior.',
             'updated_at' => 'April 3, 2026',
             'sections' => [
                 [
                     'title' => 'Service scope',
-                    'body' => 'RIF Streaming provides device configuration services, media setup guidance, customer support, and account-related service operations for eligible clients.',
+                    'body' => 'Rifi Media provides device configuration services, media setup guidance, customer support, and account-related service operations for eligible clients.',
                     'items' => [
                         'Packages, pricing, support periods, and benefits may vary by offer or renewal period.',
                         'Completion times are estimates and may depend on payment confirmation or manual review.',
@@ -116,7 +116,7 @@ return [
         'security' => [
             'label' => 'Security & Safety',
             'title' => 'Security & Safety',
-            'meta_description' => 'Understand the security controls, support practices, and account safety standards used by RIF Streaming.',
+            'meta_description' => 'Understand the security controls, support practices, and account safety standards used by Rifi Media.',
             'description' => 'The controls and operating habits we use to keep accounts, payments, and support interactions safer.',
             'updated_at' => 'April 3, 2026',
             'sections' => [
@@ -161,7 +161,7 @@ return [
         'refund' => [
             'label' => 'Refund Policy',
             'title' => 'Refund Policy',
-            'meta_description' => 'Read the refund review conditions, exclusions, and support process for RIF Streaming orders.',
+            'meta_description' => 'Read the refund review conditions, exclusions, and support process for Rifi Media orders.',
             'description' => 'Our review approach for refund requests, setup issues, duplicate payments, and service disputes.',
             'updated_at' => 'April 3, 2026',
             'sections' => [
@@ -206,7 +206,7 @@ return [
         'cookies' => [
             'label' => 'Cookie Policy',
             'title' => 'Cookie Policy',
-            'meta_description' => 'Understand the cookies and local storage settings used for language, theme, sessions, and security on RIF Streaming.',
+            'meta_description' => 'Understand the cookies and local storage settings used for language, theme, sessions, and security on Rifi Media.',
             'description' => 'How cookies and similar storage help the website remember preferences, protect sessions, and keep the experience stable.',
             'updated_at' => 'April 3, 2026',
             'sections' => [
@@ -241,3 +241,4 @@ return [
         ],
     ],
 ];
+

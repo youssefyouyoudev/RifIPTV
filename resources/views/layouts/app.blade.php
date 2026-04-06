@@ -1,60 +1,29 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->isLocale('ar') ? 'rtl' : 'ltr' }}">
 @php
     $isArabic = app()->isLocale('ar');
-    $brandName = 'RIF Media';
-    $brandSubtitle = $isArabic
-        ? 'إعداد الأجهزة والدعم التقني'
-        : data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
+    $brandName = data_get(trans('site.brand'), 'name', 'Rifi Media');
+    $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
     $brandLogo = asset('images/rifmedia-logo.png');
     $seoConfig = config('seo');
     $brandEmail = data_get($seoConfig, 'contact_email', 'contact@rifimedia.com');
     $brandPhone = data_get($seoConfig, 'contact_phone');
     $defaultOgImage = asset(ltrim((string) data_get($seoConfig, 'default_og_image', '/images/hero-light.png'), '/'));
     $socialProfiles = collect(data_get($seoConfig, 'social_profiles', []))->filter()->values();
-    $localeLabels = $isArabic ? ['en' => 'EN', 'fr' => 'FR', 'es' => 'ES', 'ar' => 'AR'] : trans('site.locales');
-    $nav = $isArabic
-        ? [
-            'home' => 'الرئيسية',
-            'features' => 'الخدمات',
-            'pricing' => 'الباقات',
-            'support' => 'الدعم',
-            'dashboard' => 'لوحة التحكم',
-            'sign_up' => 'إنشاء حساب',
-            'sign_in' => 'تسجيل الدخول',
-            'choose_plan' => 'ابدأ الطلب',
-            'toggle_theme' => 'تبديل الوضع',
-        ]
-        : array_merge(trans('site.nav'), ['sign_in' => 'Sign in']);
-    $footer = $isArabic
-        ? [
-            'copyright' => 'RIF Media. جميع الحقوق محفوظة.',
-            'disclaimer' => 'نحن لا نوفر ولا نستضيف ولا نوزع أي محتوى إعلامي. نحن نقدم فقط خدمات الإعداد التقني والدعم. المستخدم مسؤول عن احترام القوانين المحلية.',
-        ]
-        : trans('site.footer');
-    $legalUi = $isArabic
-        ? [
-            'hub_kicker' => 'مركز الثقة',
-            'hub_headline' => 'السياسات والخصوصية',
-            'hub_description' => 'هذا القسم يوضح الخصوصية وشروط الخدمة وسياسة الأمان والاسترجاع وكيفية التعامل مع البيانات والمدفوعات بشكل واضح.',
-            'browse' => 'تصفح السياسات',
-            'privacy' => 'سياسة الخصوصية',
-            'terms' => 'شروط الخدمة',
-            'security' => 'الأمان والسلامة',
-            'refund' => 'سياسة الاسترجاع',
-            'cookies' => 'سياسة ملفات الارتباط',
-        ]
-        : [
-            'hub_kicker' => trans('legal.hub.kicker'),
-            'hub_headline' => trans('legal.hub.headline'),
-            'hub_description' => trans('legal.hub.description'),
-            'browse' => trans('legal.common.browse'),
-            'privacy' => trans('legal.pages.privacy.label'),
-            'terms' => trans('legal.pages.terms.label'),
-            'security' => trans('legal.pages.security.label'),
-            'refund' => trans('legal.pages.refund.label'),
-            'cookies' => trans('legal.pages.cookies.label'),
-        ];
+    $localeLabels = trans('site.locales');
+    $nav = array_merge(trans('site.nav'), ['sign_in' => $isArabic ? 'ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„' : 'Sign in']);
+    $footer = trans('site.footer');
+    $legalUi = [
+        'hub_kicker' => trans('legal.hub.kicker'),
+        'hub_headline' => trans('legal.hub.headline'),
+        'hub_description' => trans('legal.hub.description'),
+        'browse' => trans('legal.common.browse'),
+        'privacy' => trans('legal.pages.privacy.label'),
+        'terms' => trans('legal.pages.terms.label'),
+        'security' => trans('legal.pages.security.label'),
+        'refund' => trans('legal.pages.refund.label'),
+        'cookies' => trans('legal.pages.cookies.label'),
+    ];
     $showHeader = trim($__env->yieldContent('hide_header')) !== '1';
     $showFooter = trim($__env->yieldContent('hide_footer')) !== '1';
     $dashboardRoute = Route::has('dashboard') ? route('dashboard') : '#';
@@ -62,11 +31,10 @@
     $registerRoute = Route::has('register') ? route('register') : '#';
     $supportedLocales = config('app.supported_locales', ['en']);
     $localizedBaseUrl = request()->url();
-    $localizedUrl = $localizedBaseUrl.'?lang='.app()->getLocale();
     $metaTitle = trim($__env->yieldContent('title')) ?: data_get($seoConfig, 'default_title', $brandName);
     $metaDescription = trim($__env->yieldContent('meta_description')) ?: data_get($seoConfig, 'default_description', __('site.home.meta_description'));
     $metaRobots = trim($__env->yieldContent('meta_robots')) ?: 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1';
-    $canonicalUrl = trim($__env->yieldContent('canonical')) ?: $localizedUrl;
+    $canonicalUrl = trim($__env->yieldContent('canonical')) ?: $localizedBaseUrl;
     $localeUrls = collect($supportedLocales)->mapWithKeys(fn (string $locale) => [$locale => $localizedBaseUrl.'?lang='.$locale]);
     $ogLocale = [
         'en' => 'en_US',
@@ -82,14 +50,12 @@
         'logo' => $brandLogo,
         'description' => $metaDescription,
         'email' => $brandEmail,
-        'contactPoint' => [
-            [
-                '@type' => 'ContactPoint',
-                'contactType' => 'customer support',
-                'email' => $brandEmail,
-                'availableLanguage' => $supportedLocales,
-            ],
-        ],
+        'contactPoint' => [[
+            '@type' => 'ContactPoint',
+            'contactType' => 'customer support',
+            'email' => $brandEmail,
+            'availableLanguage' => $supportedLocales,
+        ]],
     ];
     if ($brandPhone) {
         $organizationSchema['telephone'] = $brandPhone;
@@ -134,8 +100,8 @@
         : null;
     $userRoleLabel = $authUser
         ? ($authUser->isAdmin()
-            ? ($isArabic ? 'مسؤول الإدارة' : __('workflow.admin.eyebrow'))
-            : ($isArabic ? 'بوابة العميل' : __('workflow.client.eyebrow')))
+            ? __('workflow.admin.eyebrow')
+            : __('workflow.client.eyebrow'))
         : null;
 @endphp
 <head>
@@ -153,19 +119,17 @@
     @foreach ($localeUrls as $locale => $localeUrl)
         <link rel="alternate" hreflang="{{ $locale }}" href="{{ $localeUrl }}">
     @endforeach
-    @if(request()->getHost() !== '127.0.0.1' && request()->getHost() !== 'localhost')
-    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1c1a8441-b356-4d54-ab00-36a0d40490f1" type="text/javascript" async></script>
-    @endif
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-LXMHC9NGBP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-LXMHC9NGBP');
-</script>
     <link rel="alternate" hreflang="x-default" href="{{ $localizedBaseUrl }}">
+    @if(request()->getHost() !== '127.0.0.1' && request()->getHost() !== 'localhost')
+        <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1c1a8441-b356-4d54-ab00-36a0d40490f1" type="text/javascript" async></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LXMHC9NGBP"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-LXMHC9NGBP');
+        </script>
+    @endif
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:site_name" content="{{ $brandName }}">
     <meta property="og:title" content="{{ $metaTitle }}">
@@ -191,7 +155,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=DM+Sans:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ asset('/public/css/rifiptv.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/rifiptv.css') }}" rel="stylesheet">
     <script>
         (function () {
             const storedTheme = localStorage.getItem('rif-theme');
@@ -201,8 +165,7 @@
             document.documentElement.setAttribute('data-bs-theme', theme);
         }());
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
     <script type="application/ld+json">{!! json_encode($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
     <script type="application/ld+json">{!! json_encode($localBusinessSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
     <script type="application/ld+json">{!! json_encode($websiteSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
@@ -210,6 +173,8 @@
     @stack('head')
 </head>
 <body class="@yield('body_class')">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     @if ($showHeader)
         <header class="app-header">
             <div class="container-xxl px-3 px-md-4 px-lg-5">
@@ -221,7 +186,7 @@
                             </span>
                         </a>
 
-                        <nav class="header-nav d-none d-lg-flex align-items-center gap-4">
+                        <nav class="header-nav d-none d-lg-flex align-items-center gap-4" aria-label="Primary">
                             <a href="{{ route('home') }}" class="nav-link-rif">{{ data_get($nav, 'home', 'Home') }}</a>
                             <a href="{{ route('pages.services') }}" class="nav-link-rif">{{ data_get($nav, 'features', 'Services') }}</a>
                             <a href="{{ route('pages.about') }}" class="nav-link-rif">{{ data_get($nav, 'about', 'About') }}</a>
@@ -358,7 +323,7 @@
         </header>
     @endif
 
-    <main class="app-main">
+    <main id="main-content" class="app-main" tabindex="-1">
         @yield('content')
         {{ $slot ?? '' }}
     </main>
@@ -377,17 +342,17 @@
                                 </span>
                             </div>
                             <p class="text-soft-rif mb-3">{{ $legalUi['hub_description'] }}</p>
-                            <p class="text-soft-rif small mb-0">{{ data_get($footer, 'copyright', 'RIF Media. All rights reserved.') }}</p>
+                            <p class="text-soft-rif small mb-0">{{ data_get($footer, 'copyright', 'Rifi Media. All rights reserved.') }}</p>
                             <p class="text-soft-rif small mt-3 mb-0">{{ data_get($footer, 'disclaimer') }}</p>
                         </div>
 
                         <div class="col-md-6 col-lg-4">
                             <p class="section-kicker mb-3">{{ $legalUi['browse'] }}</p>
-                        <div class="footer-links d-flex flex-column gap-2">
-                            <a href="{{ route('pages.services') }}">{{ data_get($nav, 'features', 'Services') }}</a>
-                            <a href="{{ route('pages.about') }}">{{ data_get($nav, 'about', 'About') }}</a>
-                            <a href="{{ route('pages.contact') }}">{{ data_get($nav, 'support', 'Contact') }}</a>
-                            <a href="{{ route('legal.index') }}">{{ $legalUi['hub_headline'] }}</a>
+                            <div class="footer-links d-flex flex-column gap-2">
+                                <a href="{{ route('pages.services') }}">{{ data_get($nav, 'features', 'Services') }}</a>
+                                <a href="{{ route('pages.about') }}">{{ data_get($nav, 'about', 'About') }}</a>
+                                <a href="{{ route('pages.contact') }}">{{ data_get($nav, 'support', 'Contact') }}</a>
+                                <a href="{{ route('legal.index') }}">{{ $legalUi['hub_headline'] }}</a>
                                 <a href="{{ route('legal.privacy') }}">{{ $legalUi['privacy'] }}</a>
                                 <a href="{{ route('legal.terms') }}">{{ $legalUi['terms'] }}</a>
                                 <a href="{{ route('legal.security') }}">{{ $legalUi['security'] }}</a>
@@ -415,7 +380,7 @@
         </footer>
     @endif
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const root = document.documentElement;
@@ -464,10 +429,10 @@
 
             handleHeaderState();
             window.addEventListener('scroll', handleHeaderState, { passive: true });
-
             renderThemeButtons();
         });
     </script>
     @stack('scripts')
 </body>
 </html>
+

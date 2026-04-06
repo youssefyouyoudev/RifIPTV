@@ -94,6 +94,39 @@ a {
     text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid rgba(30, 152, 215, 0.85);
+    outline-offset: 3px;
+}
+
+.skip-link {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 2000;
+    transform: translateY(-180%);
+    padding: 0.8rem 1rem;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #0f172a;
+    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.16);
+    font-weight: 700;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+[dir="rtl"] .skip-link {
+    left: auto;
+    right: 1rem;
+}
+
 .app-main {
     padding-top: 7.75rem;
 }

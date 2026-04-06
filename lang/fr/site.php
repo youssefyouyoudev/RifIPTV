@@ -2,7 +2,7 @@
 
 return [
     'brand' => [
-        'name' => 'RIF Media',
+        'name' => 'Rifi Media',
         'subtitle' => 'Configuration d appareils et support technique',
     ],
     'locales' => [
@@ -25,12 +25,12 @@ return [
         'about' => 'A propos',
         'terms' => 'Conditions de service',
         'contact' => 'Contact',
-        'copyright' => 'RIF Media. Tous droits reserves.',
+        'copyright' => 'Rifi Media. Tous droits reserves.',
         'disclaimer' => 'Nous ne fournissons, n hebergeons ni ne distribuons aucun contenu media. Nous proposons uniquement des services de configuration technique et de support.',
     ],
     'home' => [
-        'title' => 'RIF Media | Configuration d appareils et support technique',
-        'meta_description' => 'Services RIF Media pour la configuration d appareils, l aide a l installation et le support technique continu.',
+        'title' => 'Rifi Media | Configuration d appareils et support technique',
+        'meta_description' => 'Services Rifi Media pour la configuration d appareils, l aide a l installation et le support technique continu dans tout le Maroc.',
         'cta' => 'Demarrer le service',
         'mini_points' => [
             'secure' => 'Processus securise',
@@ -80,13 +80,13 @@ return [
         'support' => [
             'kicker' => 'Support',
             'title' => 'Besoin d aide avant de commander ?',
-            'description' => 'Contactez l equipe RIF Streaming pour la configuration d appareils, la facturation, l installation d applications ou le choix du bon package.',
+            'description' => 'Contactez l equipe Rifi Media pour la configuration d appareils, la facturation et l accompagnement technique partout au Maroc.',
             'whatsapp' => 'Support WhatsApp',
             'plans' => 'Voir les packages',
         ],
     ],
     'dashboard' => [
-        'title' => 'Dashboard | RIF Streaming',
+        'title' => 'Dashboard | Rifi Media',
         'space' => 'Espace client',
         'sidebar' => [
             'subscription' => 'Mon package',

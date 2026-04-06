@@ -2,11 +2,11 @@
 
 return [
     'hub' => [
-        'title' => 'Centro legal y confianza | RIF Streaming',
-        'meta_description' => 'Consulta las politicas de privacidad, seguridad, reembolsos, cookies y condiciones de servicio de RIF Streaming.',
+        'title' => 'Centro legal y confianza | Rifi Media',
+        'meta_description' => 'Consulta las politicas de privacidad, seguridad, reembolsos, cookies y condiciones de servicio de Rifi Media.',
         'kicker' => 'Centro de confianza',
         'headline' => 'Politicas claras para una experiencia mas segura.',
-        'description' => 'Este centro legal explica como RIF Streaming gestiona privacidad, facturacion, cookies, seguridad de la cuenta y uso responsable para que los clientes puedan comprar con confianza.',
+        'description' => 'Este centro legal explica como Rifi Media gestiona privacidad, facturacion, cookies, seguridad de la cuenta y uso responsable para que los clientes puedan comprar con confianza.',
     ],
     'common' => [
         'updated_label' => 'Ultima actualizacion',
@@ -21,7 +21,7 @@ return [
         'privacy' => [
             'label' => 'Privacidad',
             'title' => 'Politica de privacidad',
-            'meta_description' => 'Descubre como RIF Streaming recopila, usa, conserva y protege la informacion de cuenta y soporte.',
+            'meta_description' => 'Descubre como Rifi Media recopila, usa, conserva y protege la informacion de cuenta y soporte.',
             'description' => 'Como recopilamos y protegemos la informacion necesaria para activar suscripciones y asistir a los clientes de forma responsable.',
             'updated_at' => '1 de abril de 2026',
             'sections' => [
@@ -69,13 +69,13 @@ return [
         'terms' => [
             'label' => 'Condiciones',
             'title' => 'Condiciones del servicio',
-            'meta_description' => 'Consulta las reglas de servicio, condiciones de pago, uso aceptable y responsabilidades de cuenta de RIF Streaming.',
+            'meta_description' => 'Consulta las reglas de servicio, condiciones de pago, uso aceptable y responsabilidades de cuenta de Rifi Media.',
             'description' => 'Las reglas principales que definen el uso del servicio, la facturacion y el comportamiento aceptable.',
             'updated_at' => '1 de abril de 2026',
             'sections' => [
                 [
                     'title' => 'Alcance del servicio',
-                    'body' => 'RIF Streaming ofrece gestion de acceso por suscripcion, soporte al cliente y operaciones relacionadas con la cuenta para clientes elegibles.',
+                    'body' => 'Rifi Media ofrece gestion de acceso por suscripcion, soporte al cliente y operaciones relacionadas con la cuenta para clientes elegibles.',
                     'items' => [
                         'Los planes, precios, duraciones y beneficios pueden variar segun la oferta o el periodo de renovacion.',
                         'Los tiempos de activacion son estimados y pueden depender de la confirmacion del pago o de una revision manual.',
@@ -115,7 +115,7 @@ return [
         'security' => [
             'label' => 'Seguridad',
             'title' => 'Seguridad y proteccion',
-            'meta_description' => 'Conoce los controles de seguridad, practicas de soporte y estandares de proteccion utilizados por RIF Streaming.',
+            'meta_description' => 'Conoce los controles de seguridad, practicas de soporte y estandares de proteccion utilizados por Rifi Media.',
             'description' => 'Los controles y practicas operativas que usamos para proteger mejor cuentas, pagos e interacciones de soporte.',
             'updated_at' => '1 de abril de 2026',
             'sections' => [
@@ -160,7 +160,7 @@ return [
         'refund' => [
             'label' => 'Reembolsos',
             'title' => 'Politica de reembolso',
-            'meta_description' => 'Revisa las condiciones de evaluacion de reembolsos, exclusiones y proceso de soporte para pedidos de RIF Streaming.',
+            'meta_description' => 'Revisa las condiciones de evaluacion de reembolsos, exclusiones y proceso de soporte para pedidos de Rifi Media.',
             'description' => 'Nuestro enfoque para solicitudes de reembolso, problemas de activacion, pagos duplicados y disputas de servicio.',
             'updated_at' => '1 de abril de 2026',
             'sections' => [
@@ -205,7 +205,7 @@ return [
         'cookies' => [
             'label' => 'Cookies',
             'title' => 'Politica de cookies',
-            'meta_description' => 'Comprende el uso de cookies y almacenamiento local para idioma, tema, sesiones y seguridad en RIF Streaming.',
+            'meta_description' => 'Comprende el uso de cookies y almacenamiento local para idioma, tema, sesiones y seguridad en Rifi Media.',
             'description' => 'Como las cookies y el almacenamiento similar ayudan al sitio a recordar preferencias, proteger sesiones y mantener una experiencia estable.',
             'updated_at' => '1 de abril de 2026',
             'sections' => [
@@ -240,4 +240,5 @@ return [
         ],
     ],
 ];
+
 

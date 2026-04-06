@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'common' => [
@@ -43,8 +43,8 @@ return [
         'client-workflow-updated' => 'Le parcours client a ete mis a jour.',
     ],
     'onboarding' => [
-        'title' => 'Configuration de commande | RIF Streaming',
-        'meta_description' => 'Choisissez votre package de service RIF Streaming, selectionnez carte ou virement national, puis continuez le parcours client.',
+        'title' => 'Configuration de commande | Rifi Media',
+        'meta_description' => 'Choisissez votre package de service Rifi Media, selectionnez carte ou virement national, puis continuez le parcours client.',
         'kicker' => 'Onboarding client',
         'headline' => 'Choisissez votre package et continuez l installation simplement',
         'description' => 'Inscrivez-vous une fois, choisissez la bonne periode de support, selectionnez votre paiement et laissez l equipe terminer la configuration avec vous.',
@@ -86,8 +86,8 @@ return [
         'dashboard' => 'Aller au tableau de bord',
     ],
     'checkout' => [
-        'title' => 'Paiement Paddle | RIF Streaming',
-        'meta_description' => 'Securisez votre commande RIF Streaming avec le paiement carte Paddle.',
+        'title' => 'Paiement Paddle | Rifi Media',
+        'meta_description' => 'Securisez votre commande Rifi Media avec le paiement carte Paddle.',
         'kicker' => 'Paiement carte securise',
         'headline' => 'Checkout Paddle',
         'description' => 'Cet ecran represente l etape de paiement carte securise avant la configuration finale par l admin.',
@@ -241,3 +241,4 @@ return [
         ],
     ],
 ];
+

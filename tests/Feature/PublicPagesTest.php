@@ -33,11 +33,11 @@ class PublicPagesTest extends TestCase
 
         $this->get('/about')
             ->assertSuccessful()
-            ->assertSee('About RIF Media', false);
+            ->assertSee('About Rifi Media', false);
 
         $this->get('/contact')
             ->assertSuccessful()
-            ->assertSee('Contact RIF Media', false);
+            ->assertSee('Contact Rifi Media', false);
     }
 
     public function test_it_renders_seo_helper_files(): void
@@ -57,7 +57,7 @@ class PublicPagesTest extends TestCase
 
         $this->get('/llms.txt')
             ->assertSuccessful()
-            ->assertSee('RIF Media', false)
+            ->assertSee('Rifi Media', false)
             ->assertSee('device setup', false);
     }
 

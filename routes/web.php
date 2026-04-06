@@ -91,9 +91,9 @@ Route::get('/robots.txt', function () {
 
 Route::get('/llms.txt', function () {
     $lines = [
-        '# RIF Media',
+        '# Rifi Media',
         '',
-        'RIF Media is a device setup and technical support website.',
+        'Rifi Media is a device setup and technical support website.',
         'We help clients with device configuration, app guidance, troubleshooting, setup follow-up, and payment support.',
         'We do not host, provide, or distribute media content.',
         '',

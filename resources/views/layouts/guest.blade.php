@@ -1,29 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->isLocale('ar') ? 'rtl' : 'ltr' }}">
 @php
     $isArabic = app()->isLocale('ar');
     $portalCopy = trans('portal.guest');
-    $brandName = 'RIF Media';
-    $brandSubtitle = $isArabic
-        ? 'إعداد الأجهزة والدعم التقني'
-        : data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
+    $brandName = 'Rifi Media';
+    $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
     $brandLogo = asset('images/rifmedia-logo.png');
     $supportedLocales = config('app.supported_locales', ['en']);
-    $localeLabels = $isArabic ? ['en' => 'EN', 'fr' => 'FR', 'es' => 'ES', 'ar' => 'AR'] : trans('site.locales');
-    $footer = $isArabic
-        ? [
-            'copyright' => 'RIF Media. جميع الحقوق محفوظة.',
-            'disclaimer' => 'نحن لا نوفر ولا نستضيف ولا نوزع أي محتوى إعلامي. نحن نقدم فقط خدمات الإعداد التقني والدعم. المستخدم مسؤول عن احترام القوانين المحلية.',
-        ]
-        : trans('site.footer');
-    $nav = $isArabic
-        ? [
-            'home' => 'الرئيسية',
-            'sign_up' => 'إنشاء حساب',
-            'sign_in' => 'تسجيل الدخول',
-            'toggle_theme' => 'تبديل الوضع',
-        ]
-        : array_merge(trans('site.nav'), ['sign_in' => 'Sign in']);
+    $localeLabels = trans('site.locales');
+    $footer = trans('site.footer');
+    $nav = array_merge(trans('site.nav'), ['sign_in' => $isArabic ? 'ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„' : 'Sign in']);
     $metaTitle = trim($__env->yieldContent('title')) ?: $brandName;
     $metaDescription = trim($__env->yieldContent('meta_description')) ?: __('portal.auth.login.meta_description');
     $metaRobots = trim($__env->yieldContent('meta_robots')) ?: 'noindex,nofollow';
@@ -38,7 +24,7 @@
     <meta name="robots" content="{{ $metaRobots }}">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F8FAFC">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617">
-    <link rel="canonical" href="{{ $localizedBaseUrl.'?lang='.app()->getLocale() }}">
+    <link rel="canonical" href="{{ $localizedBaseUrl }}">
     <link rel="icon" href="{{ $brandLogo }}" type="image/png">
     <title>{{ $metaTitle }}</title>
 
@@ -46,7 +32,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=DM+Sans:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ asset('/public/css/rifiptv.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/rifiptv.css') }}" rel="stylesheet">
     <script>
         (function () {
             const storedTheme = localStorage.getItem('rif-theme');
@@ -56,20 +42,20 @@
             document.documentElement.setAttribute('data-bs-theme', theme);
         }());
     </script>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-LXMHC9NGBP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-LXMHC9NGBP');
-</script>
-@if(request()->getHost() !== '127.0.0.1' && request()->getHost() !== 'localhost')
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1c1a8441-b356-4d54-ab00-36a0d40490f1" type="text/javascript" async></script>
-@endif
+    @if(request()->getHost() !== '127.0.0.1' && request()->getHost() !== 'localhost')
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LXMHC9NGBP"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-LXMHC9NGBP');
+        </script>
+        <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1c1a8441-b356-4d54-ab00-36a0d40490f1" type="text/javascript" async></script>
+    @endif
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header class="app-header">
         <div class="container-xxl px-3 px-md-4 px-lg-5">
             <div class="header-shell px-3 px-md-4 py-3" data-header-shell>
@@ -106,7 +92,7 @@
         </div>
     </header>
 
-    <main class="app-main">
+    <main id="main-content" class="app-main" tabindex="-1">
         <div class="auth-layout">
             <div class="container-xxl px-3 px-md-4 px-lg-5">
                 <div class="row g-4 align-items-stretch">
@@ -160,7 +146,7 @@
                             </span>
                         </div>
                         <p class="text-soft-rif mb-3">{{ trans('legal.hub.description') }}</p>
-                        <p class="text-soft-rif small mb-0">{{ data_get($footer, 'copyright', 'RIF Media. All rights reserved.') }}</p>
+                        <p class="text-soft-rif small mb-0">{{ data_get($footer, 'copyright', 'Rifi Media. All rights reserved.') }}</p>
                         <p class="text-soft-rif small mt-3 mb-0">{{ data_get($footer, 'disclaimer') }}</p>
                     </div>
 
@@ -206,8 +192,8 @@
 
     <button type="button" class="floating-theme-toggle" data-theme-toggle aria-label="{{ data_get($nav, 'toggle_theme', 'Toggle theme') }}"></button>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const root = document.documentElement;
@@ -248,9 +234,9 @@
 
             handleHeaderState();
             window.addEventListener('scroll', handleHeaderState, { passive: true });
-
             renderThemeButtons();
         });
     </script>
 </body>
 </html>
+

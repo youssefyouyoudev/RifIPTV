@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('workflow.onboarding.payment_title').' | RIF Media')
+@section('title', __('workflow.onboarding.payment_title').' | Rifi Media')
 @section('meta_description', __('workflow.onboarding.next_text'))
 @section('meta_robots', 'noindex,nofollow')
 

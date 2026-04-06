@@ -2,7 +2,7 @@
 
 return [
     'brand' => [
-        'name' => 'RIF Media',
+        'name' => 'Rifi Media',
         'subtitle' => 'Device Setup & Technical Support',
     ],
     'locales' => [
@@ -26,12 +26,12 @@ return [
         'about' => 'About',
         'terms' => 'Terms of Service',
         'contact' => 'Contact',
-        'copyright' => 'RIF Media. All rights reserved.',
+        'copyright' => 'Rifi Media. All rights reserved.',
         'disclaimer' => 'We do not host, provide, or distribute any media content. We only offer technical setup and support services. Users are responsible for compliance with local laws.',
     ],
     'home' => [
-        'title' => 'RIF Media | Device Setup Services, App Guidance & Technical Support',
-        'meta_description' => 'RIF Media provides device setup services, app guidance, troubleshooting, payment follow-up, and technical support for smart screens and connected devices.',
+        'title' => 'Rifi Media | Device Setup Services, App Guidance & Technical Support',
+        'meta_description' => 'Rifi Media provides device setup services, app guidance, troubleshooting, payment follow-up, and technical support for smart screens and connected devices across Morocco.',
         'cta' => 'Start Service',
         'mini_points' => [
             'secure' => 'Secure process',
@@ -81,13 +81,13 @@ return [
         'support' => [
             'kicker' => 'Support',
             'title' => 'Need help before placing an order?',
-            'description' => 'Contact the RIF Streaming team for Media Setup Services, Device Configuration, billing support, or general Technical Support.',
+            'description' => 'Contact the Rifi Media team for device configuration, billing support, or practical technical guidance anywhere in Morocco.',
             'whatsapp' => 'WhatsApp Support',
             'plans' => 'View Packages',
         ],
     ],
     'dashboard' => [
-        'title' => 'Dashboard | RIF Media',
+        'title' => 'Dashboard | Rifi Media',
         'space' => 'Client area',
         'sidebar' => [
             'subscription' => 'My package',

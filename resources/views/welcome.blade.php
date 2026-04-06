@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="refresh" content="0;url={{ route('home') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'RIF Streaming') }}</title>
+    <title>{{ config('app.name', 'Rifi Media') }}</title>
 </head>
 <body>
-    <p><a href="{{ route('home') }}">Continue to RIF Streaming</a></p>
+    <p><a href="{{ route('home') }}">Continue to Rifi Media</a></p>
 </body>
 </html>
+
 

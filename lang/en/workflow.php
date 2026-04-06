@@ -43,8 +43,8 @@ return [
         'client-workflow-updated' => 'Client workflow updated successfully.',
     ],
     'onboarding' => [
-        'title' => 'Checkout setup | RIF Streaming',
-        'meta_description' => 'Choose your RIF Streaming service package, select card or bank transfer, and continue the onboarding flow.',
+        'title' => 'Checkout setup | Rifi Media',
+        'meta_description' => 'Choose your Rifi Media service package, select card or bank transfer, and continue the onboarding flow.',
         'kicker' => 'Client onboarding',
         'headline' => 'Choose your service package and continue the setup smoothly',
         'description' => 'Register once, choose the right support window, pick your payment method, and let the team continue the technical setup with you.',
@@ -86,8 +86,8 @@ return [
         'dashboard' => 'Go to dashboard',
     ],
     'checkout' => [
-        'title' => 'Paddle checkout | RIF Streaming',
-        'meta_description' => 'Secure your RIF Streaming order with Paddle card checkout.',
+        'title' => 'Paddle checkout | Rifi Media',
+        'meta_description' => 'Secure your Rifi Media order with Paddle card checkout.',
         'kicker' => 'Secure card payment',
         'headline' => 'Paddle checkout',
         'description' => 'This screen represents the secure card checkout step before your admin completes the technical setup process.',
@@ -241,4 +241,5 @@ return [
         ],
     ],
 ];
+
 

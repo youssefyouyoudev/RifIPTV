@@ -1,7 +1,7 @@
 ﻿@extends('layouts.app')
 
 @section('title', __('site.dashboard.title'))
-@section('meta_description', 'RIF Streaming dashboard for service packages, payments, support follow-up, and admin delivery workflows.')
+@section('meta_description', 'Rifi Media dashboard for service packages, payment follow-up, client guidance, and operational workflows.')
 @section('meta_robots', 'noindex,nofollow')
 
 @section('content')
@@ -542,6 +542,7 @@
 @endsection
 
 @push('scripts')
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const chartCanvas = document.getElementById('dashboardChart');
@@ -578,4 +579,5 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
+
 

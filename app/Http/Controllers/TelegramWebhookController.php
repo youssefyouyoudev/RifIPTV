@@ -55,7 +55,7 @@ class TelegramWebhookController extends Controller
 
             $telegram->sendMessage(
                 $chatId,
-                "Welcome to RIF Media updates.\n\nYou are now subscribed to service alerts and support notifications.\nSend /stop anytime to unsubscribe."
+                "Welcome to Rifi Media updates.\n\nYou are now subscribed to service alerts and support notifications.\nSend /stop anytime to unsubscribe."
             );
 
             return response()->json(['ok' => true]);

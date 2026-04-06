@@ -11,7 +11,7 @@
     ];
 @endphp
 
-@section('title', data_get($page, 'title').' | '.data_get(trans('site.brand'), 'name', 'RIF Streaming'))
+@section('title', data_get($page, 'title').' | '.data_get(trans('site.brand'), 'name', 'Rifi Media'))
 @section('meta_description', data_get($page, 'meta_description'))
 
 @section('structured_data')
@@ -104,4 +104,5 @@
         </div>
     </section>
 @endsection
+
 

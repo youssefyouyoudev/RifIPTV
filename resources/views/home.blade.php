@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', __('site.home.title'))
 @section('meta_description', __('site.home.meta_description'))
@@ -11,7 +11,7 @@
             '@type' => 'WebPage',
             'name' => __('site.home.title'),
             'description' => __('site.home.meta_description'),
-            'url' => request()->url().'?lang='.app()->getLocale(),
+            'url' => request()->url(),
             'inLanguage' => app()->getLocale(),
             'primaryImageOfPage' => asset('images/hero-light.png'),
         ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
@@ -34,7 +34,7 @@
     @php
         $locale = app()->getLocale();
         $isArabic = $locale === 'ar';
-        $brandName = data_get(trans('site.brand'), 'name', 'RIF Media');
+        $brandName = data_get(trans('site.brand'), 'name', 'Rifi Media');
         $heroLogo = asset('images/rifmedia-logo.png');
         $primaryCta = auth()->check() && Route::has('onboarding.show') ? route('onboarding.show') : route('register');
         $secondaryCta = 'https://wa.me/212600000000';
@@ -102,30 +102,30 @@
                 'support_secondary' => 'Ver paquetes',
             ],
             'ar' => [
-                'hero_eyebrow' => 'خدمة إعداد أجهزة احترافية',
-                'hero_title_top' => 'إعداد صحيح',
-                'hero_title_bottom' => 'ودعم يبقى معك',
-                'hero_description' => 'نساعدك في إعداد التلفاز الذكي والتطبيقات والحسابات والمتابعة التقنية بخطوات واضحة وواجهة سهلة وفريق دعم حقيقي.',
-                'hero_tagline' => 'من أول إعداد إلى آخر متابعة، نبقي التجربة مرتبة وآمنة وسهلة الفهم.',
-                'hero_points' => ['إجراء آمن', 'متابعة عبر واتساب', 'إرشاد تقني واضح'],
-                'hero_stats' => ['إعداد احترافي', 'استجابة يومية', 'TV / Mobile / Tablet'],
-                'payment_kicker' => 'خيارات الدفع',
-                'payment_title' => 'دفع واضح وآمن للعملاء المحليين والدوليين.',
-                'payment_description' => 'نوفر دفعا دوليا آمنا عبر Paddle مع مراجعة يدوية للتحويلات البنكية المحلية.',
-                'payment_badge' => 'دفع دولي',
-                'payment_note' => 'بطاقة دولية مع تأكيد رقمي سريع.',
-                'payment_local' => 'شركاء التحويل المحلي',
-                'package_kicker' => 'باقات الخدمة',
-                'package_title' => 'اختر باقة الدعم والإعداد المناسبة لك.',
-                'package_description' => 'أسعار واضحة لخدمات الإعداد، المساعدة في التثبيت، والمتابعة التقنية المستمرة.',
-                'benefits_kicker' => 'لماذا يختارنا العملاء',
-                'benefits_title' => 'واجهة أنظف، ودعم أوضح، وتجربة أكثر راحة.',
-                'benefits_description' => 'نبني الخدمة حول الوضوح والثقة وسهولة الخطوات، حتى يعرف العميل دائما ما هي الخطوة التالية.',
-                'support_kicker' => 'الدعم',
-                'support_title' => 'هل تحتاج مساعدة قبل تنفيذ الطلب؟',
-                'support_description' => 'تواصل معنا إذا كنت تحتاج مساعدة في اختيار الباقة المناسبة أو فهم خطوات الإعداد والدفع.',
-                'support_primary' => 'دعم واتساب',
-                'support_secondary' => 'عرض الباقات',
+                'hero_eyebrow' => 'Ø®Ø¯Ù…Ø© Ø¥Ø¹Ø¯Ø§Ø¯ Ø£Ø¬Ù‡Ø²Ø© Ø§Ø­ØªØ±Ø§ÙÙŠØ©',
+                'hero_title_top' => 'Ø¥Ø¹Ø¯Ø§Ø¯ ØµØ­ÙŠØ­',
+                'hero_title_bottom' => 'ÙˆØ¯Ø¹Ù… ÙŠØ¨Ù‚Ù‰ Ù…Ø¹Ùƒ',
+                'hero_description' => 'Ù†Ø³Ø§Ø¹Ø¯Ùƒ ÙÙŠ Ø¥Ø¹Ø¯Ø§Ø¯ Ø§Ù„ØªÙ„ÙØ§Ø² Ø§Ù„Ø°ÙƒÙŠ ÙˆØ§Ù„ØªØ·Ø¨ÙŠÙ‚Ø§Øª ÙˆØ§Ù„Ø­Ø³Ø§Ø¨Ø§Øª ÙˆØ§Ù„Ù…ØªØ§Ø¨Ø¹Ø© Ø§Ù„ØªÙ‚Ù†ÙŠØ© Ø¨Ø®Ø·ÙˆØ§Øª ÙˆØ§Ø¶Ø­Ø© ÙˆÙˆØ§Ø¬Ù‡Ø© Ø³Ù‡Ù„Ø© ÙˆÙØ±ÙŠÙ‚ Ø¯Ø¹Ù… Ø­Ù‚ÙŠÙ‚ÙŠ.',
+                'hero_tagline' => 'Ù…Ù† Ø£ÙˆÙ„ Ø¥Ø¹Ø¯Ø§Ø¯ Ø¥Ù„Ù‰ Ø¢Ø®Ø± Ù…ØªØ§Ø¨Ø¹Ø©ØŒ Ù†Ø¨Ù‚ÙŠ Ø§Ù„ØªØ¬Ø±Ø¨Ø© Ù…Ø±ØªØ¨Ø© ÙˆØ¢Ù…Ù†Ø© ÙˆØ³Ù‡Ù„Ø© Ø§Ù„ÙÙ‡Ù….',
+                'hero_points' => ['Ø¥Ø¬Ø±Ø§Ø¡ Ø¢Ù…Ù†', 'Ù…ØªØ§Ø¨Ø¹Ø© Ø¹Ø¨Ø± ÙˆØ§ØªØ³Ø§Ø¨', 'Ø¥Ø±Ø´Ø§Ø¯ ØªÙ‚Ù†ÙŠ ÙˆØ§Ø¶Ø­'],
+                'hero_stats' => ['Ø¥Ø¹Ø¯Ø§Ø¯ Ø§Ø­ØªØ±Ø§ÙÙŠ', 'Ø§Ø³ØªØ¬Ø§Ø¨Ø© ÙŠÙˆÙ…ÙŠØ©', 'TV / Mobile / Tablet'],
+                'payment_kicker' => 'Ø®ÙŠØ§Ø±Ø§Øª Ø§Ù„Ø¯ÙØ¹',
+                'payment_title' => 'Ø¯ÙØ¹ ÙˆØ§Ø¶Ø­ ÙˆØ¢Ù…Ù† Ù„Ù„Ø¹Ù…Ù„Ø§Ø¡ Ø§Ù„Ù…Ø­Ù„ÙŠÙŠÙ† ÙˆØ§Ù„Ø¯ÙˆÙ„ÙŠÙŠÙ†.',
+                'payment_description' => 'Ù†ÙˆÙØ± Ø¯ÙØ¹Ø§ Ø¯ÙˆÙ„ÙŠØ§ Ø¢Ù…Ù†Ø§ Ø¹Ø¨Ø± Paddle Ù…Ø¹ Ù…Ø±Ø§Ø¬Ø¹Ø© ÙŠØ¯ÙˆÙŠØ© Ù„Ù„ØªØ­ÙˆÙŠÙ„Ø§Øª Ø§Ù„Ø¨Ù†ÙƒÙŠØ© Ø§Ù„Ù…Ø­Ù„ÙŠØ©.',
+                'payment_badge' => 'Ø¯ÙØ¹ Ø¯ÙˆÙ„ÙŠ',
+                'payment_note' => 'Ø¨Ø·Ø§Ù‚Ø© Ø¯ÙˆÙ„ÙŠØ© Ù…Ø¹ ØªØ£ÙƒÙŠØ¯ Ø±Ù‚Ù…ÙŠ Ø³Ø±ÙŠØ¹.',
+                'payment_local' => 'Ø´Ø±ÙƒØ§Ø¡ Ø§Ù„ØªØ­ÙˆÙŠÙ„ Ø§Ù„Ù…Ø­Ù„ÙŠ',
+                'package_kicker' => 'Ø¨Ø§Ù‚Ø§Øª Ø§Ù„Ø®Ø¯Ù…Ø©',
+                'package_title' => 'Ø§Ø®ØªØ± Ø¨Ø§Ù‚Ø© Ø§Ù„Ø¯Ø¹Ù… ÙˆØ§Ù„Ø¥Ø¹Ø¯Ø§Ø¯ Ø§Ù„Ù…Ù†Ø§Ø³Ø¨Ø© Ù„Ùƒ.',
+                'package_description' => 'Ø£Ø³Ø¹Ø§Ø± ÙˆØ§Ø¶Ø­Ø© Ù„Ø®Ø¯Ù…Ø§Øª Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯ØŒ Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯Ø© ÙÙŠ Ø§Ù„ØªØ«Ø¨ÙŠØªØŒ ÙˆØ§Ù„Ù…ØªØ§Ø¨Ø¹Ø© Ø§Ù„ØªÙ‚Ù†ÙŠØ© Ø§Ù„Ù…Ø³ØªÙ…Ø±Ø©.',
+                'benefits_kicker' => 'Ù„Ù…Ø§Ø°Ø§ ÙŠØ®ØªØ§Ø±Ù†Ø§ Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡',
+                'benefits_title' => 'ÙˆØ§Ø¬Ù‡Ø© Ø£Ù†Ø¸ÙØŒ ÙˆØ¯Ø¹Ù… Ø£ÙˆØ¶Ø­ØŒ ÙˆØªØ¬Ø±Ø¨Ø© Ø£ÙƒØ«Ø± Ø±Ø§Ø­Ø©.',
+                'benefits_description' => 'Ù†Ø¨Ù†ÙŠ Ø§Ù„Ø®Ø¯Ù…Ø© Ø­ÙˆÙ„ Ø§Ù„ÙˆØ¶ÙˆØ­ ÙˆØ§Ù„Ø«Ù‚Ø© ÙˆØ³Ù‡ÙˆÙ„Ø© Ø§Ù„Ø®Ø·ÙˆØ§ØªØŒ Ø­ØªÙ‰ ÙŠØ¹Ø±Ù Ø§Ù„Ø¹Ù…ÙŠÙ„ Ø¯Ø§Ø¦Ù…Ø§ Ù…Ø§ Ù‡ÙŠ Ø§Ù„Ø®Ø·ÙˆØ© Ø§Ù„ØªØ§Ù„ÙŠØ©.',
+                'support_kicker' => 'Ø§Ù„Ø¯Ø¹Ù…',
+                'support_title' => 'Ù‡Ù„ ØªØ­ØªØ§Ø¬ Ù…Ø³Ø§Ø¹Ø¯Ø© Ù‚Ø¨Ù„ ØªÙ†ÙÙŠØ° Ø§Ù„Ø·Ù„Ø¨ØŸ',
+                'support_description' => 'ØªÙˆØ§ØµÙ„ Ù…Ø¹Ù†Ø§ Ø¥Ø°Ø§ ÙƒÙ†Øª ØªØ­ØªØ§Ø¬ Ù…Ø³Ø§Ø¹Ø¯Ø© ÙÙŠ Ø§Ø®ØªÙŠØ§Ø± Ø§Ù„Ø¨Ø§Ù‚Ø© Ø§Ù„Ù…Ù†Ø§Ø³Ø¨Ø© Ø£Ùˆ ÙÙ‡Ù… Ø®Ø·ÙˆØ§Øª Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯ ÙˆØ§Ù„Ø¯ÙØ¹.',
+                'support_primary' => 'Ø¯Ø¹Ù… ÙˆØ§ØªØ³Ø§Ø¨',
+                'support_secondary' => 'Ø¹Ø±Ø¶ Ø§Ù„Ø¨Ø§Ù‚Ø§Øª',
             ],
             default => [
                 'hero_eyebrow' => 'Professional device setup service',
@@ -225,10 +225,10 @@
                                                     ['icon' => 'messages-square', 'title' => 'Soporte tecnico', 'text' => 'Un equipo disponible antes y despues del pedido.'],
                                                 ],
                                                 'ar' => [
-                                                    ['icon' => 'monitor-cog', 'title' => 'إعداد الأجهزة', 'text' => 'تجهيز التلفاز الذكي والأجهزة المرتبطة به.'],
-                                                    ['icon' => 'download', 'title' => 'تثبيت التطبيقات', 'text' => 'مساعدة عملية في التثبيت والخطوات الأولى.'],
-                                                    ['icon' => 'shield-check', 'title' => 'توجيه آمن', 'text' => 'تعليمات واضحة مع متابعة مريحة وآمنة.'],
-                                                    ['icon' => 'messages-square', 'title' => 'دعم تقني', 'text' => 'فريق بشري يرافقك قبل وبعد الطلب.'],
+                                                    ['icon' => 'monitor-cog', 'title' => 'Ø¥Ø¹Ø¯Ø§Ø¯ Ø§Ù„Ø£Ø¬Ù‡Ø²Ø©', 'text' => 'ØªØ¬Ù‡ÙŠØ² Ø§Ù„ØªÙ„ÙØ§Ø² Ø§Ù„Ø°ÙƒÙŠ ÙˆØ§Ù„Ø£Ø¬Ù‡Ø²Ø© Ø§Ù„Ù…Ø±ØªØ¨Ø·Ø© Ø¨Ù‡.'],
+                                                    ['icon' => 'download', 'title' => 'ØªØ«Ø¨ÙŠØª Ø§Ù„ØªØ·Ø¨ÙŠÙ‚Ø§Øª', 'text' => 'Ù…Ø³Ø§Ø¹Ø¯Ø© Ø¹Ù…Ù„ÙŠØ© ÙÙŠ Ø§Ù„ØªØ«Ø¨ÙŠØª ÙˆØ§Ù„Ø®Ø·ÙˆØ§Øª Ø§Ù„Ø£ÙˆÙ„Ù‰.'],
+                                                    ['icon' => 'shield-check', 'title' => 'ØªÙˆØ¬ÙŠÙ‡ Ø¢Ù…Ù†', 'text' => 'ØªØ¹Ù„ÙŠÙ…Ø§Øª ÙˆØ§Ø¶Ø­Ø© Ù…Ø¹ Ù…ØªØ§Ø¨Ø¹Ø© Ù…Ø±ÙŠØ­Ø© ÙˆØ¢Ù…Ù†Ø©.'],
+                                                    ['icon' => 'messages-square', 'title' => 'Ø¯Ø¹Ù… ØªÙ‚Ù†ÙŠ', 'text' => 'ÙØ±ÙŠÙ‚ Ø¨Ø´Ø±ÙŠ ÙŠØ±Ø§ÙÙ‚Ùƒ Ù‚Ø¨Ù„ ÙˆØ¨Ø¹Ø¯ Ø§Ù„Ø·Ù„Ø¨.'],
                                                 ],
                                                 default => [
                                                     ['icon' => 'monitor-cog', 'title' => 'Device setup', 'text' => 'Smart TV and connected-device configuration done with guidance.'],
@@ -267,10 +267,10 @@
                             ['icon' => 'messages-square', 'title' => 'Soporte tecnico', 'text' => 'Un equipo disponible antes y despues del pedido.'],
                         ],
                         'ar' => [
-                            ['icon' => 'monitor-cog', 'title' => 'إعداد الأجهزة', 'text' => 'تجهيز التلفاز الذكي والأجهزة المرتبطة به.'],
-                            ['icon' => 'download', 'title' => 'تثبيت التطبيقات', 'text' => 'مساعدة عملية في التثبيت والخطوات الأولى.'],
-                            ['icon' => 'shield-check', 'title' => 'توجيه آمن', 'text' => 'تعليمات واضحة مع متابعة مريحة وآمنة.'],
-                            ['icon' => 'messages-square', 'title' => 'دعم تقني', 'text' => 'فريق بشري يرافقك قبل وبعد الطلب.'],
+                            ['icon' => 'monitor-cog', 'title' => 'Ø¥Ø¹Ø¯Ø§Ø¯ Ø§Ù„Ø£Ø¬Ù‡Ø²Ø©', 'text' => 'ØªØ¬Ù‡ÙŠØ² Ø§Ù„ØªÙ„ÙØ§Ø² Ø§Ù„Ø°ÙƒÙŠ ÙˆØ§Ù„Ø£Ø¬Ù‡Ø²Ø© Ø§Ù„Ù…Ø±ØªØ¨Ø·Ø© Ø¨Ù‡.'],
+                            ['icon' => 'download', 'title' => 'ØªØ«Ø¨ÙŠØª Ø§Ù„ØªØ·Ø¨ÙŠÙ‚Ø§Øª', 'text' => 'Ù…Ø³Ø§Ø¹Ø¯Ø© Ø¹Ù…Ù„ÙŠØ© ÙÙŠ Ø§Ù„ØªØ«Ø¨ÙŠØª ÙˆØ§Ù„Ø®Ø·ÙˆØ§Øª Ø§Ù„Ø£ÙˆÙ„Ù‰.'],
+                            ['icon' => 'shield-check', 'title' => 'ØªÙˆØ¬ÙŠÙ‡ Ø¢Ù…Ù†', 'text' => 'ØªØ¹Ù„ÙŠÙ…Ø§Øª ÙˆØ§Ø¶Ø­Ø© Ù…Ø¹ Ù…ØªØ§Ø¨Ø¹Ø© Ù…Ø±ÙŠØ­Ø© ÙˆØ¢Ù…Ù†Ø©.'],
+                            ['icon' => 'messages-square', 'title' => 'Ø¯Ø¹Ù… ØªÙ‚Ù†ÙŠ', 'text' => 'ÙØ±ÙŠÙ‚ Ø¨Ø´Ø±ÙŠ ÙŠØ±Ø§ÙÙ‚Ùƒ Ù‚Ø¨Ù„ ÙˆØ¨Ø¹Ø¯ Ø§Ù„Ø·Ù„Ø¨.'],
                         ],
                         default => [
                             ['icon' => 'monitor-cog', 'title' => 'Device setup', 'text' => 'Smart TV and connected-device configuration done with guidance.'],
@@ -287,6 +287,55 @@
                             </article>
                         </div>
                     @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @php
+        $trustSignals = match ($locale) {
+            'fr' => [
+                'headline' => 'Clarte, verification humaine et accompagnement responsable.',
+                'items' => ['Partout au Maroc', 'Support humain', 'Paiement verifie', 'Processus transparent'],
+                'disclaimer' => 'Nous ne fournissons ni n hebergeons de contenu media. Nous aidons uniquement a la configuration des appareils, a l installation utile et au support technique.',
+            ],
+            'es' => [
+                'headline' => 'Claridad, revision humana y un proceso que genera confianza.',
+                'items' => ['En todo Marruecos', 'Soporte humano', 'Pago verificado', 'Proceso transparente'],
+                'disclaimer' => 'No proporcionamos ni alojamos contenido multimedia. Solo ayudamos con configuracion de dispositivos, instalacion util y soporte tecnico.',
+            ],
+            'ar' => [
+                'headline' => 'ÙˆØ¶ÙˆØ­ ÙÙŠ Ø§Ù„Ø®Ø·ÙˆØ§ØªØŒ ÙˆÙ…Ø±Ø§Ø¬Ø¹Ø© Ø¨Ø´Ø±ÙŠØ©ØŒ ÙˆØªØ¬Ø±Ø¨Ø© Ù…Ø¨Ù†ÙŠØ© Ø¹Ù„Ù‰ Ø§Ù„Ø«Ù‚Ø©.',
+                'items' => ['Ù…Ø±Ø§ÙƒØ´ØŒ Ø§Ù„Ù…ØºØ±Ø¨', 'Ø¯Ø¹Ù… Ø¨Ø´Ø±ÙŠ', 'Ø¯ÙØ¹ Ù…ÙˆØ«Ù‚', 'Ø¹Ù…Ù„ÙŠØ© ÙˆØ§Ø¶Ø­Ø©'],
+                'disclaimer' => 'Ù†Ø­Ù† Ù„Ø§ Ù†ÙˆÙØ± ÙˆÙ„Ø§ Ù†Ø³ØªØ¶ÙŠÙ Ø£ÙŠ Ù…Ø­ØªÙˆÙ‰ Ø¥Ø¹Ù„Ø§Ù…ÙŠ. Ù†Ø­Ù† Ù†Ø³Ø§Ø¹Ø¯ ÙÙ‚Ø· ÙÙŠ Ø¥Ø¹Ø¯Ø§Ø¯ Ø§Ù„Ø£Ø¬Ù‡Ø²Ø©ØŒ Ø¶Ø¨Ø· Ø§Ù„ØªØ·Ø¨ÙŠÙ‚Ø§ØªØŒ ÙˆØ§Ù„Ø¯Ø¹Ù… Ø§Ù„ØªÙ‚Ù†ÙŠ.',
+            ],
+            default => [
+                'headline' => 'Clear steps, human review, and a support process built for trust.',
+                'items' => ['Across Morocco', 'Human guidance', 'Verified payment flow', 'Transparent process'],
+                'disclaimer' => 'We do not provide or host media content. We only assist with device configuration, app setup, and technical support.',
+            ],
+        };
+    @endphp
+
+    <section class="section-space">
+        <div class="container-xxl px-3 px-md-4 px-lg-5">
+            <div class="surface-card trust-strip-shell p-4 p-lg-5 reveal-up">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-5">
+                        <span class="section-kicker mb-3">{{ $locale === 'ar' ? 'Ø¥Ø´Ø§Ø±Ø§Øª Ø§Ù„Ø«Ù‚Ø©' : ($locale === 'fr' ? 'Signaux de confiance' : ($locale === 'es' ? 'Senales de confianza' : 'Trust signals')) }}</span>
+                        <h2 class="h2 text-body-rif mb-3">{{ $trustSignals['headline'] }}</h2>
+                        <p class="text-soft-rif mb-0">{{ $trustSignals['disclaimer'] }}</p>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="trust-strip-grid">
+                            @foreach ($trustSignals['items'] as $signal)
+                                <article class="trust-strip-item">
+                                    <i data-lucide="badge-check" class="icon-sm"></i>
+                                    <span>{{ $signal }}</span>
+                                </article>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -325,13 +374,80 @@
                     @foreach (match ($locale) {
                         'fr' => ['Verification manuelle', 'Confirmation WhatsApp', 'Etapes claires'],
                         'es' => ['Validacion manual', 'Confirmacion por WhatsApp', 'Pasos claros'],
-                        'ar' => ['مراجعة يدوية للتحويل', 'تأكيد عبر واتساب', 'خطوات دفع واضحة'],
+                        'ar' => ['Ù…Ø±Ø§Ø¬Ø¹Ø© ÙŠØ¯ÙˆÙŠØ© Ù„Ù„ØªØ­ÙˆÙŠÙ„', 'ØªØ£ÙƒÙŠØ¯ Ø¹Ø¨Ø± ÙˆØ§ØªØ³Ø§Ø¨', 'Ø®Ø·ÙˆØ§Øª Ø¯ÙØ¹ ÙˆØ§Ø¶Ø­Ø©'],
                         default => ['Manual transfer review', 'WhatsApp confirmation', 'Clear payment steps'],
                     } as $trustPoint)
                         <span class="payment-trust-pill reveal-up">
                             <i data-lucide="badge-check" class="icon-sm"></i>
                             <span>{{ $trustPoint }}</span>
                         </span>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @php
+        $howWeWork = match ($locale) {
+            'fr' => [
+                'kicker' => 'Comment nous travaillons',
+                'title' => 'Un parcours simple en quatre etapes.',
+                'items' => [
+                    ['step' => '01', 'title' => 'Demande', 'text' => 'Vous nous expliquez votre appareil, votre besoin et votre contexte.'],
+                    ['step' => '02', 'title' => 'Revue', 'text' => 'Nous verifions la demande, le package, et la methode de paiement adaptee.'],
+                    ['step' => '03', 'title' => 'Guidage et setup', 'text' => 'Nous vous accompagnons pour la configuration, l installation utile et les verifications.'],
+                    ['step' => '04', 'title' => 'Suivi', 'text' => 'Le client garde un point de contact clair pour les questions et ajustements.'],
+                ],
+            ],
+            'es' => [
+                'kicker' => 'Como trabajamos',
+                'title' => 'Un proceso simple en cuatro pasos.',
+                'items' => [
+                    ['step' => '01', 'title' => 'Solicitud', 'text' => 'Nos explicas tu dispositivo, necesidad y contexto.'],
+                    ['step' => '02', 'title' => 'Revision', 'text' => 'Revisamos el caso, el paquete adecuado y el metodo de pago.'],
+                    ['step' => '03', 'title' => 'Guia y configuracion', 'text' => 'Te acompanamos en la configuracion, instalacion util y verificaciones.'],
+                    ['step' => '04', 'title' => 'Seguimiento', 'text' => 'Mantienes un punto de contacto claro para dudas y ajustes.'],
+                ],
+            ],
+            'ar' => [
+                'kicker' => 'ÙƒÙŠÙ Ù†Ø¹Ù…Ù„',
+                'title' => 'Ø±Ø­Ù„Ø© Ø¨Ø³ÙŠØ·Ø© Ù…Ù† Ø£Ø±Ø¨Ø¹ Ù…Ø±Ø§Ø­Ù„ ÙˆØ§Ø¶Ø­Ø©.',
+                'items' => [
+                    ['step' => '01', 'title' => 'Ø§Ù„Ø·Ù„Ø¨', 'text' => 'ØªØ´Ø±Ø­ Ù„Ù†Ø§ Ø§Ù„Ø¬Ù‡Ø§Ø² ÙˆØ§Ù„Ø§Ø­ØªÙŠØ§Ø¬ ÙˆØ§Ù„Ø³ÙŠØ§Ù‚ Ø§Ù„Ø¹Ù…Ù„ÙŠ Ø§Ù„Ù…Ø·Ù„ÙˆØ¨.'],
+                    ['step' => '02', 'title' => 'Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©', 'text' => 'Ù†Ø±Ø§Ø¬Ø¹ Ø§Ù„Ø­Ø§Ù„Ø© ÙˆÙ†Ø­Ø¯Ø¯ Ø§Ù„Ø¨Ø§Ù‚Ø© Ø§Ù„Ù…Ù†Ø§Ø³Ø¨Ø© ÙˆØ·Ø±ÙŠÙ‚Ø© Ø§Ù„Ø¯ÙØ¹ Ø§Ù„Ù…Ù„Ø§Ø¦Ù…Ø©.'],
+                    ['step' => '03', 'title' => 'Ø§Ù„Ø¥Ø±Ø´Ø§Ø¯ ÙˆØ§Ù„Ø¥Ø¹Ø¯Ø§Ø¯', 'text' => 'Ù†Ø±Ø§ÙÙ‚Ùƒ ÙÙŠ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯ ÙˆØ¶Ø¨Ø· Ø§Ù„ØªØ·Ø¨ÙŠÙ‚Ø§Øª ÙˆØ§Ù„Ø®Ø·ÙˆØ§Øª Ø§Ù„Ø¹Ù…Ù„ÙŠØ© Ø§Ù„Ù…Ù‡Ù…Ø©.'],
+                    ['step' => '04', 'title' => 'Ø§Ù„Ù…ØªØ§Ø¨Ø¹Ø©', 'text' => 'ÙŠØ¨Ù‚Ù‰ Ù„Ø¯ÙŠÙƒ Ù…Ø³Ø§Ø± ÙˆØ§Ø¶Ø­ Ù„Ù„ØªÙˆØ§ØµÙ„ ÙˆØ§Ù„Ø§Ø³ØªÙØ³Ø§Ø± ÙˆØ§Ù„ØªØ­Ø³ÙŠÙ† Ø¹Ù†Ø¯ Ø§Ù„Ø­Ø§Ø¬Ø©.'],
+                ],
+            ],
+            default => [
+                'kicker' => 'How we work',
+                'title' => 'A clean four-step process built for confidence.',
+                'items' => [
+                    ['step' => '01', 'title' => 'Request', 'text' => 'You tell us about your device, your goal, and the setup context.'],
+                    ['step' => '02', 'title' => 'Review', 'text' => 'We review the request, recommend the right package, and confirm the payment path.'],
+                    ['step' => '03', 'title' => 'Guidance and setup', 'text' => 'We guide the configuration, app setup, and key technical checks.'],
+                    ['step' => '04', 'title' => 'Follow-up', 'text' => 'You keep a clear support contact for questions, refinements, and practical help.'],
+                ],
+            ],
+        };
+    @endphp
+
+    <section class="section-space">
+        <div class="container-xxl px-3 px-md-4 px-lg-5">
+            <div class="surface-card p-4 p-lg-5 reveal-up">
+                <div class="text-center mx-auto mb-5" style="max-width: 760px;">
+                    <span class="section-kicker mb-3">{{ $howWeWork['kicker'] }}</span>
+                    <h2 class="section-title text-body-rif mb-3">{{ $howWeWork['title'] }}</h2>
+                </div>
+                <div class="row g-4">
+                    @foreach ($howWeWork['items'] as $item)
+                        <div class="col-md-6 col-xl-3">
+                            <article class="workflow-card home-workflow-card h-100">
+                                <span class="workflow-step-number">{{ $item['step'] }}</span>
+                                <h3 class="h4 text-body-rif mt-3 mb-2">{{ $item['title'] }}</h3>
+                                <p class="text-soft-rif mb-0">{{ $item['text'] }}</p>
+                            </article>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -408,31 +524,31 @@
                 [
                     'slug' => 'sup',
                     'title' => 'Basic / SUP',
-                    'subtitle' => 'الخيار البسيط للبداية بشكل واضح ومرتب.',
+                    'subtitle' => 'Ø§Ù„Ø®ÙŠØ§Ø± Ø§Ù„Ø¨Ø³ÙŠØ· Ù„Ù„Ø¨Ø¯Ø§ÙŠØ© Ø¨Ø´ÙƒÙ„ ÙˆØ§Ø¶Ø­ ÙˆÙ…Ø±ØªØ¨.',
                     'plans' => [
-                        ['duration' => '3 أشهر', 'price' => '89', 'badge' => null, 'features' => ['إعداد أساسي', 'مساعدة في التثبيت', 'دعم واتساب', 'متابعة بسيطة']],
-                        ['duration' => '6 أشهر', 'price' => '149', 'badge' => 'الأكثر طلبا', 'features' => ['أجهزة متعددة', 'مراجعة الإعداد', 'دعم أطول', 'سعر أفضل']],
-                        ['duration' => '12 شهرا', 'price' => '199', 'badge' => 'أفضل قيمة', 'features' => ['دعم سنوي', 'متابعة منتظمة', 'أولوية هادئة', 'توفير سنوي']],
+                        ['duration' => '3 Ø£Ø´Ù‡Ø±', 'price' => '89', 'badge' => null, 'features' => ['Ø¥Ø¹Ø¯Ø§Ø¯ Ø£Ø³Ø§Ø³ÙŠ', 'Ù…Ø³Ø§Ø¹Ø¯Ø© ÙÙŠ Ø§Ù„ØªØ«Ø¨ÙŠØª', 'Ø¯Ø¹Ù… ÙˆØ§ØªØ³Ø§Ø¨', 'Ù…ØªØ§Ø¨Ø¹Ø© Ø¨Ø³ÙŠØ·Ø©']],
+                        ['duration' => '6 Ø£Ø´Ù‡Ø±', 'price' => '149', 'badge' => 'Ø§Ù„Ø£ÙƒØ«Ø± Ø·Ù„Ø¨Ø§', 'features' => ['Ø£Ø¬Ù‡Ø²Ø© Ù…ØªØ¹Ø¯Ø¯Ø©', 'Ù…Ø±Ø§Ø¬Ø¹Ø© Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯', 'Ø¯Ø¹Ù… Ø£Ø·ÙˆÙ„', 'Ø³Ø¹Ø± Ø£ÙØ¶Ù„']],
+                        ['duration' => '12 Ø´Ù‡Ø±Ø§', 'price' => '199', 'badge' => 'Ø£ÙØ¶Ù„ Ù‚ÙŠÙ…Ø©', 'features' => ['Ø¯Ø¹Ù… Ø³Ù†ÙˆÙŠ', 'Ù…ØªØ§Ø¨Ø¹Ø© Ù…Ù†ØªØ¸Ù…Ø©', 'Ø£ÙˆÙ„ÙˆÙŠØ© Ù‡Ø§Ø¯Ø¦Ø©', 'ØªÙˆÙÙŠØ± Ø³Ù†ÙˆÙŠ']],
                     ],
                 ],
                 [
                     'slug' => 'max',
                     'title' => 'Advanced / MAX',
-                    'subtitle' => 'توازن أفضل للعملاء الذين يحتاجون متابعة أقوى.',
+                    'subtitle' => 'ØªÙˆØ§Ø²Ù† Ø£ÙØ¶Ù„ Ù„Ù„Ø¹Ù…Ù„Ø§Ø¡ Ø§Ù„Ø°ÙŠÙ† ÙŠØ­ØªØ§Ø¬ÙˆÙ† Ù…ØªØ§Ø¨Ø¹Ø© Ø£Ù‚ÙˆÙ‰.',
                     'plans' => [
-                        ['duration' => '3 أشهر', 'price' => '149', 'badge' => null, 'features' => ['إعداد متقدم', 'دعم متعدد الأجهزة', 'مساعدة عملية', 'أولوية أعلى']],
-                        ['duration' => '6 أشهر', 'price' => '249', 'badge' => 'موصى به', 'features' => ['تحسين مستمر', 'تشخيص تقني', 'متابعة ممتدة', 'راحة أكبر']],
-                        ['duration' => '12 شهرا', 'price' => '449', 'badge' => null, 'features' => ['مرافقة سنوية', 'استقرار أقوى', 'دعم مستمر', 'تغطية أفضل']],
+                        ['duration' => '3 Ø£Ø´Ù‡Ø±', 'price' => '149', 'badge' => null, 'features' => ['Ø¥Ø¹Ø¯Ø§Ø¯ Ù…ØªÙ‚Ø¯Ù…', 'Ø¯Ø¹Ù… Ù…ØªØ¹Ø¯Ø¯ Ø§Ù„Ø£Ø¬Ù‡Ø²Ø©', 'Ù…Ø³Ø§Ø¹Ø¯Ø© Ø¹Ù…Ù„ÙŠØ©', 'Ø£ÙˆÙ„ÙˆÙŠØ© Ø£Ø¹Ù„Ù‰']],
+                        ['duration' => '6 Ø£Ø´Ù‡Ø±', 'price' => '249', 'badge' => 'Ù…ÙˆØµÙ‰ Ø¨Ù‡', 'features' => ['ØªØ­Ø³ÙŠÙ† Ù…Ø³ØªÙ…Ø±', 'ØªØ´Ø®ÙŠØµ ØªÙ‚Ù†ÙŠ', 'Ù…ØªØ§Ø¨Ø¹Ø© Ù…Ù…ØªØ¯Ø©', 'Ø±Ø§Ø­Ø© Ø£ÙƒØ¨Ø±']],
+                        ['duration' => '12 Ø´Ù‡Ø±Ø§', 'price' => '449', 'badge' => null, 'features' => ['Ù…Ø±Ø§ÙÙ‚Ø© Ø³Ù†ÙˆÙŠØ©', 'Ø§Ø³ØªÙ‚Ø±Ø§Ø± Ø£Ù‚ÙˆÙ‰', 'Ø¯Ø¹Ù… Ù…Ø³ØªÙ…Ø±', 'ØªØºØ·ÙŠØ© Ø£ÙØ¶Ù„']],
                     ],
                 ],
                 [
                     'slug' => 'trex',
                     'title' => 'Premium / TREX',
-                    'subtitle' => 'الخيار الأقوى لمن يريد متابعة كاملة ومستمرة.',
+                    'subtitle' => 'Ø§Ù„Ø®ÙŠØ§Ø± Ø§Ù„Ø£Ù‚ÙˆÙ‰ Ù„Ù…Ù† ÙŠØ±ÙŠØ¯ Ù…ØªØ§Ø¨Ø¹Ø© ÙƒØ§Ù…Ù„Ø© ÙˆÙ…Ø³ØªÙ…Ø±Ø©.',
                     'plans' => [
-                        ['duration' => '3 أشهر', 'price' => '249', 'badge' => null, 'features' => ['دعم بريميوم', 'متابعة مفصلة', 'مساعدة متقدمة', 'أولوية كاملة']],
-                        ['duration' => '6 أشهر', 'price' => '349', 'badge' => 'الأكثر مبيعا', 'features' => ['دعم مكثف', 'مرافقة أطول', 'مراجعة تقنية', 'طمأنينة أكبر']],
-                        ['duration' => '12 شهرا', 'price' => '599', 'badge' => 'سنوي', 'features' => ['دعم شامل', 'متابعة سنوية', 'أعلى أولوية', 'تغطية موسعة']],
+                        ['duration' => '3 Ø£Ø´Ù‡Ø±', 'price' => '249', 'badge' => null, 'features' => ['Ø¯Ø¹Ù… Ø¨Ø±ÙŠÙ…ÙŠÙˆÙ…', 'Ù…ØªØ§Ø¨Ø¹Ø© Ù…ÙØµÙ„Ø©', 'Ù…Ø³Ø§Ø¹Ø¯Ø© Ù…ØªÙ‚Ø¯Ù…Ø©', 'Ø£ÙˆÙ„ÙˆÙŠØ© ÙƒØ§Ù…Ù„Ø©']],
+                        ['duration' => '6 Ø£Ø´Ù‡Ø±', 'price' => '349', 'badge' => 'Ø§Ù„Ø£ÙƒØ«Ø± Ù…Ø¨ÙŠØ¹Ø§', 'features' => ['Ø¯Ø¹Ù… Ù…ÙƒØ«Ù', 'Ù…Ø±Ø§ÙÙ‚Ø© Ø£Ø·ÙˆÙ„', 'Ù…Ø±Ø§Ø¬Ø¹Ø© ØªÙ‚Ù†ÙŠØ©', 'Ø·Ù…Ø£Ù†ÙŠÙ†Ø© Ø£ÙƒØ¨Ø±']],
+                        ['duration' => '12 Ø´Ù‡Ø±Ø§', 'price' => '599', 'badge' => 'Ø³Ù†ÙˆÙŠ', 'features' => ['Ø¯Ø¹Ù… Ø´Ø§Ù…Ù„', 'Ù…ØªØ§Ø¨Ø¹Ø© Ø³Ù†ÙˆÙŠØ©', 'Ø£Ø¹Ù„Ù‰ Ø£ÙˆÙ„ÙˆÙŠØ©', 'ØªØºØ·ÙŠØ© Ù…ÙˆØ³Ø¹Ø©']],
                     ],
                 ],
             ],
@@ -502,7 +618,7 @@
                                     <p class="text-soft-rif mb-0">{{ $family['subtitle'] }}</p>
                                 </div>
                             </div>
-                            <a href="{{ $primaryCta }}" class="btn-rif-outline family-pricing-cta">{{ $locale === 'fr' ? 'Choisir' : ($locale === 'es' ? 'Elegir' : ($locale === 'ar' ? 'اختيار' : 'Choose')) }}</a>
+                            <a href="{{ $primaryCta }}" class="btn-rif-outline family-pricing-cta">{{ $locale === 'fr' ? 'Choisir' : ($locale === 'es' ? 'Elegir' : ($locale === 'ar' ? 'Ø§Ø®ØªÙŠØ§Ø±' : 'Choose')) }}</a>
                         </div>
                         <div class="row g-3">
                             @foreach ($family['plans'] as $index => $plan)
@@ -526,7 +642,7 @@
                                                 </li>
                                             @endforeach
                                         </ul>
-                                        <a href="{{ $primaryCta }}" class="{{ $index === 1 ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100 mt-auto">{{ $locale === 'fr' ? 'Continuer' : ($locale === 'es' ? 'Continuar' : ($locale === 'ar' ? 'متابعة' : 'Continue')) }}</a>
+                                        <a href="{{ $primaryCta }}" class="{{ $index === 1 ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100 mt-auto">{{ $locale === 'fr' ? 'Continuer' : ($locale === 'es' ? 'Continuar' : ($locale === 'ar' ? 'Ù…ØªØ§Ø¨Ø¹Ø©' : 'Continue')) }}</a>
                                     </article>
                                 </div>
                             @endforeach
@@ -556,10 +672,10 @@
                                 ['icon' => 'refresh-cw', 'title' => 'Seguimiento simple', 'text' => 'El cliente siempre entiende su siguiente paso.'],
                             ],
                             'ar' => [
-                                ['icon' => 'sparkles', 'title' => 'بداية مرتبة', 'text' => 'رحلة عميل واضحة من الصفحة الأولى إلى الدعم.'],
-                                ['icon' => 'messages-square', 'title' => 'دعم بشري', 'text' => 'محادثة حقيقية ومتابعة عملية عبر واتساب.'],
-                                ['icon' => 'shield-check', 'title' => 'ثقة وأمان', 'text' => 'مراجعة يدوية وخطوات دفع ودعم مفهومة.'],
-                                ['icon' => 'refresh-cw', 'title' => 'متابعة بسيطة', 'text' => 'تقدم واضح في كل مرحلة دون ارتباك.'],
+                                ['icon' => 'sparkles', 'title' => 'Ø¨Ø¯Ø§ÙŠØ© Ù…Ø±ØªØ¨Ø©', 'text' => 'Ø±Ø­Ù„Ø© Ø¹Ù…ÙŠÙ„ ÙˆØ§Ø¶Ø­Ø© Ù…Ù† Ø§Ù„ØµÙØ­Ø© Ø§Ù„Ø£ÙˆÙ„Ù‰ Ø¥Ù„Ù‰ Ø§Ù„Ø¯Ø¹Ù….'],
+                                ['icon' => 'messages-square', 'title' => 'Ø¯Ø¹Ù… Ø¨Ø´Ø±ÙŠ', 'text' => 'Ù…Ø­Ø§Ø¯Ø«Ø© Ø­Ù‚ÙŠÙ‚ÙŠØ© ÙˆÙ…ØªØ§Ø¨Ø¹Ø© Ø¹Ù…Ù„ÙŠØ© Ø¹Ø¨Ø± ÙˆØ§ØªØ³Ø§Ø¨.'],
+                                ['icon' => 'shield-check', 'title' => 'Ø«Ù‚Ø© ÙˆØ£Ù…Ø§Ù†', 'text' => 'Ù…Ø±Ø§Ø¬Ø¹Ø© ÙŠØ¯ÙˆÙŠØ© ÙˆØ®Ø·ÙˆØ§Øª Ø¯ÙØ¹ ÙˆØ¯Ø¹Ù… Ù…ÙÙ‡ÙˆÙ…Ø©.'],
+                                ['icon' => 'refresh-cw', 'title' => 'Ù…ØªØ§Ø¨Ø¹Ø© Ø¨Ø³ÙŠØ·Ø©', 'text' => 'ØªÙ‚Ø¯Ù… ÙˆØ§Ø¶Ø­ ÙÙŠ ÙƒÙ„ Ù…Ø±Ø­Ù„Ø© Ø¯ÙˆÙ† Ø§Ø±ØªØ¨Ø§Ùƒ.'],
                             ],
                             default => [
                                 ['icon' => 'sparkles', 'title' => 'Professional onboarding', 'text' => 'A stronger first impression from the moment a client lands on the site.'],
@@ -590,6 +706,93 @@
     </section>
 
     @php
+        $testimonials = match ($locale) {
+            'fr' => [
+                ['name' => 'Samir', 'role' => 'Client au Maroc', 'quote' => 'Le parcours etait clair du debut a la fin, surtout pour le paiement et la mise en route.'],
+                ['name' => 'Leila', 'role' => 'Support local', 'quote' => 'J ai apprecie le ton calme, la verification humaine, et la rapidite des retours.'],
+                ['name' => 'Omar', 'role' => 'Client prive', 'quote' => 'On comprend enfin quoi faire, a quel moment, et avec qui parler si quelque chose bloque.'],
+            ],
+            'es' => [
+                ['name' => 'Samir', 'role' => 'Cliente en Marruecos', 'quote' => 'El proceso fue claro de principio a fin, sobre todo en pago y configuracion.'],
+                ['name' => 'Leila', 'role' => 'Soporte local', 'quote' => 'Me gusto el tono profesional, la revision humana y la rapidez del seguimiento.'],
+                ['name' => 'Omar', 'role' => 'Cliente privado', 'quote' => 'Por fin una experiencia donde entiendes que hacer, cuando hacerlo y con quien hablar.'],
+            ],
+            'ar' => [
+                ['name' => 'Ø³Ù…ÙŠØ±', 'role' => 'Ø¹Ù…ÙŠÙ„ Ù…Ù† Ù…Ø±Ø§ÙƒØ´', 'quote' => 'ÙƒÙ„ Ø´ÙŠØ¡ ÙƒØ§Ù† ÙˆØ§Ø¶Ø­Ù‹Ø§ Ù…Ù† Ø§Ù„Ø¨Ø¯Ø§ÙŠØ© Ø­ØªÙ‰ Ø§Ù„Ù†Ù‡Ø§ÙŠØ©ØŒ Ø®ØµÙˆØµÙ‹Ø§ ÙÙŠ Ø®Ø·ÙˆØ§Øª Ø§Ù„Ø¯ÙØ¹ ÙˆØ§Ù„Ø¥Ø¹Ø¯Ø§Ø¯.'],
+                ['name' => 'Ù„ÙŠÙ„Ù‰', 'role' => 'Ù…ØªØ§Ø¨Ø¹Ø© Ù…Ø­Ù„ÙŠØ©', 'quote' => 'Ø£Ø¹Ø¬Ø¨Ù†ÙŠ Ø§Ù„Ù‡Ø¯ÙˆØ¡ ÙÙŠ Ø§Ù„ÙˆØ§Ø¬Ù‡Ø© ÙˆØ·Ø±ÙŠÙ‚Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø© Ø§Ù„Ø¨Ø´Ø±ÙŠØ© ÙˆØ³Ø±Ø¹Ø© Ø§Ù„ØªÙØ§Ø¹Ù„.'],
+                ['name' => 'Ø¹Ù…Ø±', 'role' => 'Ø¹Ù…ÙŠÙ„ Ø®Ø§Øµ', 'quote' => 'Ø£Ø®ÙŠØ±Ù‹Ø§ ØªØ¬Ø±Ø¨Ø© ØªØ´Ø±Ø­ Ù„Ùƒ Ù…Ø§ Ø§Ù„Ø°ÙŠ ÙŠØ¬Ø¨ ÙØ¹Ù„Ù‡ ÙˆÙ…ØªÙ‰ ÙˆÙ…Ø¹ Ù…Ù† ØªØªÙˆØ§ØµÙ„ Ø¹Ù†Ø¯ Ø§Ù„Ø­Ø§Ø¬Ø©.'],
+            ],
+            default => [
+                ['name' => 'Samir', 'role' => 'Client in Morocco', 'quote' => 'The whole journey felt clear from the first step, especially around payment review and setup.'],
+                ['name' => 'Leila', 'role' => 'Local support client', 'quote' => 'I liked the calm tone, the human review, and the way every step was explained.'],
+                ['name' => 'Omar', 'role' => 'Private client', 'quote' => 'It finally feels like a service site that explains what happens next instead of confusing the client.'],
+            ],
+        };
+        $faqItems = match ($locale) {
+            'fr' => [
+                ['q' => 'Que propose exactement Rifi Media ?', 'a' => 'Nous proposons l aide a la configuration, l accompagnement applicatif, l assistance technique et le suivi humain.'],
+                ['q' => 'Recevez-vous des paiements internationaux ?', 'a' => 'Oui, via Paddle pour les cartes internationales, avec verification manuelle pour les transferts locaux.'],
+                ['q' => 'Fournissez-vous du contenu media ?', 'a' => 'Non. Nous ne fournissons ni n hebergeons de contenu. Nous aidons uniquement a la configuration et au support technique.'],
+                ['q' => 'Comment se passe le suivi apres commande ?', 'a' => 'Le client garde un tableau de bord, un contact humain et un historique clair des etapes.'],
+            ],
+            'es' => [
+                ['q' => 'Que ofrece exactamente Rifi Media?', 'a' => 'Ofrecemos ayuda de configuracion, guia de aplicaciones, asistencia tecnica y seguimiento humano.'],
+                ['q' => 'Aceptan pagos internacionales?', 'a' => 'Si, mediante Paddle para tarjetas internacionales, con revision manual para transferencias locales.'],
+                ['q' => 'Proporcionan contenido multimedia?', 'a' => 'No. No proporcionamos ni alojamos contenido. Solo ayudamos con configuracion y soporte tecnico.'],
+                ['q' => 'Como funciona el seguimiento despues del pedido?', 'a' => 'El cliente conserva un panel, un contacto humano y un historial claro de pasos.'],
+            ],
+            'ar' => [
+                ['q' => 'Ù…Ø§ Ø§Ù„Ø°ÙŠ ØªÙ‚Ø¯Ù…Ù‡ Rifi Media Ø¨Ø§Ù„Ø¶Ø¨Ø·ØŸ', 'a' => 'Ù†Ù‚Ø¯Ù… Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯Ø© ÙÙŠ Ø¥Ø¹Ø¯Ø§Ø¯ Ø§Ù„Ø£Ø¬Ù‡Ø²Ø©ØŒ ÙˆØ¶Ø¨Ø· Ø§Ù„ØªØ·Ø¨ÙŠÙ‚Ø§ØªØŒ ÙˆØ§Ù„Ù…ØªØ§Ø¨Ø¹Ø© Ø§Ù„ØªÙ‚Ù†ÙŠØ©ØŒ ÙˆØ§Ù„Ø¯Ø¹Ù… Ø§Ù„Ø¨Ø´Ø±ÙŠ Ø§Ù„ÙˆØ§Ø¶Ø­.'],
+                ['q' => 'Ù‡Ù„ ØªÙ‚Ø¨Ù„ÙˆÙ† Ø§Ù„Ø¯ÙØ¹ Ø§Ù„Ø¯ÙˆÙ„ÙŠØŸ', 'a' => 'Ù†Ø¹Ù…ØŒ Ø¹Ø¨Ø± Paddle Ù„Ù„Ø¨Ø·Ø§Ù‚Ø§Øª Ø§Ù„Ø¯ÙˆÙ„ÙŠØ©ØŒ Ù…Ø¹ Ù…Ø±Ø§Ø¬Ø¹Ø© ÙŠØ¯ÙˆÙŠØ© Ù„Ù„ØªØ­ÙˆÙŠÙ„Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ©.'],
+                ['q' => 'Ù‡Ù„ ØªÙˆÙØ±ÙˆÙ† Ù…Ø­ØªÙˆÙ‰ Ø¥Ø¹Ù„Ø§Ù…ÙŠÙ‹Ø§ØŸ', 'a' => 'Ù„Ø§. Ù†Ø­Ù† Ù„Ø§ Ù†ÙˆÙØ± ÙˆÙ„Ø§ Ù†Ø³ØªØ¶ÙŠÙ Ø£ÙŠ Ù…Ø­ØªÙˆÙ‰ØŒ Ø¨Ù„ Ù†Ù‚Ø¯Ù… ÙÙ‚Ø· Ø®Ø¯Ù…Ø§Øª Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯ ÙˆØ§Ù„Ø¯Ø¹Ù… Ø§Ù„ØªÙ‚Ù†ÙŠ.'],
+                ['q' => 'ÙƒÙŠÙ ØªØªÙ… Ø§Ù„Ù…ØªØ§Ø¨Ø¹Ø© Ø¨Ø¹Ø¯ Ø§Ù„Ø·Ù„Ø¨ØŸ', 'a' => 'ÙŠØ­ØµÙ„ Ø§Ù„Ø¹Ù…ÙŠÙ„ Ø¹Ù„Ù‰ Ù„ÙˆØ­Ø© Ù…ØªØ§Ø¨Ø¹Ø© ÙˆÙ…Ø³Ø§Ø± ÙˆØ§Ø¶Ø­ Ù„Ù„ØªÙˆØ§ØµÙ„ ÙˆØ³Ø¬Ù„ Ù…Ù†Ø¸Ù… Ù„Ù„Ø­Ø§Ù„Ø© ÙˆØ§Ù„Ø®Ø·ÙˆØ§Øª.'],
+            ],
+            default => [
+                ['q' => 'What does Rifi Media actually provide?', 'a' => 'We provide device setup help, app guidance, technical troubleshooting, and practical follow-up from a real team.'],
+                ['q' => 'Do you accept international payments?', 'a' => 'Yes. International card payments can be reviewed through Paddle, while local transfers are confirmed manually.'],
+                ['q' => 'Do you provide media content?', 'a' => 'No. We do not provide or host media content. We only assist with device configuration, app setup, and technical support.'],
+                ['q' => 'What happens after the order is placed?', 'a' => 'The client gets a clearer workflow, payment status visibility, and human guidance for the next technical steps.'],
+            ],
+        };
+    @endphp
+
+    <section class="section-space">
+        <div class="container-xxl px-3 px-md-4 px-lg-5">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="surface-card p-4 p-lg-5 h-100 reveal-up">
+                        <span class="section-kicker mb-3">{{ $locale === 'ar' ? 'Ø¢Ø±Ø§Ø¡ Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡' : ($locale === 'fr' ? 'Temoignages' : ($locale === 'es' ? 'Testimonios' : 'Testimonials')) }}</span>
+                        <h2 class="section-title text-body-rif mb-4">{{ $locale === 'ar' ? 'Ø«Ù‚Ø© ØªÙØ¨Ù†Ù‰ Ù…Ù† Ø®Ù„Ø§Ù„ ØªØ¬Ø±Ø¨Ø© ÙˆØ§Ø¶Ø­Ø©.' : ($locale === 'fr' ? 'La confiance passe par une experience claire.' : ($locale === 'es' ? 'La confianza empieza con una experiencia clara.' : 'Trust starts with a clearer client experience.')) }}</h2>
+                        <div class="d-grid gap-3">
+                            @foreach ($testimonials as $testimonial)
+                                <article class="surface-card p-4">
+                                    <p class="text-body-rif fs-5 mb-3">â€œ{{ $testimonial['quote'] }}â€</p>
+                                    <div class="fw-semibold text-body-rif">{{ $testimonial['name'] }}</div>
+                                    <div class="text-soft-rif small">{{ $testimonial['role'] }}</div>
+                                </article>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="surface-card p-4 p-lg-5 h-100 reveal-up">
+                        <span class="section-kicker mb-3">{{ $locale === 'ar' ? 'Ø§Ù„Ø£Ø³Ø¦Ù„Ø© Ø§Ù„Ø´Ø§Ø¦Ø¹Ø©' : ($locale === 'fr' ? 'FAQ' : ($locale === 'es' ? 'FAQ' : 'FAQ')) }}</span>
+                        <h2 class="section-title text-body-rif mb-4">{{ $locale === 'ar' ? 'Ø¥Ø¬Ø§Ø¨Ø§Øª Ø³Ø±ÙŠØ¹Ø© Ø¹Ù„Ù‰ Ø£Ù‡Ù… Ø§Ù„Ø£Ø³Ø¦Ù„Ø©.' : ($locale === 'fr' ? 'Des reponses claires aux questions importantes.' : ($locale === 'es' ? 'Respuestas claras a las preguntas mas importantes.' : 'Clear answers to the questions clients ask most.')) }}</h2>
+                        <div class="d-grid gap-3">
+                            @foreach ($faqItems as $faq)
+                                <details class="faq-item-card">
+                                    <summary>{{ $faq['q'] }}</summary>
+                                    <p class="text-soft-rif mb-0">{{ $faq['a'] }}</p>
+                                </details>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @php
         $resourceLinks = match ($locale) {
             'fr' => [
                 'kicker' => 'Explorer le site',
@@ -612,13 +815,13 @@
                 ],
             ],
             'ar' => [
-                'kicker' => 'استكشف الموقع',
-                'title' => 'صفحات مفيدة لفهم الخدمات وطريقة العمل والسياسات بشكل أوضح.',
+                'kicker' => 'Ø§Ø³ØªÙƒØ´Ù Ø§Ù„Ù…ÙˆÙ‚Ø¹',
+                'title' => 'ØµÙØ­Ø§Øª Ù…ÙÙŠØ¯Ø© Ù„ÙÙ‡Ù… Ø§Ù„Ø®Ø¯Ù…Ø§Øª ÙˆØ·Ø±ÙŠÙ‚Ø© Ø§Ù„Ø¹Ù…Ù„ ÙˆØ§Ù„Ø³ÙŠØ§Ø³Ø§Øª Ø¨Ø´ÙƒÙ„ Ø£ÙˆØ¶Ø­.',
                 'items' => [
-                    ['title' => 'الخدمات', 'text' => 'تعرف على خدمات الإعداد والمساعدة التقنية.', 'url' => route('pages.services')],
-                    ['title' => 'من نحن', 'text' => 'اقرأ عن نهج الفريق وطريقة المتابعة والدعم.', 'url' => route('pages.about')],
-                    ['title' => 'التواصل', 'text' => 'تواصل مع الفريق قبل الطلب أو بعده.', 'url' => route('pages.contact')],
-                    ['title' => 'مركز الثقة', 'text' => 'راجع الخصوصية والأمان وشروط الخدمة والاسترجاع.', 'url' => route('legal.index')],
+                    ['title' => 'Ø§Ù„Ø®Ø¯Ù…Ø§Øª', 'text' => 'ØªØ¹Ø±Ù Ø¹Ù„Ù‰ Ø®Ø¯Ù…Ø§Øª Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯ ÙˆØ§Ù„Ù…Ø³Ø§Ø¹Ø¯Ø© Ø§Ù„ØªÙ‚Ù†ÙŠØ©.', 'url' => route('pages.services')],
+                    ['title' => 'Ù…Ù† Ù†Ø­Ù†', 'text' => 'Ø§Ù‚Ø±Ø£ Ø¹Ù† Ù†Ù‡Ø¬ Ø§Ù„ÙØ±ÙŠÙ‚ ÙˆØ·Ø±ÙŠÙ‚Ø© Ø§Ù„Ù…ØªØ§Ø¨Ø¹Ø© ÙˆØ§Ù„Ø¯Ø¹Ù….', 'url' => route('pages.about')],
+                    ['title' => 'Ø§Ù„ØªÙˆØ§ØµÙ„', 'text' => 'ØªÙˆØ§ØµÙ„ Ù…Ø¹ Ø§Ù„ÙØ±ÙŠÙ‚ Ù‚Ø¨Ù„ Ø§Ù„Ø·Ù„Ø¨ Ø£Ùˆ Ø¨Ø¹Ø¯Ù‡.', 'url' => route('pages.contact')],
+                    ['title' => 'Ù…Ø±ÙƒØ² Ø§Ù„Ø«Ù‚Ø©', 'text' => 'Ø±Ø§Ø¬Ø¹ Ø§Ù„Ø®ØµÙˆØµÙŠØ© ÙˆØ§Ù„Ø£Ù…Ø§Ù† ÙˆØ´Ø±ÙˆØ· Ø§Ù„Ø®Ø¯Ù…Ø© ÙˆØ§Ù„Ø§Ø³ØªØ±Ø¬Ø§Ø¹.', 'url' => route('legal.index')],
                 ],
             ],
             default => [
@@ -722,3 +925,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
+

@@ -1,6 +1,6 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
-@section('title', $page['title'].' | RIF Media')
+@section('title', $page['title'].' | Rifi Media')
 @section('meta_description', $page['meta_description'])
 
 @section('structured_data')
@@ -10,7 +10,7 @@
             '@type' => 'WebPage',
             'name' => $page['title'],
             'description' => $page['meta_description'],
-            'url' => request()->url().'?lang='.app()->getLocale(),
+            'url' => request()->url(),
             'inLanguage' => app()->getLocale(),
             'breadcrumb' => [
                 '@type' => 'BreadcrumbList',
@@ -87,22 +87,22 @@
 
                 <div class="col-lg-4">
                     <div class="surface-card p-4 p-lg-5 h-100 page-action-card">
-                        <span class="section-kicker mb-3">{{ $isArabic ? 'خطوات واضحة' : 'Clear next steps' }}</span>
+                        <span class="section-kicker mb-3">{{ $isArabic ? 'Ø®Ø·ÙˆØ§Øª ÙˆØ§Ø¶Ø­Ø©' : 'Clear next steps' }}</span>
                         <h2 class="h3 text-body-rif mb-3">
-                            {{ $isArabic ? 'ابدأ من الصفحة المناسبة ثم أكمل مع الفريق.' : 'Start from the right page and continue with the team.' }}
+                            {{ $isArabic ? 'Ø§Ø¨Ø¯Ø£ Ù…Ù† Ø§Ù„ØµÙØ­Ø© Ø§Ù„Ù…Ù†Ø§Ø³Ø¨Ø© Ø«Ù… Ø£ÙƒÙ…Ù„ Ù…Ø¹ Ø§Ù„ÙØ±ÙŠÙ‚.' : 'Start from the right page and continue with the team.' }}
                         </h2>
                         <p class="text-soft-rif mb-4">
-                            {{ $isArabic ? 'يمكنك التواصل مباشرة عبر واتساب أو الرجوع إلى الباقات لاختيار الخدمة المناسبة قبل المتابعة.' : 'You can contact support directly on WhatsApp or go back to the packages section to choose the service that fits your needs.' }}
+                            {{ $isArabic ? 'ÙŠÙ…ÙƒÙ†Ùƒ Ø§Ù„ØªÙˆØ§ØµÙ„ Ù…Ø¨Ø§Ø´Ø±Ø© Ø¹Ø¨Ø± ÙˆØ§ØªØ³Ø§Ø¨ Ø£Ùˆ Ø§Ù„Ø±Ø¬ÙˆØ¹ Ø¥Ù„Ù‰ Ø§Ù„Ø¨Ø§Ù‚Ø§Øª Ù„Ø§Ø®ØªÙŠØ§Ø± Ø§Ù„Ø®Ø¯Ù…Ø© Ø§Ù„Ù…Ù†Ø§Ø³Ø¨Ø© Ù‚Ø¨Ù„ Ø§Ù„Ù…ØªØ§Ø¨Ø¹Ø©.' : 'You can contact support directly on WhatsApp or go back to the packages section to choose the service that fits your needs.' }}
                         </p>
                         <div class="d-flex flex-column gap-3">
                             <a href="{{ $ctaPrimary }}" class="btn-rif-secondary" target="_blank" rel="noopener">
-                                {{ $isArabic ? 'تواصل عبر واتساب' : 'Talk on WhatsApp' }}
+                                {{ $isArabic ? 'ØªÙˆØ§ØµÙ„ Ø¹Ø¨Ø± ÙˆØ§ØªØ³Ø§Ø¨' : 'Talk on WhatsApp' }}
                             </a>
                             <a href="{{ $ctaSecondary }}" class="btn-rif-outline">
-                                {{ $isArabic ? 'عرض الباقات' : 'View packages' }}
+                                {{ $isArabic ? 'Ø¹Ø±Ø¶ Ø§Ù„Ø¨Ø§Ù‚Ø§Øª' : 'View packages' }}
                             </a>
                             <a href="{{ route('legal.index') }}" class="btn-rif-outline">
-                                {{ $isArabic ? 'مركز الثقة' : 'Trust center' }}
+                                {{ $isArabic ? 'Ù…Ø±ÙƒØ² Ø§Ù„Ø«Ù‚Ø©' : 'Trust center' }}
                             </a>
                         </div>
                     </div>
@@ -111,3 +111,4 @@
         </div>
     </section>
 @endsection
+

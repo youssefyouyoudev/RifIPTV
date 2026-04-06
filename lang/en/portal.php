@@ -31,10 +31,10 @@ return [
     ],
     'auth' => [
         'login' => [
-            'title' => 'Sign in | RIF Streaming',
-            'meta_description' => 'Sign in to your RIF Streaming account to review your service package, payments, and support activity.',
+            'title' => 'Sign in | Rifi Media',
+            'meta_description' => 'Sign in to your Rifi Media account to review your service package, payments, and support activity.',
             'kicker' => 'Welcome back',
-            'headline' => 'Sign in to your RIF Streaming workspace',
+            'headline' => 'Sign in to your Rifi Media workspace',
             'description' => 'Access your package, payment options, support owner, and account activity from one clean dashboard.',
             'email' => 'Email',
             'password' => 'Password',
@@ -45,8 +45,8 @@ return [
             'switch_cta' => 'Create your client account',
         ],
         'register' => [
-            'title' => 'Register | RIF Streaming',
-            'meta_description' => 'Create your RIF Streaming client account and start managing service packages, support, and setup follow-up.',
+            'title' => 'Register | Rifi Media',
+            'meta_description' => 'Create your Rifi Media client account and start managing service packages, support, and setup follow-up.',
             'kicker' => 'Client registration',
             'headline' => 'Create your client account',
             'description' => 'Registration creates a client account automatically. An admin can then manage your package, support, and setup follow-up from the business dashboard.',
@@ -63,8 +63,8 @@ return [
             'switch_cta' => 'Sign in',
         ],
         'forgot' => [
-            'title' => 'Forgot password | RIF Streaming',
-            'meta_description' => 'Request a password reset link for your RIF Streaming account.',
+            'title' => 'Forgot password | Rifi Media',
+            'meta_description' => 'Request a password reset link for your Rifi Media account.',
             'kicker' => 'Password recovery',
             'headline' => 'Reset your password',
             'description' => 'Enter your email and we will send you a secure link so you can get back to your service dashboard quickly.',
@@ -72,8 +72,8 @@ return [
             'submit' => 'Email reset link',
         ],
         'reset' => [
-            'title' => 'Reset password | RIF Streaming',
-            'meta_description' => 'Choose a new password for your RIF Streaming client account.',
+            'title' => 'Reset password | Rifi Media',
+            'meta_description' => 'Choose a new password for your Rifi Media client account.',
             'kicker' => 'Secure update',
             'headline' => 'Choose a new password',
             'description' => 'Keep your client space protected with a strong password so your order and support history stay safe.',
@@ -83,8 +83,8 @@ return [
             'submit' => 'Reset password',
         ],
         'verify' => [
-            'title' => 'Verify email | RIF Streaming',
-            'meta_description' => 'Verify your RIF Streaming email address before continuing to the protected account area.',
+            'title' => 'Verify email | Rifi Media',
+            'meta_description' => 'Verify your Rifi Media email address before continuing to the protected account area.',
             'kicker' => 'Email verification',
             'headline' => 'Verify your email address',
             'description' => 'Before continuing, please confirm your email using the link we just sent. If it did not arrive, we can send another one.',
@@ -93,8 +93,8 @@ return [
             'logout' => 'Log out',
         ],
         'confirm' => [
-            'title' => 'Confirm password | RIF Streaming',
-            'meta_description' => 'Confirm your password before making sensitive changes in your RIF Streaming account.',
+            'title' => 'Confirm password | Rifi Media',
+            'meta_description' => 'Confirm your password before making sensitive changes in your Rifi Media account.',
             'kicker' => 'Confirmation',
             'headline' => 'Confirm your password',
             'description' => 'This extra check keeps your account changes and service information protected.',
@@ -103,8 +103,8 @@ return [
         ],
     ],
     'profile' => [
-        'title' => 'Profile & Security | RIF Streaming',
-        'meta_description' => 'Manage your RIF Streaming profile details, password, and account security settings.',
+        'title' => 'Profile & Security | Rifi Media',
+        'meta_description' => 'Manage your Rifi Media profile details, password, and account security settings.',
         'kicker' => 'Account center',
         'headline' => 'Profile and security',
         'description' => 'Update your personal information, change your password, and keep your client account secure.',
@@ -238,4 +238,5 @@ return [
         ],
     ],
 ];
+
 

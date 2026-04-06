@@ -5,7 +5,7 @@
     $portalCopy = trans('portal.guest');
     $brandName = 'Rifi Media';
     $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
-    $brandLogo = asset('images/rifmedia-logo-128.png');
+    $brandLogo = asset('/public/images/rifmedia-logo-128.png');
     $themeCss = app()->environment('production') ? asset('/public/css/rifiptv.min.css') : asset('css/rifiptv.css');
     $seoConfig = config('seo');
     $socialLinks = collect(data_get($seoConfig, 'social_links', []))

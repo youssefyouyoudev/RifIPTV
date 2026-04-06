@@ -1,117 +1,129 @@
 <?php
 
+namespace Tests\Feature;
+
 use App\Models\Client;
 use App\Models\Plan;
 use App\Models\Subscription;
 use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-test('home route renders the safer services homepage', function () {
-    $response = $this->get('/');
+class DashboardExperienceTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $response
-        ->assertOk()
-        ->assertSee('Professional device setup service', false)
-        ->assertSee('Setup done right.', false);
-});
+    public function test_home_route_renders_the_safer_services_homepage(): void
+    {
+        $response = $this->get('/');
 
-test('client dashboard shows subscription-focused experience', function () {
-    $user = User::factory()->create([
-        'name' => 'Client User',
-        'role' => 'client',
-    ]);
+        $response
+            ->assertOk()
+            ->assertSee('Professional device setup service', false)
+            ->assertSee('Setup done right.', false);
+    }
 
-    $client = Client::create([
-        'user_id' => $user->id,
-    ]);
+    public function test_client_dashboard_shows_subscription_focused_experience(): void
+    {
+        $user = User::factory()->create([
+            'name' => 'Client User',
+            'role' => 'client',
+        ]);
 
-    $plan = Plan::create([
-        'name' => 'Premium',
-        'price_mad' => 149,
-        'features' => ['Fast activation'],
-        'is_featured' => true,
-    ]);
+        $client = Client::create([
+            'user_id' => $user->id,
+        ]);
 
-    Subscription::create([
-        'user_id' => $user->id,
-        'client_id' => $client->id,
-        'plan_id' => $plan->id,
-        'starts_at' => now()->subDays(10),
-        'activated_at' => now()->subDays(10),
-        'expires_at' => now()->addDays(20),
-        'status' => 'active',
-    ]);
+        $plan = Plan::create([
+            'name' => 'Premium',
+            'price_mad' => 149,
+            'features' => ['Fast activation'],
+            'is_featured' => true,
+        ]);
 
-    Transaction::create([
-        'user_id' => $user->id,
-        'client_id' => $client->id,
-        'amount_mad' => 149,
-        'payment_method' => 'Paddle',
-        'status' => 'paid',
-        'reference' => 'TX-CLIENT-1',
-        'paid_at' => now()->subDay(),
-    ]);
+        Subscription::create([
+            'user_id' => $user->id,
+            'client_id' => $client->id,
+            'plan_id' => $plan->id,
+            'starts_at' => now()->subDays(10),
+            'activated_at' => now()->subDays(10),
+            'expires_at' => now()->addDays(20),
+            'status' => 'active',
+        ]);
 
-    $response = $this->actingAs($user)->get('/dashboard');
+        Transaction::create([
+            'user_id' => $user->id,
+            'client_id' => $client->id,
+            'amount_mad' => 149,
+            'payment_method' => 'Paddle',
+            'status' => 'paid',
+            'reference' => 'TX-CLIENT-1',
+            'paid_at' => now()->subDay(),
+        ]);
 
-    $response
-        ->assertOk()
-        ->assertSee('Client dashboard')
-        ->assertSee('Premium')
-        ->assertSee('Payment summary')
-        ->assertDontSee('Total revenue');
-});
+        $response = $this->actingAs($user)->get('/dashboard');
 
-test('admin dashboard shows revenue and client management metrics', function () {
-    $admin = User::factory()->create([
-        'name' => 'Admin User',
-        'role' => 'admin',
-    ]);
+        $response
+            ->assertOk()
+            ->assertSee('Client dashboard')
+            ->assertSee('Premium')
+            ->assertSee('Payment summary')
+            ->assertDontSee('Total revenue');
+    }
 
-    $clientUser = User::factory()->create([
-        'name' => 'Managed Client',
-        'role' => 'client',
-    ]);
+    public function test_admin_dashboard_shows_revenue_and_client_management_metrics(): void
+    {
+        $admin = User::factory()->create([
+            'name' => 'Admin User',
+            'role' => 'admin',
+        ]);
 
-    $client = Client::create([
-        'user_id' => $clientUser->id,
-        'assigned_admin_id' => $admin->id,
-        'city' => 'Tetouan',
-    ]);
+        $clientUser = User::factory()->create([
+            'name' => 'Managed Client',
+            'role' => 'client',
+        ]);
 
-    $plan = Plan::create([
-        'name' => 'Family',
-        'price_mad' => 199,
-        'features' => ['Support'],
-        'is_featured' => false,
-    ]);
+        $client = Client::create([
+            'user_id' => $clientUser->id,
+            'assigned_admin_id' => $admin->id,
+            'city' => 'Tetouan',
+        ]);
 
-    $subscription = Subscription::create([
-        'user_id' => $clientUser->id,
-        'client_id' => $client->id,
-        'plan_id' => $plan->id,
-        'starts_at' => now()->subDays(12),
-        'activated_at' => now()->subDays(12),
-        'expires_at' => now()->addDays(18),
-        'status' => 'active',
-    ]);
+        $plan = Plan::create([
+            'name' => 'Family',
+            'price_mad' => 199,
+            'features' => ['Support'],
+            'is_featured' => false,
+        ]);
 
-    Transaction::create([
-        'user_id' => $clientUser->id,
-        'client_id' => $client->id,
-        'subscription_id' => $subscription->id,
-        'amount_mad' => 199,
-        'payment_method' => 'Bank Transfer',
-        'status' => 'paid',
-        'reference' => 'TX-ADMIN-1',
-        'paid_at' => now()->subDays(2),
-    ]);
+        $subscription = Subscription::create([
+            'user_id' => $clientUser->id,
+            'client_id' => $client->id,
+            'plan_id' => $plan->id,
+            'starts_at' => now()->subDays(12),
+            'activated_at' => now()->subDays(12),
+            'expires_at' => now()->addDays(18),
+            'status' => 'active',
+        ]);
 
-    $response = $this->actingAs($admin)->get('/dashboard');
+        Transaction::create([
+            'user_id' => $clientUser->id,
+            'client_id' => $client->id,
+            'subscription_id' => $subscription->id,
+            'amount_mad' => 199,
+            'payment_method' => 'Bank Transfer',
+            'status' => 'paid',
+            'reference' => 'TX-ADMIN-1',
+            'paid_at' => now()->subDays(2),
+        ]);
 
-    $response
-        ->assertOk()
-        ->assertSee('Total revenue')
-        ->assertSee('Managed Client')
-        ->assertSee('Client tracking table');
-});
+        $response = $this->actingAs($admin)->get('/dashboard');
+
+        $response
+            ->assertOk()
+            ->assertSee('Total revenue')
+            ->assertSee('Managed Client')
+            ->assertSee('Client tracking table');
+    }
+}

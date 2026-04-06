@@ -4,6 +4,32 @@
 @section('meta_description', __('site.home.meta_description'))
 @section('body_class', 'page-home')
 
+@section('structured_data')
+    <script type="application/ld+json">
+        {!! json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'WebPage',
+            'name' => __('site.home.title'),
+            'description' => __('site.home.meta_description'),
+            'url' => request()->url().'?lang='.app()->getLocale(),
+            'inLanguage' => app()->getLocale(),
+            'primaryImageOfPage' => asset('images/hero-light.png'),
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+    <script type="application/ld+json">
+        {!! json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'ItemList',
+            'name' => __('site.home.pricing.title'),
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Basic / SUP'],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Advanced / MAX'],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => 'Premium / TREX'],
+            ],
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+@endsection
+
 @section('content')
     @php
         $locale = app()->getLocale();

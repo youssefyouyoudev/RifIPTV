@@ -110,7 +110,7 @@ class AdminClientWorkflowController extends Controller
 
         $transaction->loadMissing('subscription.plan');
         $client->loadMissing('user');
-        $this->alerts->notifyPaymentConfirmed($client, $transaction);
+        $this->alerts->notifyPaymentConfirmed($client, $transaction, 'The admin reviewed the transfer, attached proof when available, and marked the payment as confirmed.');
     }
 
     protected function sendTutorial(Client $client, int $adminId): void

@@ -80,6 +80,7 @@ Route::get('/robots.txt', function () {
         'Disallow: /register',
         'Disallow: /forgot-password',
         'Disallow: /reset-password',
+        'Host: '.parse_url(config('app.url'), PHP_URL_HOST),
         'Sitemap: '.route('sitemap'),
     ];
 
@@ -87,6 +88,34 @@ Route::get('/robots.txt', function () {
         'Content-Type' => 'text/plain; charset=UTF-8',
     ]);
 })->name('robots');
+
+Route::get('/llms.txt', function () {
+    $lines = [
+        '# RIF Media',
+        '',
+        'RIF Media is a device setup and technical support website.',
+        'We help clients with device configuration, app guidance, troubleshooting, setup follow-up, and payment support.',
+        'We do not host, provide, or distribute media content.',
+        '',
+        'Public pages:',
+        '- '.route('home'),
+        '- '.route('pages.services'),
+        '- '.route('pages.about'),
+        '- '.route('pages.contact'),
+        '- '.route('legal.index'),
+        '',
+        'Primary contact:',
+        '- Email: '.config('seo.contact_email', 'contact@rifimedia.com'),
+    ];
+
+    if ($phone = config('seo.contact_phone')) {
+        $lines[] = '- Phone: '.$phone;
+    }
+
+    return response(implode(PHP_EOL, $lines), Response::HTTP_OK, [
+        'Content-Type' => 'text/plain; charset=UTF-8',
+    ]);
+})->name('llms');
 
 Route::post('/telegram/webhook/{secret}', TelegramWebhookController::class)
     ->withoutMiddleware([VerifyCsrfToken::class])

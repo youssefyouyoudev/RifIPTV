@@ -7,6 +7,11 @@
         ? 'إعداد الأجهزة والدعم التقني'
         : data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
     $brandLogo = asset('images/rifmedia-logo.png');
+    $seoConfig = config('seo');
+    $brandEmail = data_get($seoConfig, 'contact_email', 'contact@rifimedia.com');
+    $brandPhone = data_get($seoConfig, 'contact_phone');
+    $defaultOgImage = asset(ltrim((string) data_get($seoConfig, 'default_og_image', '/images/hero-light.png'), '/'));
+    $socialProfiles = collect(data_get($seoConfig, 'social_profiles', []))->filter()->values();
     $localeLabels = $isArabic ? ['en' => 'EN', 'fr' => 'FR', 'es' => 'ES', 'ar' => 'AR'] : trans('site.locales');
     $nav = $isArabic
         ? [
@@ -58,8 +63,8 @@
     $supportedLocales = config('app.supported_locales', ['en']);
     $localizedBaseUrl = request()->url();
     $localizedUrl = $localizedBaseUrl.'?lang='.app()->getLocale();
-    $metaTitle = trim($__env->yieldContent('title')) ?: $brandName;
-    $metaDescription = trim($__env->yieldContent('meta_description')) ?: __('site.home.meta_description');
+    $metaTitle = trim($__env->yieldContent('title')) ?: data_get($seoConfig, 'default_title', $brandName);
+    $metaDescription = trim($__env->yieldContent('meta_description')) ?: data_get($seoConfig, 'default_description', __('site.home.meta_description'));
     $metaRobots = trim($__env->yieldContent('meta_robots')) ?: 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1';
     $canonicalUrl = trim($__env->yieldContent('canonical')) ?: $localizedUrl;
     $localeUrls = collect($supportedLocales)->mapWithKeys(fn (string $locale) => [$locale => $localizedBaseUrl.'?lang='.$locale]);
@@ -76,16 +81,41 @@
         'url' => rtrim(config('app.url'), '/'),
         'logo' => $brandLogo,
         'description' => $metaDescription,
-        'email' => 'contact@rifimedia.com',
+        'email' => $brandEmail,
         'contactPoint' => [
             [
                 '@type' => 'ContactPoint',
                 'contactType' => 'customer support',
-                'email' => 'contact@rifimedia.com',
+                'email' => $brandEmail,
                 'availableLanguage' => $supportedLocales,
             ],
         ],
     ];
+    if ($brandPhone) {
+        $organizationSchema['telephone'] = $brandPhone;
+        $organizationSchema['contactPoint'][0]['telephone'] = $brandPhone;
+    }
+    if ($socialProfiles->isNotEmpty()) {
+        $organizationSchema['sameAs'] = $socialProfiles->all();
+    }
+    $localBusinessSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => data_get($seoConfig, 'business_type', 'ProfessionalService'),
+        'name' => $brandName,
+        'url' => rtrim(config('app.url'), '/'),
+        'image' => $defaultOgImage,
+        'logo' => $brandLogo,
+        'description' => $metaDescription,
+        'email' => $brandEmail,
+        'areaServed' => data_get($seoConfig, 'area_served', 'MA'),
+        'serviceType' => data_get($seoConfig, 'service_types', []),
+    ];
+    if ($brandPhone) {
+        $localBusinessSchema['telephone'] = $brandPhone;
+    }
+    if ($socialProfiles->isNotEmpty()) {
+        $localBusinessSchema['sameAs'] = $socialProfiles->all();
+    }
     $websiteSchema = [
         '@context' => 'https://schema.org',
         '@type' => 'WebSite',
@@ -114,6 +144,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="{{ $metaDescription }}">
     <meta name="robots" content="{{ $metaRobots }}">
+    <meta name="author" content="{{ $brandName }}">
+    <meta name="application-name" content="{{ $brandName }}">
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F8FAFC">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617">
@@ -140,13 +172,19 @@
     <meta property="og:description" content="{{ $metaDescription }}">
     <meta property="og:url" content="{{ $canonicalUrl }}">
     <meta property="og:locale" content="{{ $ogLocale }}">
-    <meta property="og:image" content="{{ asset('images/hero-light.png') }}">
+    <meta property="og:image" content="{{ $defaultOgImage }}">
+    <meta property="og:image:alt" content="{{ $brandName }} preview image">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $metaTitle }}">
     <meta name="twitter:description" content="{{ $metaDescription }}">
-    <meta name="twitter:image" content="{{ asset('images/hero-light.png') }}">
+    <meta name="twitter:image" content="{{ $defaultOgImage }}">
+    <meta name="twitter:image:alt" content="{{ $brandName }} preview image">
     <link rel="icon" href="{{ $brandLogo }}" type="image/png">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <link rel="alternate" type="text/plain" href="{{ url('/llms.txt') }}" title="LLMs.txt">
+    @foreach ($socialProfiles as $socialProfile)
+        <link rel="me" href="{{ $socialProfile }}">
+    @endforeach
     <title>{{ $metaTitle }}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -166,6 +204,7 @@
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="application/ld+json">{!! json_encode($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    <script type="application/ld+json">{!! json_encode($localBusinessSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
     <script type="application/ld+json">{!! json_encode($websiteSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
     @yield('structured_data')
     @stack('head')
@@ -191,7 +230,7 @@
                             <a href="{{ route('legal.index') }}" class="nav-link-rif">{{ $legalUi['hub_kicker'] }}</a>
                         </nav>
 
-                        <div class="d-none d-xl-flex align-items-center gap-3">
+                        <div class="d-none d-xl-flex align-items-center gap-3 header-desktop-tools">
                             <div class="dropdown">
                                 <button class="lang-dropdown-toggle dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span>{{ data_get($localeLabels, app()->getLocale(), strtoupper(app()->getLocale())) }}</span>

@@ -67,8 +67,8 @@ class PageController extends Controller
                     ],
                 ],
                 default => [
-                    'title' => 'Device Setup Services and Technical Support',
-                    'meta_description' => 'Professional device setup services, app guidance, troubleshooting, optimization, and technical support for connected devices.',
+                    'title' => 'Device Setup Services, App Guidance and Technical Support',
+                    'meta_description' => 'Professional device setup services, app guidance, troubleshooting, optimization, and technical support for connected devices, smart screens, and client follow-up.',
                     'kicker' => 'Services',
                     'headline' => 'Clear services for setup, optimization, and reliable technical follow-up.',
                     'description' => 'We help clients configure screens, mobile devices, and useful apps with practical guidance and human support.',
@@ -118,8 +118,8 @@ class PageController extends Controller
                     ],
                 ],
                 default => [
-                    'title' => 'About RIF Media',
-                    'meta_description' => 'Learn how RIF Media approaches device configuration, client guidance, and technical support with clarity and trust.',
+                    'title' => 'About RIF Media and Our Support Approach',
+                    'meta_description' => 'Learn how RIF Media approaches device configuration, client guidance, payment follow-up, and technical support with clarity and trust.',
                     'kicker' => 'About',
                     'headline' => 'A team focused on clarity, trust, and practical human support.',
                     'description' => 'RIF Media is designed as a practical setup and support service with cleaner language, a calmer interface, and responsible client follow-up.',
@@ -168,8 +168,8 @@ class PageController extends Controller
                     ],
                 ],
                 default => [
-                    'title' => 'Contact and Support',
-                    'meta_description' => 'Contact RIF Media for setup guidance, technical support, payment follow-up, and client assistance.',
+                    'title' => 'Contact RIF Media for Setup and Support',
+                    'meta_description' => 'Contact RIF Media for setup guidance, technical support, payment follow-up, WhatsApp assistance, and client support.',
                     'kicker' => 'Contact',
                     'headline' => 'Talk to the team if you need help before or after your order.',
                     'description' => 'We can help you choose the right service, understand payment steps, and get clearer technical support.',

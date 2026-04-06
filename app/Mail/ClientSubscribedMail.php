@@ -16,15 +16,25 @@ class ClientSubscribedMail extends Mailable
     public Client $client;
     public string $subjectLine;
     public string $summary;
+    public string $eyebrow;
+    public array $details;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Client $client, string $subjectLine = 'New Client Subscription - Support Needed', string $summary = 'A client needs support follow-up.')
+    public function __construct(
+        Client $client,
+        string $subjectLine = 'New client checkout submitted',
+        string $summary = 'A client needs support follow-up.',
+        string $eyebrow = 'Operational alert',
+        array $details = []
+    )
     {
         $this->client = $client;
         $this->subjectLine = $subjectLine;
         $this->summary = $summary;
+        $this->eyebrow = $eyebrow;
+        $this->details = $details;
     }
 
     /**
@@ -48,6 +58,8 @@ class ClientSubscribedMail extends Mailable
                 'client' => $this->client,
                 'subjectLine' => $this->subjectLine,
                 'summary' => $this->summary,
+                'eyebrow' => $this->eyebrow,
+                'details' => $this->details,
             ],
         );
     }

@@ -30,8 +30,8 @@ return [
         'disclaimer' => 'We do not host, provide, or distribute any media content. We only offer technical setup and support services. Users are responsible for compliance with local laws.',
     ],
     'home' => [
-        'title' => 'RIF Media | Device Setup & Technical Support',
-        'meta_description' => 'RIF Media provides device setup, app guidance, troubleshooting, and technical support for smart screens and connected devices.',
+        'title' => 'RIF Media | Device Setup Services, App Guidance & Technical Support',
+        'meta_description' => 'RIF Media provides device setup services, app guidance, troubleshooting, payment follow-up, and technical support for smart screens and connected devices.',
         'cta' => 'Start Service',
         'mini_points' => [
             'secure' => 'Secure process',
@@ -87,7 +87,7 @@ return [
         ],
     ],
     'dashboard' => [
-        'title' => 'Dashboard | RIF Streaming',
+        'title' => 'Dashboard | RIF Media',
         'space' => 'Client area',
         'sidebar' => [
             'subscription' => 'My package',

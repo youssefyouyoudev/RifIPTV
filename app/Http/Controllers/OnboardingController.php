@@ -121,7 +121,8 @@ class OnboardingController extends Controller
             ]);
         }
 
-        $transaction = $this->currentDraftTransaction($client, $subscription) ?? new Transaction();
+        $existingTransaction = $this->currentDraftTransaction($client, $subscription);
+        $transaction = $existingTransaction ?? new Transaction();
         $transaction->user_id = $user->id;
         $transaction->client_id = $client->id;
         $transaction->subscription_id = $subscription->id;
@@ -167,7 +168,11 @@ class OnboardingController extends Controller
 
         $transaction->loadMissing('subscription.plan');
         $client->loadMissing('user');
-        $this->alerts->notifyCheckoutSubmitted($client, $transaction);
+        if ($existingTransaction) {
+            $this->alerts->notifyCheckoutUpdated($client, $transaction, 'The client updated the bank-transfer checkout details.');
+        } else {
+            $this->alerts->notifyCheckoutSubmitted($client, $transaction);
+        }
 
         return redirect()->route('dashboard')->with('status', 'bank-transfer-waiting');
     }
@@ -214,7 +219,7 @@ class OnboardingController extends Controller
 
         $transaction->loadMissing('subscription.plan');
         $client->loadMissing('user');
-        $this->alerts->notifyPaymentConfirmed($client, $transaction);
+        $this->alerts->notifyPaymentConfirmed($client, $transaction, 'The card checkout was completed and the payment status is now confirmed.');
 
         return redirect()->route('dashboard')->with('status', 'card-paid');
     }

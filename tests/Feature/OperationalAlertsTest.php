@@ -82,12 +82,13 @@ class OperationalAlertsTest extends TestCase
         Mail::assertSent(ClientSubscribedMail::class, function (ClientSubscribedMail $mail) {
             return $mail->hasTo('ops@rifimedia.com')
                 && $mail->hasTo('admin@rifimedia.com')
-                && $mail->subjectLine === 'New client checkout submitted';
+                && $mail->subjectLine === 'New client checkout submitted'
+                && collect($mail->details)->contains(fn ($detail) => $detail['label'] === 'Bank' && $detail['value'] === 'CIH Bank');
         });
 
         Http::assertSentCount(2);
-        Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '7001');
-        Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '9001');
+        Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '7001' && str_contains((string) data_get($request->data(), 'text'), 'Bank: CIH Bank'));
+        Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '9001' && str_contains((string) data_get($request->data(), 'text'), 'Reference:'));
     }
 
     public function test_confirmed_card_checkout_sends_email_and_telegram_alerts(): void
@@ -149,11 +150,12 @@ class OperationalAlertsTest extends TestCase
         Mail::assertSent(ClientSubscribedMail::class, function (ClientSubscribedMail $mail) {
             return $mail->hasTo('ops@rifimedia.com')
                 && $mail->hasTo('admin@rifimedia.com')
-                && $mail->subjectLine === 'Client payment confirmed';
+                && $mail->subjectLine === 'Checkout updated: payment confirmed'
+                && $mail->eyebrow === 'Payment confirmed';
         });
 
         Http::assertSentCount(2);
-        Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '7001');
-        Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '9001');
+        Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '7001' && str_contains((string) data_get($request->data(), 'text'), 'Provider: Paddle'));
+        Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '9001' && str_contains((string) data_get($request->data(), 'text'), 'Status: Paid'));
     }
 }

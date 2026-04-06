@@ -5,7 +5,7 @@
 @section('body_class', 'page-home')
 
 @push('preloads')
-    <link rel="preload" as="image" href="{{ asset('images/rifmedia-logo-512.png') }}" imagesrcset="{{ asset('images/rifmedia-logo-320.png') }} 320w, {{ asset('images/rifmedia-logo-512.png') }} 512w" imagesizes="(min-width: 1200px) 320px, (min-width: 768px) 280px, 220px" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ asset('/public/images/rifmedia-logo-512.png') }}" imagesrcset="{{ asset('/public/images/rifmedia-logo-320.png') }} 320w, {{ asset('/public/images/rifmedia-logo-512.png') }} 512w" imagesizes="(min-width: 1200px) 320px, (min-width: 768px) 280px, 220px" fetchpriority="high">
 @endpush
 
 @section('structured_data')
@@ -17,7 +17,7 @@
             'description' => __('site.home.meta_description'),
             'url' => request()->url(),
             'inLanguage' => app()->getLocale(),
-            'primaryImageOfPage' => asset('images/hero-light.png'),
+            'primaryImageOfPage' => asset('/public/images/hero-light.png'),
         ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
     <script type="application/ld+json">
@@ -39,18 +39,18 @@
         $locale = app()->getLocale();
         $isArabic = $locale === 'ar';
         $brandName = data_get(trans('site.brand'), 'name', 'Rifi Media');
-        $heroLogo = asset('images/rifmedia-logo-512.png');
-        $heroLogoCompact = asset('images/rifmedia-logo-320.png');
+        $heroLogo = asset('/public/images/rifmedia-logo-512.png');
+        $heroLogoCompact = asset('/public/images/rifmedia-logo-320.png');
         $primaryCta = auth()->check() && Route::has('onboarding.show') ? route('onboarding.show') : route('register');
         $secondaryCta = 'https://wa.me/212600000000';
         $paymentLogos = [
-            'paddle' => ['path' => 'images/payment-paddle.jpg', 'width' => 600, 'height' => 315],
-            'cih' => ['path' => 'images/payment-cih-bank.jpg', 'width' => 569, 'height' => 429],
-            'attijari' => ['path' => 'images/payment-attijariwafa-bank.png', 'width' => 331, 'height' => 284],
-            'boa' => ['path' => 'images/payment-bank-of-africa.png', 'width' => 225, 'height' => 225],
-            'chaabi' => ['path' => 'images/payment-chaabi-bank.png', 'width' => 267, 'height' => 189],
-            'saham' => ['path' => 'images/payment-saham-bank.webp', 'width' => 1080, 'height' => 1080],
-            'cashplus' => ['path' => 'images/payment-cashplus.png', 'width' => 1920, 'height' => 1080],
+            'paddle' => ['path' => '/public/images/payment-paddle.jpg', 'width' => 600, 'height' => 315],
+            'cih' => ['path' => '/public/images/payment-cih-bank.jpg', 'width' => 569, 'height' => 429],
+            'attijari' => ['path' => '/public/images/payment-attijariwafa-bank.png', 'width' => 331, 'height' => 284],
+            'boa' => ['path' => '/public/images/payment-bank-of-africa.png', 'width' => 225, 'height' => 225],
+            'chaabi' => ['path' => '/public/images/payment-chaabi-bank.png', 'width' => 267, 'height' => 189],
+            'saham' => ['path' => '/public/images/payment-saham-bank.webp', 'width' => 1080, 'height' => 1080],
+            'cashplus' => ['path' => '/public/images/payment-cashplus.png', 'width' => 1920, 'height' => 1080],
         ];
 
         $ui = match ($locale) {

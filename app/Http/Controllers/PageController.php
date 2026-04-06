@@ -2,189 +2,348 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class PageController extends Controller
 {
     public function services(): View
     {
-        return view('pages.show', $this->pageData('services'));
+        return view('pages.show', $this->pagePayload('services'));
     }
 
     public function about(): View
     {
-        return view('pages.show', $this->pageData('about'));
+        return view('pages.show', $this->pagePayload('about'));
     }
 
     public function contact(): View
     {
-        return view('pages.show', $this->pageData('contact'));
+        return view('pages.show', $this->pagePayload('contact'));
     }
 
-    protected function pageData(string $page): array
+    public function faq(): View
     {
-        $locale = app()->getLocale();
+        return view('pages.faq', [
+            'page' => $this->faqPage(),
+            'faqItems' => $this->faqItems(),
+            'breadcrumbs' => [
+                ['label' => __('site.nav.home'), 'url' => route('home')],
+                ['label' => 'FAQ', 'url' => route('pages.faq')],
+            ],
+        ]);
+    }
 
-        $pages = [
-            'services' => match ($locale) {
-                'fr' => [
-                    'title' => 'Services de configuration et support technique',
-                    'meta_description' => 'Services professionnels de configuration d appareils, assistance applicative, optimisation et accompagnement technique dans tout le Maroc.',
-                    'kicker' => 'Services',
-                    'headline' => 'Des services clairs pour configurer, stabiliser et accompagner vos appareils.',
-                    'description' => 'Nous aidons les clients dans tout le Maroc a mettre en route leurs ecrans, appareils mobiles et applications utiles avec un support humain et des etapes claires.',
-                    'cards' => [
-                        ['title' => 'Configuration d appareil', 'text' => 'Installation initiale, verifications de base et mise en route propre.'],
-                        ['title' => 'Aide applicative', 'text' => 'Assistance pour l installation, l organisation et les premiers acces.'],
-                        ['title' => 'Optimisation', 'text' => 'Ajustements pratiques pour un usage plus stable et plus simple.'],
-                        ['title' => 'Support technique', 'text' => 'WhatsApp, tableau de bord et suivi humain pour chaque etape.'],
-                    ],
-                ],
-                'es' => [
-                    'title' => 'Servicios de configuracion y soporte tecnico',
-                    'meta_description' => 'Servicios profesionales de configuracion de dispositivos, guia de aplicaciones, optimizacion y soporte tecnico continuo en todo Marruecos.',
-                    'kicker' => 'Servicios',
-                    'headline' => 'Servicios claros para configurar, estabilizar y acompanar tus dispositivos.',
-                    'description' => 'Ayudamos a los clientes en todo Marruecos a preparar pantallas, moviles y aplicaciones utiles con soporte humano y pasos faciles de seguir.',
-                    'cards' => [
-                        ['title' => 'Configuracion de dispositivos', 'text' => 'Instalacion inicial, revisiones basicas y puesta en marcha limpia.'],
-                        ['title' => 'Guia de aplicaciones', 'text' => 'Ayuda para instalar, organizar y completar los primeros accesos.'],
-                        ['title' => 'Optimizacion', 'text' => 'Ajustes practicos para una experiencia mas estable y sencilla.'],
-                        ['title' => 'Soporte tecnico', 'text' => 'WhatsApp, panel de control y seguimiento humano en cada paso.'],
-                    ],
-                ],
-                'ar' => [
-                    'title' => 'خدمات الإعداد والدعم التقني',
-                    'meta_description' => 'خدمات احترافية لإعداد الأجهزة، المساعدة في التطبيقات، التحسين، والمتابعة التقنية الواضحة في جميع أنحاء المغرب.',
-                    'kicker' => 'الخدمات',
-                    'headline' => 'خدمات واضحة لإعداد الأجهزة وتحسينها ومرافقة العميل خطوة بخطوة.',
-                    'description' => 'نساعد العملاء في جميع أنحاء المغرب على تجهيز الشاشات والأجهزة المحمولة والتطبيقات المفيدة مع دعم بشري وخطوات سهلة الفهم.',
-                    'cards' => [
-                        ['title' => 'إعداد الأجهزة', 'text' => 'تهيئة أولية، فحص أساسي، وبداية مرتبة وواضحة.'],
-                        ['title' => 'المساعدة في التطبيقات', 'text' => 'دعم عملي في التثبيت والتنظيم وإتمام خطوات البداية.'],
-                        ['title' => 'التحسين والمتابعة', 'text' => 'تعديلات عملية لتجربة أكثر استقرارا وسهولة.'],
-                        ['title' => 'الدعم التقني', 'text' => 'واتساب ولوحة العميل ومتابعة بشرية في كل مرحلة.'],
-                    ],
-                ],
-                default => [
-                    'title' => 'Device Setup Services, App Guidance and Technical Support',
-                    'meta_description' => 'Professional device setup services, app guidance, troubleshooting, optimization, and technical support for connected devices across Morocco.',
-                    'kicker' => 'Services',
-                    'headline' => 'Clear services for setup, optimization, and reliable technical follow-up.',
-                    'description' => 'We help clients across Morocco configure screens, mobile devices, and useful apps with practical guidance and human support.',
-                    'cards' => [
-                        ['title' => 'Device setup', 'text' => 'Initial configuration, essential checks, and a cleaner first start.'],
-                        ['title' => 'App guidance', 'text' => 'Hands-on help for installation, organization, and first-time access.'],
-                        ['title' => 'Optimization', 'text' => 'Practical adjustments for a steadier and simpler experience.'],
-                        ['title' => 'Technical support', 'text' => 'WhatsApp, dashboard follow-up, and clear human support at each step.'],
-                    ],
-                ],
-            },
-            'about' => match ($locale) {
-                'fr' => [
-                    'title' => 'A propos de Rifi Media',
-                    'meta_description' => 'Decouvrez l approche de Rifi Media pour la configuration d appareils, l accompagnement client et le support technique partout au Maroc.',
-                    'kicker' => 'A propos',
-                    'headline' => 'Une equipe qui privilegie la clarte, la confiance et le support humain.',
-                    'description' => 'Rifi Media est concu comme un service pratique de configuration et d assistance, avec un langage clair, une presentation propre et un suivi responsable a travers le Maroc.',
-                    'cards' => [
-                        ['title' => 'Approche claire', 'text' => 'Des etapes simples, des statuts lisibles et un cadre rassurant pour chaque client.'],
-                        ['title' => 'Suivi humain', 'text' => 'Chaque demande peut etre prise en charge par un responsable clairement identifie.'],
-                        ['title' => 'Presence nationale', 'text' => 'Notre approche s adresse aux clients de tout le Maroc avec un parcours lisible et responsable.'],
-                    ],
-                ],
-                'es' => [
-                    'title' => 'Sobre Rifi Media',
-                    'meta_description' => 'Conoce el enfoque de Rifi Media para configuracion de dispositivos, acompanamiento al cliente y soporte tecnico en todo Marruecos.',
-                    'kicker' => 'Nosotros',
-                    'headline' => 'Un equipo centrado en claridad, confianza y soporte humano.',
-                    'description' => 'Rifi Media esta pensado como un servicio practico de configuracion y ayuda tecnica, con lenguaje claro, presentacion limpia y seguimiento responsable en todo Marruecos.',
-                    'cards' => [
-                        ['title' => 'Enfoque claro', 'text' => 'Pasos simples, estados visibles y una experiencia tranquila para el cliente.'],
-                        ['title' => 'Seguimiento humano', 'text' => 'Cada solicitud puede ser atendida por una persona claramente identificada.'],
-                        ['title' => 'Cobertura nacional', 'text' => 'El servicio esta pensado para clientes en todo Marruecos con un proceso estable y comprensible.'],
-                    ],
-                ],
-                'ar' => [
-                    'title' => 'من نحن - Rifi Media',
-                    'meta_description' => 'تعرف على طريقة عمل Rifi Media في إعداد الأجهزة، مرافقة العملاء، والدعم التقني الواضح في جميع أنحاء المغرب.',
-                    'kicker' => 'من نحن',
-                    'headline' => 'فريق يركز على الوضوح والثقة والدعم البشري الحقيقي.',
-                    'description' => 'تم تصميم Rifi Media كخدمة عملية للإعداد والمساعدة التقنية، بلغة واضحة وواجهة نظيفة ومتابعة مسؤولة في جميع أنحاء المغرب.',
-                    'cards' => [
-                        ['title' => 'نهج واضح', 'text' => 'خطوات بسيطة، حالات مفهومة، وتجربة مريحة للعميل.'],
-                        ['title' => 'متابعة بشرية', 'text' => 'كل طلب يمكن أن يتابعه مسؤول واضح ومعروف.'],
-                        ['title' => 'تغطية على مستوى المغرب', 'text' => 'الخدمة موجهة للعملاء في مختلف المدن المغربية ضمن مسار واضح ومسؤول.'],
-                    ],
-                ],
-                default => [
-                    'title' => 'About Rifi Media and Our Support Approach',
-                    'meta_description' => 'Learn how Rifi Media approaches device configuration, client guidance, payment follow-up, and technical support with clarity and trust across Morocco.',
-                    'kicker' => 'About',
-                    'headline' => 'A team focused on clarity, trust, and practical human support.',
-                    'description' => 'Rifi Media is designed as a practical setup and support service with cleaner language, a calmer interface, and responsible client follow-up across Morocco.',
-                    'cards' => [
-                        ['title' => 'Clear process', 'text' => 'Simple steps, visible statuses, and a calmer experience for every client.'],
-                        ['title' => 'Human follow-up', 'text' => 'Each request can be handled by a clearly assigned support contact.'],
-                        ['title' => 'Nationwide service approach', 'text' => 'Our support model is designed for clients across Morocco, not just one city.'],
-                    ],
-                ],
-            },
-            'contact' => match ($locale) {
-                'fr' => [
-                    'title' => 'Contact et support',
-                    'meta_description' => 'Contactez Rifi Media pour la configuration, l aide technique, le suivi de paiement et l accompagnement client partout au Maroc.',
-                    'kicker' => 'Contact',
-                    'headline' => 'Parlez a l equipe si vous avez besoin d aide avant ou apres votre commande.',
-                    'description' => 'Nous pouvons vous aider a choisir le bon service, comprendre le processus de paiement et recevoir un accompagnement technique adapte partout au Maroc.',
-                    'cards' => [
-                        ['title' => 'WhatsApp', 'text' => 'Le moyen le plus rapide pour echanger avec un membre de l equipe.'],
-                        ['title' => 'Email', 'text' => 'Utilisez contact@rifimedia.com pour les questions generales et administratives.'],
-                        ['title' => 'Couverture nationale', 'text' => 'Nous accompagnons les clients de tout le Maroc avec un suivi clair et humain.'],
-                    ],
-                ],
-                'es' => [
-                    'title' => 'Contacto y soporte',
-                    'meta_description' => 'Contacta con Rifi Media para configuracion, ayuda tecnica, seguimiento de pagos y soporte al cliente en todo Marruecos.',
-                    'kicker' => 'Contacto',
-                    'headline' => 'Habla con el equipo si necesitas ayuda antes o despues de tu pedido.',
-                    'description' => 'Podemos ayudarte a elegir el servicio adecuado, entender el proceso de pago y recibir soporte tecnico claro en todo Marruecos.',
-                    'cards' => [
-                        ['title' => 'WhatsApp', 'text' => 'La forma mas rapida de hablar con un miembro del equipo.'],
-                        ['title' => 'Correo', 'text' => 'Usa contact@rifimedia.com para preguntas generales y administrativas.'],
-                        ['title' => 'Cobertura nacional', 'text' => 'Acompanamos a clientes de todo Marruecos con un proceso claro y humano.'],
-                    ],
-                ],
-                'ar' => [
-                    'title' => 'التواصل والدعم',
-                    'meta_description' => 'تواصل مع Rifi Media للمساعدة في الإعداد، المتابعة التقنية، وخطوات الدفع والدعم في جميع أنحاء المغرب.',
-                    'kicker' => 'التواصل',
-                    'headline' => 'تحدث مع الفريق إذا كنت تحتاج مساعدة قبل الطلب أو بعده.',
-                    'description' => 'يمكننا مساعدتك في اختيار الخدمة المناسبة وفهم خطوات الدفع والحصول على متابعة تقنية واضحة في جميع أنحاء المغرب.',
-                    'cards' => [
-                        ['title' => 'واتساب', 'text' => 'أسرع طريقة للتواصل مع أحد أعضاء الفريق.'],
-                        ['title' => 'البريد الإلكتروني', 'text' => 'استخدم contact@rifimedia.com للأسئلة العامة والإدارية.'],
-                        ['title' => 'تغطية على مستوى المغرب', 'text' => 'نرافق العملاء في مختلف المدن المغربية بخطوات واضحة ومتابعة بشرية.'],
-                    ],
-                ],
-                default => [
-                    'title' => 'Contact Rifi Media for Setup and Support',
-                    'meta_description' => 'Contact Rifi Media for setup guidance, technical support, payment follow-up, WhatsApp assistance, and client support across Morocco.',
-                    'kicker' => 'Contact',
-                    'headline' => 'Talk to the team if you need help before or after your order.',
-                    'description' => 'We can help you choose the right service, understand payment steps, and get clearer technical support anywhere in Morocco.',
-                    'cards' => [
-                        ['title' => 'WhatsApp', 'text' => 'The fastest way to speak with a member of the team.'],
-                        ['title' => 'Email', 'text' => 'Use contact@rifimedia.com for general and administrative questions.'],
-                        ['title' => 'Nationwide coverage', 'text' => 'We support clients across Morocco with a clear process and human follow-up.'],
-                    ],
-                ],
-            },
-        ];
+    public function service(string $slug): View
+    {
+        $page = $this->servicePages()[$slug] ?? abort(404);
+
+        return view('pages.show', [
+            'page' => $page,
+            'pageKey' => $slug,
+            'breadcrumbs' => [
+                ['label' => __('site.nav.home'), 'url' => route('home')],
+                ['label' => __('site.nav.features'), 'url' => route('pages.services')],
+                ['label' => $page['headline'], 'url' => route('pages.service', $slug)],
+            ],
+        ]);
+    }
+
+    public function legacyLegal(): RedirectResponse
+    {
+        return redirect()->route('pages.trust', request()->query(), 301);
+    }
+
+    protected function pagePayload(string $key): array
+    {
+        $page = match ($key) {
+            'services' => $this->servicesPage(),
+            'about' => $this->aboutPage(),
+            default => $this->contactPage(),
+        };
 
         return [
-            'page' => $pages[$page],
-            'pageKey' => $page,
+            'page' => $page,
+            'pageKey' => $key,
+            'breadcrumbs' => [
+                ['label' => __('site.nav.home'), 'url' => route('home')],
+                ['label' => $page['headline'], 'url' => route("pages.{$key}")],
+            ],
         ];
+    }
+
+    protected function servicesPage(): array
+    {
+        return match (app()->getLocale()) {
+            'fr' => [
+                'meta_title' => 'Services de configuration d appareils au Maroc | Rifi Media',
+                'meta_description' => 'Configuration Smart TV, aide a l installation d applications, depannage des appareils connectes et support technique au Maroc.',
+                'kicker' => 'Services',
+                'headline' => 'Services de configuration d appareils et support technique au Maroc.',
+                'title' => 'Configuration Smart TV, aide applicative et assistance technique',
+                'description' => 'Nous aidons les clients dans tout le Maroc a configurer leurs appareils, organiser leurs applications utiles et avancer avec un support humain clair.',
+                'cards' => [
+                    ['title' => 'Configuration Smart TV', 'text' => 'Installation initiale, reglages pratiques et verification du bon fonctionnement.'],
+                    ['title' => 'Guidage applicatif', 'text' => 'Aide a l installation, a l organisation et a la connexion de vos applications utiles.'],
+                    ['title' => 'Depannage d appareils', 'text' => 'Resolution des blocages courants sur Smart TV, box Android, mobile ou tablette.'],
+                    ['title' => 'Onboarding de compte', 'text' => 'Mise en route plus claire pour les comptes, paiements et etapes de support.'],
+                ],
+                'links' => $this->serviceLinks(),
+            ],
+            'es' => [
+                'meta_title' => 'Servicios de configuracion de dispositivos en Marruecos | Rifi Media',
+                'meta_description' => 'Configuracion de Smart TV, ayuda de instalacion de aplicaciones, solucion de problemas y soporte tecnico en Marruecos.',
+                'kicker' => 'Servicios',
+                'headline' => 'Servicios de configuracion de dispositivos y soporte tecnico en Marruecos.',
+                'title' => 'Configuracion de Smart TV, guia de aplicaciones y asistencia tecnica',
+                'description' => 'Ayudamos a clientes en todo Marruecos a configurar sus dispositivos, ordenar aplicaciones utiles y mantener un soporte tecnico claro.',
+                'cards' => [
+                    ['title' => 'Configuracion de Smart TV', 'text' => 'Instalacion inicial, ajustes practicos y revision del funcionamiento.'],
+                    ['title' => 'Guia de aplicaciones', 'text' => 'Ayuda para instalar, organizar e iniciar aplicaciones utiles.'],
+                    ['title' => 'Solucion de problemas', 'text' => 'Asistencia para fallos frecuentes en Smart TV, Android box, movil o tableta.'],
+                    ['title' => 'Ayuda de onboarding', 'text' => 'Un comienzo mas claro para cuentas, pagos y pasos de soporte.'],
+                ],
+                'links' => $this->serviceLinks(),
+            ],
+            'ar' => [
+                'meta_title' => 'خدمات إعداد الأجهزة والدعم التقني في المغرب | Rifi Media',
+                'meta_description' => 'إعداد Smart TV، وضبط التطبيقات، وحل مشاكل الأجهزة المتصلة، والمساعدة التقنية في مختلف أنحاء المغرب.',
+                'kicker' => 'الخدمات',
+                'headline' => 'خدمات إعداد الأجهزة والدعم التقني في المغرب.',
+                'title' => 'إعداد Smart TV، وإرشاد التطبيقات، والمساعدة التقنية',
+                'description' => 'نساعد العملاء في جميع أنحاء المغرب على إعداد أجهزتهم، وتنظيم التطبيقات المفيدة، والحصول على متابعة تقنية واضحة وآمنة.',
+                'cards' => [
+                    ['title' => 'إعداد Smart TV', 'text' => 'تهيئة أولية، وضبط عملي، والتأكد من أن الجهاز يعمل بشكل مستقر.'],
+                    ['title' => 'إرشاد التطبيقات', 'text' => 'مساعدة في تثبيت التطبيقات المفيدة وتنظيمها وتسجيل الدخول إليها.'],
+                    ['title' => 'حل مشاكل الأجهزة', 'text' => 'دعم لحل الأعطال الشائعة على Smart TV وAndroid box والهاتف واللوحي.'],
+                    ['title' => 'المساعدة في بدء الحساب', 'text' => 'بداية أوضح في الحساب والدفع ومسار الدعم التقني.'],
+                ],
+                'links' => $this->primaryLinks(),
+            ],
+            default => [
+                'meta_title' => 'Device Setup Services in Morocco | Rifi Media',
+                'meta_description' => 'Smart TV setup, app installation guidance, connected device troubleshooting, account onboarding help, and technical support across Morocco.',
+                'kicker' => 'Services',
+                'headline' => 'Smart TV, device setup, and technical support services in Morocco.',
+                'title' => 'Clear setup services for connected devices and everyday technical support',
+                'description' => 'We help clients across Morocco set up devices, organize useful apps, resolve configuration issues, and move through onboarding with human support.',
+                'cards' => [
+                    ['title' => 'Smart TV setup', 'text' => 'First-time configuration, practical settings, and a smoother setup experience.'],
+                    ['title' => 'App installation guidance', 'text' => 'Hands-on help for safe app setup, sign-in steps, and everyday organization.'],
+                    ['title' => 'Device troubleshooting', 'text' => 'Help with common issues on Smart TV, Android boxes, phones, tablets, and related devices.'],
+                    ['title' => 'Account onboarding help', 'text' => 'A clearer first journey for account setup, payment review, and support follow-up.'],
+                ],
+                'links' => $this->serviceLinks(),
+            ],
+        };
+    }
+
+    protected function aboutPage(): array
+    {
+        return match (app()->getLocale()) {
+            'ar' => [
+                'meta_title' => 'من نحن | Rifi Media للدعم التقني في المغرب',
+                'meta_description' => 'تعرّف على طريقة عمل Rifi Media في إعداد الأجهزة وبدء الحساب والمتابعة التقنية في مختلف أنحاء المغرب.',
+                'kicker' => 'من نحن',
+                'headline' => 'Rifi Media علامة تقنية تساعد العملاء في المغرب بوضوح وثقة.',
+                'title' => 'خدمة إعداد ومساندة مبنية على الوضوح والمتابعة البشرية',
+                'description' => 'نركز على إعداد الأجهزة، وشرح الخطوات العملية، وتقديم متابعة تقنية واضحة وسهلة الفهم قبل الطلب وبعده.',
+                'cards' => [
+                    ['title' => 'عملية واضحة', 'text' => 'كل مرحلة مفهومة: طلب، مراجعة، إرشاد، ثم متابعة.'],
+                    ['title' => 'دعم بشري', 'text' => 'يعرف العميل من يتابع معه وما هي الخطوة التالية.'],
+                    ['title' => 'خدمة على مستوى المغرب', 'text' => 'الخدمة موجهة للعملاء في مختلف أنحاء المغرب.'],
+                ],
+                'links' => $this->primaryLinks(),
+            ],
+            default => [
+                'meta_title' => 'About Rifi Media | Device Setup & Technical Support in Morocco',
+                'meta_description' => 'Learn how Rifi Media approaches Smart TV setup, app guidance, onboarding, and technical support for clients across Morocco.',
+                'kicker' => __('site.nav.about'),
+                'headline' => 'Rifi Media is a technical support brand built for clients across Morocco.',
+                'title' => 'A clearer approach to device setup, app guidance, and follow-up',
+                'description' => 'Rifi Media is built around calm communication, practical onboarding, and trustworthy support for Smart TV, connected devices, and app setup help.',
+                'cards' => [
+                    ['title' => 'Transparent workflow', 'text' => 'Each step stays visible: request, review, guidance, and follow-up support.'],
+                    ['title' => 'Human support', 'text' => 'Clients know who is helping them and what happens next.'],
+                    ['title' => 'Morocco-wide service area', 'text' => 'The business supports clients across Morocco, not one city alone.'],
+                ],
+                'links' => $this->primaryLinks(),
+            ],
+        };
+    }
+
+    protected function contactPage(): array
+    {
+        $email = config('seo.contact_email', 'contact@rifimedia.com');
+        $whatsapp = config('seo.whatsapp_url', 'https://wa.me/212600000000');
+        $supportHours = config('seo.support_hours', 'Monday to Saturday, 09:00 to 22:00');
+
+        return match (app()->getLocale()) {
+            'ar' => [
+                'meta_title' => 'التواصل مع Rifi Media | دعم تقني في المغرب',
+                'meta_description' => 'تواصل مع Rifi Media للمساعدة في إعداد الأجهزة وضبط التطبيقات والدفع والمتابعة التقنية في مختلف أنحاء المغرب.',
+                'kicker' => 'التواصل',
+                'headline' => 'تحدث مع الفريق للمساعدة التقنية أو الإعداد أو متابعة الدفع.',
+                'title' => 'وسائل تواصل واضحة للعملاء داخل المغرب',
+                'description' => 'نستقبل طلبات إعداد الأجهزة، والمساعدة في التطبيقات، وحل المشكلات، وبدء الحساب، والمتابعة التقنية في جميع أنحاء المغرب.',
+                'cards' => [
+                    ['title' => 'البريد الإلكتروني', 'text' => $email],
+                    ['title' => 'واتساب', 'text' => $whatsapp],
+                    ['title' => 'ساعات الدعم', 'text' => $supportHours],
+                    ['title' => 'نطاق الخدمة', 'text' => 'المغرب'],
+                ],
+                'links' => $this->primaryLinks(),
+            ],
+            default => [
+                'meta_title' => 'Contact Rifi Media | Technical Support in Morocco',
+                'meta_description' => 'Contact Rifi Media for Smart TV setup help, app guidance, payment follow-up, and technical support anywhere in Morocco.',
+                'kicker' => __('site.nav.support'),
+                'headline' => 'Talk to the team for device setup, payment questions, or technical support.',
+                'title' => 'Simple contact options for clients across Morocco',
+                'description' => 'We answer questions about Smart TV setup, app guidance, onboarding, troubleshooting, and ongoing technical support across Morocco.',
+                'cards' => [
+                    ['title' => 'Email', 'text' => $email],
+                    ['title' => 'WhatsApp', 'text' => $whatsapp],
+                    ['title' => 'Support hours', 'text' => $supportHours],
+                    ['title' => 'Service area', 'text' => 'Morocco'],
+                ],
+                'links' => $this->primaryLinks(),
+            ],
+        };
+    }
+
+    protected function faqPage(): array
+    {
+        return match (app()->getLocale()) {
+            'ar' => [
+                'meta_title' => 'الأسئلة الشائعة | Rifi Media',
+                'meta_description' => 'إجابات واضحة عن إعداد Smart TV، وضبط التطبيقات، والدفع، والدعم التقني من Rifi Media في المغرب.',
+                'kicker' => 'الأسئلة الشائعة',
+                'headline' => 'إجابات سريعة عن الإعداد والدفع والدعم التقني.',
+                'description' => 'تشرح هذه الصفحة طريقة عمل Rifi Media في إعداد الأجهزة، وبدء الحساب، والمتابعة، والدعم التقني داخل المغرب.',
+            ],
+            default => [
+                'meta_title' => 'FAQ | Rifi Media',
+                'meta_description' => 'Clear answers about Smart TV setup, app guidance, payment steps, onboarding help, and technical support from Rifi Media in Morocco.',
+                'kicker' => 'FAQ',
+                'headline' => 'Answers to common setup, onboarding, and technical support questions.',
+                'description' => 'This FAQ explains how Rifi Media helps clients with Smart TV setup, app installation guidance, troubleshooting, and support in Morocco.',
+            ],
+        };
+    }
+
+    protected function faqItems(): array
+    {
+        return match (app()->getLocale()) {
+            'ar' => [
+                ['q' => 'ما الذي تقدمه Rifi Media بالضبط؟', 'a' => 'نساعد في إعداد Smart TV، وتثبيت التطبيقات، وحل مشاكل الأجهزة، والمتابعة التقنية.'],
+                ['q' => 'هل توفرون محتوى إعلاميًا؟', 'a' => 'لا. نحن لا نوفر ولا نستضيف أي محتوى إعلامي، بل نقدم فقط خدمات الإعداد والدعم التقني.'],
+                ['q' => 'هل تعملون في جميع أنحاء المغرب؟', 'a' => 'نعم. نطاق الخدمة يشمل المغرب مع متابعة عن بُعد ودعم بشري واضح.'],
+                ['q' => 'ما هي خيارات الدفع المتاحة؟', 'a' => 'يمكن استخدام الدفع بالبطاقة عبر Paddle، كما تتم مراجعة التحويلات البنكية المحلية يدويًا.'],
+            ],
+            default => [
+                ['q' => 'What does Rifi Media actually do?', 'a' => 'We help clients with Smart TV setup, app installation guidance, connected device troubleshooting, and practical technical support.'],
+                ['q' => 'Do you provide media content?', 'a' => 'No. We do not provide or host media content. We only assist with device configuration, app setup, and technical support.'],
+                ['q' => 'Do you work across Morocco?', 'a' => 'Yes. Our service area covers Morocco with remote guidance and human support.'],
+                ['q' => 'What payment options are available?', 'a' => 'Card payments can be handled through Paddle, and local bank transfers are reviewed manually.'],
+            ],
+        };
+    }
+
+    protected function servicePages(): array
+    {
+        return match (app()->getLocale()) {
+            'ar' => [
+                'smart-tv-setup' => $this->servicePage(
+                    'إعداد Smart TV في المغرب',
+                    'إعداد Smart TV في المغرب | Rifi Media',
+                    'مساعدة احترافية في إعداد Smart TV وضبط الإعدادات الأساسية وتجهيز الأجهزة المتصلة في المغرب.'
+                ),
+                'app-installation-guidance' => $this->servicePage(
+                    'إرشاد تثبيت التطبيقات',
+                    'إرشاد تثبيت التطبيقات في المغرب | Rifi Media',
+                    'مساعدة في تثبيت التطبيقات المفيدة وتنظيمها وتسجيل الدخول إليها على Smart TV والهاتف واللوحي في المغرب.'
+                ),
+                'device-troubleshooting' => $this->servicePage(
+                    'حل مشاكل الأجهزة المتصلة',
+                    'حل مشاكل الأجهزة المتصلة في المغرب | Rifi Media',
+                    'دعم لحل مشاكل الإعداد والاتصال والاستقرار على Smart TV والأجهزة المتصلة في المغرب.'
+                ),
+                'account-onboarding-help' => $this->servicePage(
+                    'المساعدة في بدء الحساب',
+                    'المساعدة في بدء الحساب في المغرب | Rifi Media',
+                    'إرشاد واضح لخطوات الحساب والدفع والمراجعة والمتابعة التقنية في المغرب.'
+                ),
+                'technical-support-morocco' => $this->servicePage(
+                    'الدعم التقني في المغرب',
+                    'الدعم التقني في المغرب | Rifi Media',
+                    'دعم تقني احترافي لإعداد Smart TV والتطبيقات والأجهزة المتصلة في مختلف أنحاء المغرب.'
+                ),
+            ],
+            default => [
+                'smart-tv-setup' => $this->servicePage('Smart TV setup in Morocco', 'Smart TV setup in Morocco | Rifi Media', 'Professional Smart TV setup help in Morocco, including first-time configuration, practical settings, and connected device guidance.'),
+                'app-installation-guidance' => $this->servicePage('App installation guidance', 'App installation guidance in Morocco | Rifi Media', 'App installation guidance in Morocco for Smart TV, mobile devices, tablets, and connected-device environments.'),
+                'device-troubleshooting' => $this->servicePage('Connected device troubleshooting', 'Connected device troubleshooting in Morocco | Rifi Media', 'Technical troubleshooting for Smart TV, Android boxes, mobile devices, and connected-device issues across Morocco.'),
+                'account-onboarding-help' => $this->servicePage('Account onboarding help', 'Account onboarding help in Morocco | Rifi Media', 'Account onboarding help in Morocco for first-time clients who need clearer setup, payment, and support guidance.'),
+                'technical-support-morocco' => $this->servicePage('Technical support in Morocco', 'Technical support in Morocco | Rifi Media', 'Premium technical support in Morocco for Smart TV setup, app guidance, device troubleshooting, and connected-device help.'),
+            ],
+        };
+    }
+
+    protected function servicePage(string $headline, string $metaTitle, string $metaDescription): array
+    {
+        return [
+            'meta_title' => $metaTitle,
+            'meta_description' => $metaDescription,
+            'kicker' => __('site.nav.features'),
+            'headline' => $headline,
+            'title' => $headline,
+            'description' => $metaDescription,
+            'cards' => [
+                ['title' => __('site.nav.features'), 'text' => $metaDescription],
+                [
+                    'title' => __('site.nav.support'),
+                    'text' => app()->isLocale('ar')
+                        ? 'خطوات واضحة، وتوجيه عملي، ومتابعة بشرية مناسبة لنوع الخدمة المختارة.'
+                        : 'Clear guidance, practical steps, and human follow-up tailored to the selected service.',
+                ],
+            ],
+            'schema_type' => 'Service',
+            'links' => $this->primaryLinks(),
+        ];
+    }
+
+    protected function primaryLinks(): array
+    {
+        if (app()->isLocale('ar')) {
+            return [
+                ['title' => 'كل الخدمات', 'text' => 'تصفح خدمات الإعداد والإرشاد والدعم التقني.', 'url' => route('pages.services')],
+                ['title' => 'إعداد Smart TV', 'text' => 'تعرّف على خدمة إعداد التلفاز الذكي والخطوات الأولى.', 'url' => route('pages.service', 'smart-tv-setup')],
+                ['title' => 'إرشاد تثبيت التطبيقات', 'text' => 'راجع خدمة تثبيت التطبيقات وضبطها على أجهزتك.', 'url' => route('pages.service', 'app-installation-guidance')],
+                ['title' => 'الدعم التقني في المغرب', 'text' => 'اعرف كيف يعمل الدعم التقني في مختلف أنحاء المغرب.', 'url' => route('pages.service', 'technical-support-morocco')],
+                ['title' => 'الأسئلة الشائعة', 'text' => 'اقرأ الإجابات الواضحة عن الإعداد والدفع والمتابعة.', 'url' => route('pages.faq')],
+                ['title' => trans('legal.hub.kicker'), 'text' => 'راجع سياسات الخصوصية والاسترجاع وشروط الخدمة.', 'url' => route('pages.trust')],
+                ['title' => 'التواصل', 'text' => 'تواصل مع الفريق لمساعدتك في الإعداد والدعم.', 'url' => route('pages.contact')],
+            ];
+        }
+
+        return [
+            ['title' => __('site.nav.features'), 'text' => 'Browse all setup and guidance services.', 'url' => route('pages.services')],
+            ['title' => 'Smart TV setup', 'text' => 'Learn about Smart TV configuration and first-time setup help.', 'url' => route('pages.service', 'smart-tv-setup')],
+            ['title' => 'App installation guidance', 'text' => 'Review safe app setup guidance for connected devices.', 'url' => route('pages.service', 'app-installation-guidance')],
+            ['title' => 'Technical support in Morocco', 'text' => 'See how technical support works across Morocco.', 'url' => route('pages.service', 'technical-support-morocco')],
+            ['title' => 'FAQ', 'text' => 'Read clear answers about setup, payment, and support.', 'url' => route('pages.faq')],
+            ['title' => trans('legal.hub.kicker'), 'text' => 'Review privacy, refund, and service policies.', 'url' => route('pages.trust')],
+            ['title' => __('site.nav.support'), 'text' => 'Contact the team for setup guidance and support.', 'url' => route('pages.contact')],
+        ];
+    }
+
+    protected function serviceLinks(): array
+    {
+        return collect($this->servicePages())->map(fn (array $page, string $slug) => [
+            'title' => $page['headline'],
+            'text' => $page['meta_description'],
+            'url' => route('pages.service', $slug),
+        ])->values()->all();
     }
 }

@@ -5,9 +5,14 @@
     $portalCopy = trans('portal.guest');
     $brandName = 'Rifi Media';
     $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
-    $brandLogo = asset('/public/images/rifmedia-logo-128.png');
-    $themeCss = app()->environment('production') ? asset('/public/css/rifiptv.min.css') : asset('css/rifiptv.css');
+    $brandLogo = asset('images/rifmedia-logo-128.png');
+    $themeCss = app()->environment('production') ? asset('css/rifiptv.min.css') : asset('css/rifiptv.css');
     $seoConfig = config('seo');
+    $brandEmail = data_get($seoConfig, 'contact_email', 'contact@rifimedia.com');
+    $brandWhatsapp = data_get($seoConfig, 'whatsapp_url', 'https://wa.me/212600000000');
+    $supportHours = data_get($seoConfig, 'support_hours', 'Monday to Saturday, 09:00 to 22:00');
+    $defaultOgImage = asset(ltrim((string) data_get($seoConfig, 'default_og_image', '/images/hero-light.png'), '/'));
+    $socialProfiles = collect(data_get($seoConfig, 'social_profiles', []))->filter()->values();
     $socialLinks = collect(data_get($seoConfig, 'social_links', []))
         ->filter(fn (array $link) => filled(data_get($link, 'url')))
         ->values();
@@ -22,16 +27,9 @@
     $localeUrls = collect($supportedLocales)->mapWithKeys(fn (string $locale) => [$locale => $localizedBaseUrl.'?lang='.$locale]);
 @endphp
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="{{ $metaDescription }}">
-    <meta name="robots" content="{{ $metaRobots }}">
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F8FAFC">
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617">
-    <link rel="canonical" href="{{ $localizedBaseUrl }}">
-    <link rel="icon" href="{{ $brandLogo }}" type="image/png">
-    <title>{{ $metaTitle }}</title>
+    @php($canonicalUrl = $localizedBaseUrl)
+    @php($ogLocale = ['en' => 'en_US', 'fr' => 'fr_FR', 'es' => 'es_ES', 'ar' => 'ar_MA'][app()->getLocale()] ?? 'en_US')
+    @include('partials.seo-meta')
 
     @stack('preloads')
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,7 +101,7 @@
                 <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
                     <a href="{{ route('home') }}" class="brand-link brand-link-logo-only" aria-label="{{ $brandName }}">
                         <span class="brand-logo brand-logo-header">
-                            <img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid" width="128" height="70" decoding="async">
+                            <img src="{{ $brandLogo }}" alt="{{ $brandName }} device setup and technical support logo" class="img-fluid" width="128" height="70" decoding="async">
                         </span>
                     </a>
 
@@ -183,10 +181,13 @@
                     <div class="col-lg-5">
                         <div class="d-flex align-items-center gap-3 mb-3">
                             <span class="brand-logo brand-logo-footer">
-                                <img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid" width="128" height="70" loading="lazy" decoding="async">
+                                <img src="{{ $brandLogo }}" alt="{{ $brandName }} device setup and technical support logo" class="img-fluid" width="128" height="70" loading="lazy" decoding="async">
                             </span>
                         </div>
                         <p class="text-soft-rif mb-3">{{ trans('legal.hub.description') }}</p>
+                        <p class="text-soft-rif small mb-2">{{ $brandEmail }}</p>
+                        <p class="text-soft-rif small mb-2">{{ $supportHours }}</p>
+                        <a href="{{ $brandWhatsapp }}" class="text-soft-rif small text-decoration-none" target="_blank" rel="noopener">WhatsApp</a>
                         <p class="text-soft-rif small mb-0">{{ data_get($footer, 'copyright', 'Rifi Media. All rights reserved.') }}</p>
                         <p class="text-soft-rif small mt-3 mb-0">{{ data_get($footer, 'disclaimer') }}</p>
                     </div>
@@ -197,7 +198,7 @@
                             <a href="{{ route('pages.services') }}">{{ data_get(trans('site.nav'), 'features', 'Services') }}</a>
                             <a href="{{ route('pages.about') }}">{{ data_get(trans('site.nav'), 'about', 'About') }}</a>
                             <a href="{{ route('pages.contact') }}">{{ data_get(trans('site.nav'), 'support', 'Contact') }}</a>
-                            <a href="{{ route('legal.index') }}">{{ trans('legal.hub.headline') }}</a>
+                            <a href="{{ route('pages.trust') }}">{{ trans('legal.hub.headline') }}</a>
                             <a href="{{ route('legal.privacy') }}">{{ trans('legal.pages.privacy.label') }}</a>
                             <a href="{{ route('legal.terms') }}">{{ trans('legal.pages.terms.label') }}</a>
                             <a href="{{ route('legal.security') }}">{{ trans('legal.pages.security.label') }}</a>
@@ -250,6 +251,7 @@
             const root = document.documentElement;
             const headerShell = document.querySelector('[data-header-shell]');
             const themeButtons = document.querySelectorAll('[data-theme-toggle]');
+            const revealItems = document.querySelectorAll('.reveal-up');
 
             const renderThemeButtons = function () {
                 const theme = root.getAttribute('data-theme') || 'dark';
@@ -275,6 +277,32 @@
                 });
             });
 
+            if (revealItems.length) {
+                if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    const revealObserver = new IntersectionObserver(function (entries, observer) {
+                        entries.forEach(function (entry) {
+                            if (!entry.isIntersecting) {
+                                return;
+                            }
+
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        });
+                    }, {
+                        rootMargin: '0px 0px -10% 0px',
+                        threshold: 0.08
+                    });
+
+                    revealItems.forEach(function (item) {
+                        revealObserver.observe(item);
+                    });
+                } else {
+                    revealItems.forEach(function (item) {
+                        item.classList.add('is-visible');
+                    });
+                }
+            }
+
             const handleHeaderState = function () {
                 if (!headerShell) {
                     return;
@@ -290,4 +318,3 @@
     </script>
 </body>
 </html>
-

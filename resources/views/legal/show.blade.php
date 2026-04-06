@@ -13,17 +13,35 @@
 
 @section('title', data_get($page, 'title').' | '.data_get(trans('site.brand'), 'name', 'Rifi Media'))
 @section('meta_description', data_get($page, 'meta_description'))
+@section('canonical', request()->url())
+
+@php
+    $legalPageSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'WebPage',
+        'name' => data_get($page, 'title'),
+        'description' => data_get($page, 'description'),
+        'url' => request()->url(),
+        'inLanguage' => app()->getLocale(),
+    ];
+
+    $legalBreadcrumbSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => __('site.nav.home'), 'item' => route('home')],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => trans('legal.hub.kicker'), 'item' => route('pages.trust')],
+            ['@type' => 'ListItem', 'position' => 3, 'name' => data_get($page, 'title'), 'item' => request()->url()],
+        ],
+    ];
+@endphp
 
 @section('structured_data')
     <script type="application/ld+json">
-        {!! json_encode([
-            '@context' => 'https://schema.org',
-            '@type' => 'WebPage',
-            'name' => data_get($page, 'title'),
-            'description' => data_get($page, 'description'),
-            'url' => request()->url().'?lang='.app()->getLocale(),
-            'inLanguage' => app()->getLocale(),
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+        {!! json_encode($legalPageSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+    <script type="application/ld+json">
+        {!! json_encode($legalBreadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
 @endsection
 
@@ -33,7 +51,7 @@
             <div class="row g-4">
                 <div class="col-lg-4">
                     <div class="surface-card p-4 mb-4">
-                        <a href="{{ route('legal.index') }}" class="nav-link-rif d-inline-flex align-items-center gap-2 mb-3">
+                        <a href="{{ route('pages.trust') }}" class="nav-link-rif d-inline-flex align-items-center gap-2 mb-3">
                             <i data-lucide="arrow-left" class="icon-sm"></i>
                             <span>{{ trans('legal.common.back') }}</span>
                         </a>

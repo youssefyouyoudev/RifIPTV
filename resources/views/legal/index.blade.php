@@ -2,6 +2,7 @@
 
 @section('title', trans('legal.hub.title'))
 @section('meta_description', trans('legal.hub.meta_description'))
+@section('canonical', route('pages.trust'))
 
 @php
     $pages = [

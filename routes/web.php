@@ -16,8 +16,14 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/services', [PageController::class, 'services'])->name('pages.services');
+Route::get('/services/{slug}', [PageController::class, 'service'])->name('pages.service');
 Route::get('/about', [PageController::class, 'about'])->name('pages.about');
 Route::get('/contact', [PageController::class, 'contact'])->name('pages.contact');
+Route::get('/faq', [PageController::class, 'faq'])->name('pages.faq');
+Route::get('/legal', [PageController::class, 'legacyLegal']);
+Route::get('/trust-center', function () {
+    return view('legal.index');
+})->name('pages.trust');
 
 Route::get('/locale/{locale}', function (string $locale, Request $request) {
     abort_unless(in_array($locale, config('app.supported_locales', ['en']), true), 404);
@@ -31,7 +37,7 @@ Route::get('/locale/{locale}', function (string $locale, Request $request) {
         ->withCookie(cookie()->forever('locale', $locale));
 })->name('locale.switch');
 
-Route::get('/legal', function () {
+Route::get('/trust-center/legal', function () {
     return view('legal.index');
 })->name('legal.index');
 
@@ -44,7 +50,7 @@ $legalRoutes = [
 ];
 
 foreach ($legalRoutes as $slug => $pageKey) {
-    Route::get("/legal/{$slug}", function () use ($pageKey) {
+    Route::get("/trust-center/{$slug}", function () use ($pageKey) {
         abort_unless(is_array(trans("legal.pages.{$pageKey}")), 404);
 
         return view('legal.show', ['pageKey' => $pageKey]);
@@ -56,8 +62,15 @@ Route::get('/sitemap.xml', function () use ($legalRoutes) {
     $paths = [
         route('home', absolute: false),
         route('pages.services', absolute: false),
+        route('pages.service', 'smart-tv-setup', absolute: false),
+        route('pages.service', 'app-installation-guidance', absolute: false),
+        route('pages.service', 'device-troubleshooting', absolute: false),
+        route('pages.service', 'account-onboarding-help', absolute: false),
+        route('pages.service', 'technical-support-morocco', absolute: false),
         route('pages.about', absolute: false),
         route('pages.contact', absolute: false),
+        route('pages.faq', absolute: false),
+        route('pages.trust', absolute: false),
         route('legal.index', absolute: false),
         ...array_map(fn (string $pageKey) => route("legal.{$pageKey}", absolute: false), array_values($legalRoutes)),
     ];

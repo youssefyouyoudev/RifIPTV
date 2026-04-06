@@ -21,7 +21,7 @@ class DashboardExperienceTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('Professional device setup service', false)
-            ->assertSee('Setup done right.', false);
+            ->assertSee('Smart TV, device setup,', false);
     }
 
     public function test_client_dashboard_shows_subscription_focused_experience(): void

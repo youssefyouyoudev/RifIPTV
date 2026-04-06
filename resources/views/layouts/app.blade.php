@@ -4,12 +4,14 @@
     $isArabic = app()->isLocale('ar');
     $brandName = data_get(trans('site.brand'), 'name', 'Rifi Media');
     $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
-    $brandLogo = asset('/public/images/rifmedia-logo-128.png');
-    $schemaLogo = asset('/public/images/rifmedia-logo-512.png');
-    $themeCss = app()->environment('production') ? asset('/public/css/rifiptv.min.css') : asset('/public/css/rifiptv.css');
+    $brandLogo = asset('images/rifmedia-logo-128.png');
+    $schemaLogo = asset('images/rifmedia-logo-512.png');
+    $themeCss = app()->environment('production') ? asset('css/rifiptv.min.css') : asset('css/rifiptv.css');
     $seoConfig = config('seo');
     $brandEmail = data_get($seoConfig, 'contact_email', 'contact@rifimedia.com');
     $brandPhone = data_get($seoConfig, 'contact_phone');
+    $brandWhatsapp = data_get($seoConfig, 'whatsapp_url', 'https://wa.me/212600000000');
+    $supportHours = data_get($seoConfig, 'support_hours', 'Monday to Saturday, 09:00 to 22:00');
     $defaultOgImage = asset(ltrim((string) data_get($seoConfig, 'default_og_image', '/images/hero-light.png'), '/'));
     $socialProfiles = collect(data_get($seoConfig, 'social_profiles', []))->filter()->values();
     $socialLinks = collect(data_get($seoConfig, 'social_links', []))
@@ -59,6 +61,7 @@
             '@type' => 'ContactPoint',
             'contactType' => 'customer support',
             'email' => $brandEmail,
+            'url' => $brandWhatsapp,
             'availableLanguage' => $supportedLocales,
         ]],
     ];
@@ -80,6 +83,7 @@
         'email' => $brandEmail,
         'areaServed' => data_get($seoConfig, 'area_served', 'MA'),
         'serviceType' => data_get($seoConfig, 'service_types', []),
+        'openingHours' => $supportHours,
     ];
     if ($brandPhone) {
         $localBusinessSchema['telephone'] = $brandPhone;
@@ -110,21 +114,7 @@
         : null;
 @endphp
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="{{ $metaDescription }}">
-    <meta name="robots" content="{{ $metaRobots }}">
-    <meta name="author" content="{{ $brandName }}">
-    <meta name="application-name" content="{{ $brandName }}">
-    <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F8FAFC">
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617">
-    <link rel="canonical" href="{{ $canonicalUrl }}">
-    @foreach ($localeUrls as $locale => $localeUrl)
-        <link rel="alternate" hreflang="{{ $locale }}" href="{{ $localeUrl }}">
-    @endforeach
-    <link rel="alternate" hreflang="x-default" href="{{ $localizedBaseUrl }}">
+    @include('partials.seo-meta')
     @if(request()->getHost() !== '127.0.0.1' && request()->getHost() !== 'localhost')
         <script>
             window.dataLayer = window.dataLayer || [];
@@ -170,27 +160,6 @@
             }, { once: true });
         </script>
     @endif
-    <meta property="og:type" content="@yield('og_type', 'website')">
-    <meta property="og:site_name" content="{{ $brandName }}">
-    <meta property="og:title" content="{{ $metaTitle }}">
-    <meta property="og:description" content="{{ $metaDescription }}">
-    <meta property="og:url" content="{{ $canonicalUrl }}">
-    <meta property="og:locale" content="{{ $ogLocale }}">
-    <meta property="og:image" content="{{ $defaultOgImage }}">
-    <meta property="og:image:alt" content="{{ $brandName }} preview image">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $metaTitle }}">
-    <meta name="twitter:description" content="{{ $metaDescription }}">
-    <meta name="twitter:image" content="{{ $defaultOgImage }}">
-    <meta name="twitter:image:alt" content="{{ $brandName }} preview image">
-    <link rel="icon" href="{{ $brandLogo }}" type="image/png">
-    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-    <link rel="alternate" type="text/plain" href="{{ url('/llms.txt') }}" title="LLMs.txt">
-    @foreach ($socialProfiles as $socialProfile)
-        <link rel="me" href="{{ $socialProfile }}">
-    @endforeach
-    <title>{{ $metaTitle }}</title>
-
     @stack('preloads')
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -222,7 +191,7 @@
                     <div class="d-flex align-items-center justify-content-between gap-3">
                         <a href="{{ route('home') }}" class="brand-link brand-link-logo-only" aria-label="{{ $brandName }}">
                             <span class="brand-logo brand-logo-header">
-                                <img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid" width="128" height="70" decoding="async">
+                                <img src="{{ $brandLogo }}" alt="{{ $brandName }} device setup and technical support logo" class="img-fluid" width="128" height="70" decoding="async">
                             </span>
                         </a>
 
@@ -232,7 +201,7 @@
                             <a href="{{ route('pages.about') }}" class="nav-link-rif">{{ data_get($nav, 'about', 'About') }}</a>
                             <a href="{{ route('home') }}#plans" class="nav-link-rif">{{ data_get($nav, 'pricing', 'Packages') }}</a>
                             <a href="{{ route('pages.contact') }}" class="nav-link-rif">{{ data_get($nav, 'support', 'Contact') }}</a>
-                            <a href="{{ route('legal.index') }}" class="nav-link-rif">{{ $legalUi['hub_kicker'] }}</a>
+                            <a href="{{ route('pages.trust') }}" class="nav-link-rif">{{ $legalUi['hub_kicker'] }}</a>
                         </nav>
 
                         <div class="d-none d-xl-flex align-items-center gap-3 header-desktop-tools">
@@ -315,7 +284,7 @@
                     <a href="{{ route('pages.about') }}">{{ data_get($nav, 'about', 'About') }}</a>
                     <a href="{{ route('home') }}#plans">{{ data_get($nav, 'pricing', 'Packages') }}</a>
                     <a href="{{ route('pages.contact') }}">{{ data_get($nav, 'support', 'Contact') }}</a>
-                    <a href="{{ route('legal.index') }}">{{ $legalUi['hub_kicker'] }}</a>
+                    <a href="{{ route('pages.trust') }}">{{ $legalUi['hub_kicker'] }}</a>
 
                     @auth
                         <div class="mobile-user-card">
@@ -378,10 +347,13 @@
                         <div class="col-lg-5">
                             <div class="d-flex align-items-center gap-3 mb-3">
                                 <span class="brand-logo brand-logo-footer">
-                                    <img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid" width="128" height="70" loading="lazy" decoding="async">
+                                    <img src="{{ $brandLogo }}" alt="{{ $brandName }} device setup and technical support logo" class="img-fluid" width="128" height="70" loading="lazy" decoding="async">
                                 </span>
                             </div>
                             <p class="text-soft-rif mb-3">{{ $legalUi['hub_description'] }}</p>
+                            <p class="text-soft-rif small mb-2">{{ $brandEmail }}</p>
+                            <p class="text-soft-rif small mb-2">{{ $supportHours }}</p>
+                            <a href="{{ $brandWhatsapp }}" class="text-soft-rif small text-decoration-none" target="_blank" rel="noopener">WhatsApp</a>
                             <p class="text-soft-rif small mb-0">{{ data_get($footer, 'copyright', 'Rifi Media. All rights reserved.') }}</p>
                             <p class="text-soft-rif small mt-3 mb-0">{{ data_get($footer, 'disclaimer') }}</p>
                         </div>
@@ -392,7 +364,7 @@
                                 <a href="{{ route('pages.services') }}">{{ data_get($nav, 'features', 'Services') }}</a>
                                 <a href="{{ route('pages.about') }}">{{ data_get($nav, 'about', 'About') }}</a>
                                 <a href="{{ route('pages.contact') }}">{{ data_get($nav, 'support', 'Contact') }}</a>
-                                <a href="{{ route('legal.index') }}">{{ $legalUi['hub_headline'] }}</a>
+                                <a href="{{ route('pages.trust') }}">{{ $legalUi['hub_headline'] }}</a>
                                 <a href="{{ route('legal.privacy') }}">{{ $legalUi['privacy'] }}</a>
                                 <a href="{{ route('legal.terms') }}">{{ $legalUi['terms'] }}</a>
                                 <a href="{{ route('legal.security') }}">{{ $legalUi['security'] }}</a>
@@ -439,6 +411,7 @@
             const mobileToggle = document.querySelector('[data-mobile-toggle]');
             const mobileMenu = document.querySelector('[data-mobile-menu]');
             const themeButtons = document.querySelectorAll('[data-theme-toggle]');
+            const revealItems = document.querySelectorAll('.reveal-up');
 
             const renderThemeButtons = function () {
                 const theme = root.getAttribute('data-theme') || 'dark';
@@ -470,6 +443,32 @@
                 });
             }
 
+            if (revealItems.length) {
+                if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    const revealObserver = new IntersectionObserver(function (entries, observer) {
+                        entries.forEach(function (entry) {
+                            if (!entry.isIntersecting) {
+                                return;
+                            }
+
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        });
+                    }, {
+                        rootMargin: '0px 0px -10% 0px',
+                        threshold: 0.08
+                    });
+
+                    revealItems.forEach(function (item) {
+                        revealObserver.observe(item);
+                    });
+                } else {
+                    revealItems.forEach(function (item) {
+                        item.classList.add('is-visible');
+                    });
+                }
+            }
+
             const handleHeaderState = function () {
                 if (!headerShell) {
                     return;
@@ -486,4 +485,3 @@
     @stack('scripts')
 </body>
 </html>
-

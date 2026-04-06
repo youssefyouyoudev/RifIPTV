@@ -14,6 +14,7 @@ return [
     'nav' => [
         'home' => 'Inicio',
         'features' => 'Servicios',
+        'about' => 'Nosotros',
         'pricing' => 'Paquetes',
         'support' => 'Soporte',
         'dashboard' => 'Panel',
@@ -29,8 +30,8 @@ return [
         'disclaimer' => 'No alojamos, proporcionamos ni distribuimos contenido multimedia. Solo ofrecemos servicios de configuracion tecnica y soporte.',
     ],
     'home' => [
-        'title' => 'Rifi Media | Configuracion de dispositivos y soporte tecnico',
-        'meta_description' => 'Servicios de Rifi Media para configuracion de dispositivos, ayuda con aplicaciones y soporte tecnico continuo en todo Marruecos.',
+        'title' => 'Rifi Media | Smart TV, configuracion de dispositivos y soporte tecnico en Marruecos',
+        'meta_description' => 'Rifi Media ofrece configuracion de Smart TV, guia de aplicaciones, onboarding y soporte tecnico para dispositivos conectados en todo Marruecos.',
         'cta' => 'Iniciar servicio',
         'mini_points' => [
             'secure' => 'Proceso seguro',

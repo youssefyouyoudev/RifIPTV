@@ -9,18 +9,21 @@ class PublicPagesTest extends TestCase
     public function test_it_renders_the_legal_hub_and_policy_pages(): void
     {
         $this->get('/legal')
+            ->assertRedirect('/trust-center');
+
+        $this->get('/trust-center')
             ->assertSuccessful()
             ->assertSee('Trust center', false);
 
-        $this->get('/legal/privacy-policy')
+        $this->get('/trust-center/privacy-policy')
             ->assertSuccessful()
             ->assertSee('Privacy Policy', false);
 
-        $this->get('/legal/terms-of-service')
+        $this->get('/trust-center/terms-of-service')
             ->assertSuccessful()
             ->assertSee('Terms of Service', false);
 
-        $this->get('/legal/security-safety')
+        $this->get('/trust-center/security-safety')
             ->assertSuccessful()
             ->assertSee('Security & Safety', false);
     }
@@ -38,6 +41,14 @@ class PublicPagesTest extends TestCase
         $this->get('/contact')
             ->assertSuccessful()
             ->assertSee('Contact Rifi Media', false);
+
+        $this->get('/faq')
+            ->assertSuccessful()
+            ->assertSee('Answers to common setup, onboarding, and technical support questions.', false);
+
+        $this->get('/services/smart-tv-setup')
+            ->assertSuccessful()
+            ->assertSee('Smart TV setup in Morocco', false);
     }
 
     public function test_it_renders_seo_helper_files(): void
@@ -64,6 +75,9 @@ class PublicPagesTest extends TestCase
     public function test_it_supports_locale_query_parameters_on_public_pages(): void
     {
         $this->get('/legal?lang=fr')
+            ->assertRedirect('/trust-center?lang=fr');
+
+        $this->get('/trust-center?lang=fr')
             ->assertSuccessful()
             ->assertSee('Centre de confiance', false);
 

@@ -10,6 +10,8 @@ return [
     'business_type' => env('SEO_BUSINESS_TYPE', 'ProfessionalService'),
     'contact_email' => env('SEO_CONTACT_EMAIL', 'contact@rifimedia.com'),
     'contact_phone' => env('SEO_CONTACT_PHONE', ''),
+    'whatsapp_url' => env('SEO_WHATSAPP_URL', 'https://wa.me/212600000000'),
+    'support_hours' => env('SEO_SUPPORT_HOURS', 'Monday to Saturday, 09:00 to 22:00'),
     'area_served' => env('SEO_AREA_SERVED', 'MA'),
     'service_region' => env('SEO_SERVICE_REGION', 'Morocco'),
     'service_types' => array_values(array_filter(array_map(

@@ -3426,3 +3426,169 @@ html[data-theme="light"] .workflow-step-card.is-complete {
         grid-template-columns: 1fr;
     }
 }
+
+.internal-page-shell {
+    padding: 2.75rem 0 3.5rem;
+}
+
+.page-intro-shell {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: 2rem;
+    background:
+        radial-gradient(circle at 10% 18%, rgba(30, 152, 215, 0.12), transparent 30%),
+        radial-gradient(circle at 88% 20%, rgba(122, 199, 12, 0.12), transparent 28%),
+        linear-gradient(135deg, var(--rif-surface), var(--rif-surface-soft));
+    border: 1px solid var(--rif-border);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="light"] .page-intro-shell {
+    background:
+        radial-gradient(circle at 10% 18%, rgba(30, 152, 215, 0.10), transparent 30%),
+        radial-gradient(circle at 88% 20%, rgba(122, 199, 12, 0.12), transparent 28%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(246, 250, 255, 0.92));
+}
+
+.page-quickfacts-card {
+    height: 100%;
+    padding: 1.25rem;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(30, 152, 215, 0.14);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .page-quickfacts-card {
+    background: rgba(15, 23, 42, 0.62);
+    border-color: rgba(148, 163, 184, 0.16);
+}
+
+.page-quickfacts-list {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.page-quickfacts-list div {
+    display: grid;
+    gap: 0.2rem;
+}
+
+.page-quickfacts-list span {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rif-text-soft);
+}
+
+.page-quickfacts-list strong {
+    font-size: 0.98rem;
+    color: var(--rif-text);
+    word-break: break-word;
+}
+
+.page-feature-card {
+    border: 1px solid var(--rif-border);
+    border-radius: 1.35rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.05);
+}
+
+html[data-theme="light"] .page-feature-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(30, 152, 215, 0.12);
+}
+
+.faq-list-card {
+    min-height: 100%;
+}
+
+.faq-sidebar-card,
+.page-action-card {
+    background:
+        radial-gradient(circle at top left, rgba(122, 199, 12, 0.14), transparent 32%),
+        linear-gradient(180deg, var(--rif-surface), var(--rif-surface-soft));
+}
+
+.faq-item-card {
+    border: 1px solid rgba(30, 152, 215, 0.12);
+    border-radius: 1.25rem;
+    padding: 1.05rem 1.15rem;
+    background: rgba(255, 255, 255, 0.78);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+[data-theme="dark"] .faq-item-card {
+    background: rgba(15, 23, 42, 0.62);
+    border-color: rgba(148, 163, 184, 0.14);
+}
+
+.faq-item-card[open] {
+    border-color: rgba(30, 152, 215, 0.26);
+    box-shadow: 0 16px 28px rgba(30, 152, 215, 0.08);
+    transform: translateY(-1px);
+}
+
+.faq-item-card summary {
+    cursor: pointer;
+    list-style: none;
+    font-weight: 700;
+    color: var(--rif-text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.faq-item-card summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-item-card summary::after {
+    content: "+";
+    flex-shrink: 0;
+    width: 1.65rem;
+    height: 1.65rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(30, 152, 215, 0.10);
+    color: var(--rif-primary);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.faq-item-card[open] summary::after {
+    content: "−";
+}
+
+.faq-item-card p {
+    margin-top: 0.95rem;
+    padding-top: 0.95rem;
+    border-top: 1px solid rgba(30, 152, 215, 0.10);
+}
+
+@media (max-width: 991.98px) {
+    .internal-page-shell {
+        padding: 2rem 0 3rem;
+    }
+
+    .page-intro-shell,
+    .surface-card {
+        border-radius: 1.5rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .page-intro-shell {
+        padding: 1.25rem;
+    }
+
+    .page-quickfacts-card,
+    .page-feature-card,
+    .faq-item-card {
+        border-radius: 1.1rem;
+    }
+}

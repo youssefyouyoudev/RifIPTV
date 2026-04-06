@@ -30,8 +30,8 @@ return [
         'disclaimer' => 'We do not host, provide, or distribute any media content. We only offer technical setup and support services. Users are responsible for compliance with local laws.',
     ],
     'home' => [
-        'title' => 'Rifi Media | Device Setup Services, App Guidance & Technical Support',
-        'meta_description' => 'Rifi Media provides device setup services, app guidance, troubleshooting, payment follow-up, and technical support for smart screens and connected devices across Morocco.',
+        'title' => 'Rifi Media | Smart TV, Device Setup & Technical Support in Morocco',
+        'meta_description' => 'Rifi Media provides Smart TV setup, device configuration, app guidance, onboarding help, and technical support for connected devices across Morocco.',
         'cta' => 'Start Service',
         'mini_points' => [
             'secure' => 'Secure process',

@@ -148,7 +148,7 @@
                     <h2 class="h3 text-body-rif mb-3">{{ __('workflow.onboarding.next_title') }}</h2>
                     <p class="text-soft-rif mb-4">{{ __('workflow.onboarding.next_text') }}</p>
                     <div class="d-grid gap-3">
-                        <a href="https://wa.me/212600000000" class="btn-rif-outline w-100">{{ __('workflow.onboarding.whatsapp') }}</a>
+                        <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-outline w-100">{{ __('workflow.onboarding.whatsapp') }}</a>
                         <a href="{{ route('dashboard') }}" class="btn-rif-secondary w-100">{{ __('workflow.onboarding.dashboard') }}</a>
                     </div>
                 </article>

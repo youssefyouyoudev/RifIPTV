@@ -113,7 +113,7 @@
                             {{ $isArabic ? 'نساعدك في فهم خطوات الإعداد والدفع والمتابعة التقنية واختيار الصفحة المناسبة لجهازك.' : 'We can help you understand setup steps, payment flow, technical follow-up, and the right service page for your device.' }}
                         </p>
                         <div class="d-flex flex-column gap-3">
-                            <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212600000000') }}" class="btn-rif-secondary" target="_blank" rel="noopener">
+                            <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-secondary" target="_blank" rel="noopener">
                                 {{ $isArabic ? 'تواصل عبر واتساب' : 'Talk on WhatsApp' }}
                             </a>
                             <a href="{{ route('pages.contact') }}" class="btn-rif-outline">{{ __('site.nav.support') }}</a>

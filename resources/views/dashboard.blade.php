@@ -457,7 +457,7 @@
                                     @else
                                         <a href="{{ route('onboarding.show') }}" class="btn-rif-secondary w-100">{{ __('workflow.client.setup.manage_order') }}</a>
                                     @endif
-                                    <a href="https://wa.me/212600000000" class="btn-rif-outline w-100">{{ __('workflow.client.setup.whatsapp') }}</a>
+                                    <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-outline w-100">{{ __('workflow.client.setup.whatsapp') }}</a>
                                 </div>
                             </div>
                         </article>

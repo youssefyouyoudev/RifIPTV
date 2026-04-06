@@ -10,7 +10,7 @@ return [
     'business_type' => env('SEO_BUSINESS_TYPE', 'ProfessionalService'),
     'contact_email' => env('SEO_CONTACT_EMAIL', 'contact@rifimedia.com'),
     'contact_phone' => env('SEO_CONTACT_PHONE', ''),
-    'whatsapp_url' => env('SEO_WHATSAPP_URL', 'https://wa.me/212600000000'),
+    'whatsapp_url' => env('SEO_WHATSAPP_URL', 'https://wa.me/212663323824'),
     'support_hours' => env('SEO_SUPPORT_HOURS', 'Monday to Saturday, 09:00 to 22:00'),
     'area_served' => env('SEO_AREA_SERVED', 'MA'),
     'service_region' => env('SEO_SERVICE_REGION', 'Morocco'),
@@ -28,7 +28,7 @@ return [
             env('SEO_YOUTUBE_URL', 'https://www.youtube.com/@rifimedia'),
             env('SEO_TIKTOK_URL', 'https://www.tiktok.com/@rifimedia'),
             env('SEO_TELEGRAM_URL', 'https://t.me/Rifimediabot'),
-            env('SEO_WHATSAPP_URL', 'https://wa.me/212600000000'),
+            env('SEO_WHATSAPP_URL', 'https://wa.me/212663323824'),
         ]
     ))),
     'social_links' => [
@@ -70,7 +70,7 @@ return [
         [
             'label' => 'WhatsApp',
             'icon' => 'message-circle-more',
-            'url' => env('SEO_WHATSAPP_URL', 'https://wa.me/212600000000'),
+            'url' => env('SEO_WHATSAPP_URL', 'https://wa.me/212663323824'),
         ],
     ],
 ];

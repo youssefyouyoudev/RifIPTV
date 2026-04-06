@@ -175,7 +175,7 @@ class PageController extends Controller
     protected function contactPage(): array
     {
         $email = config('seo.contact_email', 'contact@rifimedia.com');
-        $whatsapp = config('seo.whatsapp_url', 'https://wa.me/212600000000');
+        $whatsapp = config('seo.whatsapp_url', 'https://wa.me/212663323824');
         $supportHours = config('seo.support_hours', 'Monday to Saturday, 09:00 to 22:00');
 
         return match (app()->getLocale()) {

@@ -61,7 +61,7 @@
 @section('content')
     @php
         $isArabic = app()->isLocale('ar');
-        $ctaPrimary = config('seo.whatsapp_url', 'https://wa.me/212600000000');
+        $ctaPrimary = config('seo.whatsapp_url', 'https://wa.me/212663323824');
         $ctaSecondary = route('home').'#plans';
         $supportHours = config('seo.support_hours', 'Monday to Saturday, 09:00 to 22:00');
         $supportEmail = config('seo.contact_email', 'contact@rifimedia.com');

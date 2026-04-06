@@ -4,6 +4,10 @@
 @section('meta_description', __('site.home.meta_description'))
 @section('body_class', 'page-home')
 
+@push('preloads')
+    <link rel="preload" as="image" href="{{ asset('images/rifmedia-logo-512.png') }}" imagesrcset="{{ asset('images/rifmedia-logo-320.png') }} 320w, {{ asset('images/rifmedia-logo-512.png') }} 512w" imagesizes="(min-width: 1200px) 320px, (min-width: 768px) 280px, 220px" fetchpriority="high">
+@endpush
+
 @section('structured_data')
     <script type="application/ld+json">
         {!! json_encode([
@@ -35,17 +39,18 @@
         $locale = app()->getLocale();
         $isArabic = $locale === 'ar';
         $brandName = data_get(trans('site.brand'), 'name', 'Rifi Media');
-        $heroLogo = asset('images/rifmedia-logo.png');
+        $heroLogo = asset('images/rifmedia-logo-512.png');
+        $heroLogoCompact = asset('images/rifmedia-logo-320.png');
         $primaryCta = auth()->check() && Route::has('onboarding.show') ? route('onboarding.show') : route('register');
         $secondaryCta = 'https://wa.me/212600000000';
         $paymentLogos = [
-            'paddle' => 'images/payment-paddle.jpg',
-            'cih' => 'images/payment-cih-bank.jpg',
-            'attijari' => 'images/payment-attijariwafa-bank.png',
-            'boa' => 'images/payment-bank-of-africa.png',
-            'chaabi' => 'images/payment-chaabi-bank.png',
-            'saham' => 'images/payment-saham-bank.webp',
-            'cashplus' => 'images/payment-cashplus.png',
+            'paddle' => ['path' => 'images/payment-paddle.jpg', 'width' => 600, 'height' => 315],
+            'cih' => ['path' => 'images/payment-cih-bank.jpg', 'width' => 569, 'height' => 429],
+            'attijari' => ['path' => 'images/payment-attijariwafa-bank.png', 'width' => 331, 'height' => 284],
+            'boa' => ['path' => 'images/payment-bank-of-africa.png', 'width' => 225, 'height' => 225],
+            'chaabi' => ['path' => 'images/payment-chaabi-bank.png', 'width' => 267, 'height' => 189],
+            'saham' => ['path' => 'images/payment-saham-bank.webp', 'width' => 1080, 'height' => 1080],
+            'cashplus' => ['path' => 'images/payment-cashplus.png', 'width' => 1920, 'height' => 1080],
         ];
 
         $ui = match ($locale) {
@@ -206,7 +211,18 @@
                                     <div class="home-brand-layout">
                                         <div class="home-brand-card">
                                             <div class="home-brand-logo-shell">
-                                                <img src="{{ $heroLogo }}" alt="{{ $brandName }} logo" class="home-brand-logo">
+                                                <img
+                                                    src="{{ $heroLogoCompact }}"
+                                                    srcset="{{ $heroLogoCompact }} 320w, {{ $heroLogo }} 512w"
+                                                    sizes="(min-width: 1200px) 320px, (min-width: 768px) 280px, 220px"
+                                                    alt="{{ $brandName }} logo"
+                                                    class="home-brand-logo"
+                                                    width="512"
+                                                    height="279"
+                                                    fetchpriority="high"
+                                                    loading="eager"
+                                                    decoding="async"
+                                                >
                                             </div>
                                             <p class="home-brand-tagline mb-0">{{ $ui['hero_tagline'] }}</p>
                                         </div>
@@ -353,7 +369,16 @@
                     <div class="payment-featured-badge">{{ $ui['payment_badge'] }}</div>
                     <div class="payment-featured-inner">
                         <div class="payment-logo-wrap payment-logo-wrap-xl">
-                            <img src="{{ asset($paymentLogos['paddle']) }}" alt="Paddle" class="img-fluid payment-logo-image payment-logo-image-paddle">
+                            <img
+                                src="{{ asset($paymentLogos['paddle']['path']) }}"
+                                alt="Paddle"
+                                class="img-fluid payment-logo-image payment-logo-image-paddle"
+                                width="{{ $paymentLogos['paddle']['width'] }}"
+                                height="{{ $paymentLogos['paddle']['height'] }}"
+                                loading="lazy"
+                                fetchpriority="low"
+                                decoding="async"
+                            >
                         </div>
                         <p class="payment-featured-note mb-0">{{ $ui['payment_note'] }}</p>
                     </div>
@@ -365,7 +390,16 @@
                     @foreach (['cih', 'attijari', 'boa', 'chaabi', 'saham', 'cashplus'] as $paymentKey)
                         <article class="payment-logo-card reveal-up">
                             <div class="payment-logo-wrap">
-                                <img src="{{ asset($paymentLogos[$paymentKey]) }}" alt="{{ strtoupper($paymentKey) }} logo" class="img-fluid payment-logo-image">
+                                <img
+                                    src="{{ asset($paymentLogos[$paymentKey]['path']) }}"
+                                    alt="{{ strtoupper($paymentKey) }} logo"
+                                    class="img-fluid payment-logo-image"
+                                    width="{{ $paymentLogos[$paymentKey]['width'] }}"
+                                    height="{{ $paymentLogos[$paymentKey]['height'] }}"
+                                    loading="lazy"
+                                    fetchpriority="low"
+                                    decoding="async"
+                                >
                             </div>
                         </article>
                     @endforeach

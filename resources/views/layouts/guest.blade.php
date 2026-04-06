@@ -5,7 +5,8 @@
     $portalCopy = trans('portal.guest');
     $brandName = 'Rifi Media';
     $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
-    $brandLogo = asset('images/rifmedia-logo.png');
+    $brandLogo = asset('images/rifmedia-logo-128.png');
+    $themeCss = app()->environment('production') ? asset('css/rifiptv.min.css') : asset('css/rifiptv.css');
     $seoConfig = config('seo');
     $socialLinks = collect(data_get($seoConfig, 'social_links', []))
         ->filter(fn (array $link) => filled(data_get($link, 'url')))
@@ -32,11 +33,12 @@
     <link rel="icon" href="{{ $brandLogo }}" type="image/png">
     <title>{{ $metaTitle }}</title>
 
+    @stack('preloads')
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=DM+Sans:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ asset('css/rifiptv.css') }}" rel="stylesheet">
+    <link href="{{ $themeCss }}" rel="stylesheet">
     <script>
         (function () {
             const storedTheme = localStorage.getItem('rif-theme');
@@ -47,14 +49,49 @@
         }());
     </script>
     @if(request()->getHost() !== '127.0.0.1' && request()->getHost() !== 'localhost')
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LXMHC9NGBP"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-LXMHC9NGBP');
+
+            window.__rifiLoadThirdParty = function () {
+                if (window.__rifiThirdPartyLoaded) {
+                    return;
+                }
+
+                window.__rifiThirdPartyLoaded = true;
+
+                const injectScript = function (src, attributes = {}) {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    Object.entries(attributes).forEach(function ([key, value]) {
+                        if (value === true) {
+                            script.setAttribute(key, key);
+                        } else {
+                            script.setAttribute(key, value);
+                        }
+                    });
+                    document.head.appendChild(script);
+                };
+
+                injectScript('https://www.googletagmanager.com/gtag/js?id=G-LXMHC9NGBP', { async: true });
+                injectScript('https://consent.cookiebot.com/uc.js', {
+                    id: 'Cookiebot',
+                    'data-cbid': '1c1a8441-b356-4d54-ab00-36a0d40490f1',
+                    type: 'text/javascript',
+                    async: true,
+                });
+            };
+
+            window.addEventListener('load', function () {
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(window.__rifiLoadThirdParty, { timeout: 3500 });
+                } else {
+                    setTimeout(window.__rifiLoadThirdParty, 1500);
+                }
+            }, { once: true });
         </script>
-        <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1c1a8441-b356-4d54-ab00-36a0d40490f1" type="text/javascript" async></script>
     @endif
 </head>
 <body>
@@ -66,7 +103,7 @@
                 <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
                     <a href="{{ route('home') }}" class="brand-link brand-link-logo-only" aria-label="{{ $brandName }}">
                         <span class="brand-logo brand-logo-header">
-                            <img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid">
+                            <img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid" width="128" height="70" decoding="async">
                         </span>
                     </a>
 
@@ -146,7 +183,7 @@
                     <div class="col-lg-5">
                         <div class="d-flex align-items-center gap-3 mb-3">
                             <span class="brand-logo brand-logo-footer">
-                                <img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid">
+                                <img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid" width="128" height="70" loading="lazy" decoding="async">
                             </span>
                         </div>
                         <p class="text-soft-rif mb-3">{{ trans('legal.hub.description') }}</p>

@@ -32,7 +32,8 @@ class PublicPagesTest extends TestCase
     {
         $this->get('/')
             ->assertSuccessful()
-            ->assertSee('Smart TV, Device Setup &amp; Technical Support in Morocco', false);
+            ->assertSee('Setup done right.', false)
+            ->assertSee('Support that stays with you.', false);
 
         $this->get('/services')
             ->assertSuccessful()

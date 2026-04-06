@@ -1,0 +1,15 @@
+{
+  "name": "RIF Media",
+  "short_name": "RIF Media",
+  "start_url": "/?lang=en",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#0D0D0D",
+  "icons": [
+    {
+      "src": "/images/rifmedia-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+# RIF Media
+
+RIF Media is a device setup and technical support website.
+We help clients with device configuration, app guidance, troubleshooting, setup follow-up, and payment support.
+We do not host, provide, or distribute media content.
+
+Public pages:
+- https://rifimedia.com/
+- https://rifimedia.com/services
+- https://rifimedia.com/about
+- https://rifimedia.com/contact
+- https://rifimedia.com/legal
+
+Primary contact:
+- Email: contact@rifimedia.com

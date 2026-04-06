@@ -6,10 +6,14 @@
     $brandName = 'Rifi Media';
     $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
     $brandLogo = asset('images/rifmedia-logo.png');
+    $seoConfig = config('seo');
+    $socialLinks = collect(data_get($seoConfig, 'social_links', []))
+        ->filter(fn (array $link) => filled(data_get($link, 'url')))
+        ->values();
     $supportedLocales = config('app.supported_locales', ['en']);
     $localeLabels = trans('site.locales');
     $footer = trans('site.footer');
-    $nav = array_merge(trans('site.nav'), ['sign_in' => $isArabic ? 'ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„' : 'Sign in']);
+    $nav = array_merge(trans('site.nav'), ['sign_in' => $isArabic ? 'تسجيل الدخول' : 'Sign in']);
     $metaTitle = trim($__env->yieldContent('title')) ?: $brandName;
     $metaDescription = trim($__env->yieldContent('meta_description')) ?: __('portal.auth.login.meta_description');
     $metaRobots = trim($__env->yieldContent('meta_robots')) ?: 'noindex,nofollow';
@@ -170,6 +174,16 @@
                             <a href="{{ route('sitemap') }}">Sitemap</a>
                             <a href="{{ route('robots') }}">Robots</a>
                         </div>
+                        @if ($socialLinks->isNotEmpty())
+                            <div class="social-links-grid mb-3" aria-label="Social links">
+                                @foreach ($socialLinks as $socialLink)
+                                    <a href="{{ $socialLink['url'] }}" class="social-link-chip" target="_blank" rel="noopener noreferrer me">
+                                        <i data-lucide="{{ $socialLink['icon'] }}" class="icon-sm"></i>
+                                        <span>{{ $socialLink['label'] }}</span>
+                                    </a>
+                                @endforeach
+                            </div>
+                        @endif
                         <div class="dropdown">
                             <button class="lang-dropdown-toggle dropdown-toggle w-100 justify-content-between" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span>{{ data_get($localeLabels, app()->getLocale(), strtoupper(app()->getLocale())) }}</span>

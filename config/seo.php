@@ -19,12 +19,57 @@ return [
     'social_profiles' => array_values(array_filter(array_map(
         static fn ($url) => trim((string) $url),
         [
-            env('SEO_FACEBOOK_URL'),
-            env('SEO_INSTAGRAM_URL'),
-            env('SEO_X_URL'),
-            env('SEO_LINKEDIN_URL'),
-            env('SEO_YOUTUBE_URL'),
+            env('SEO_FACEBOOK_URL', 'https://www.facebook.com/rifimedia'),
+            env('SEO_INSTAGRAM_URL', 'https://www.instagram.com/rifimedia'),
+            env('SEO_X_URL', 'https://x.com/rifimedia'),
+            env('SEO_LINKEDIN_URL', 'https://www.linkedin.com/company/rifimedia'),
+            env('SEO_YOUTUBE_URL', 'https://www.youtube.com/@rifimedia'),
+            env('SEO_TIKTOK_URL', 'https://www.tiktok.com/@rifimedia'),
+            env('SEO_TELEGRAM_URL', 'https://t.me/Rifimediabot'),
+            env('SEO_WHATSAPP_URL', 'https://wa.me/212600000000'),
         ]
     ))),
+    'social_links' => [
+        [
+            'label' => 'Facebook',
+            'icon' => 'facebook',
+            'url' => env('SEO_FACEBOOK_URL', 'https://www.facebook.com/rifimedia'),
+        ],
+        [
+            'label' => 'Instagram',
+            'icon' => 'instagram',
+            'url' => env('SEO_INSTAGRAM_URL', 'https://www.instagram.com/rifimedia'),
+        ],
+        [
+            'label' => 'X',
+            'icon' => 'twitter',
+            'url' => env('SEO_X_URL', 'https://x.com/rifimedia'),
+        ],
+        [
+            'label' => 'LinkedIn',
+            'icon' => 'linkedin',
+            'url' => env('SEO_LINKEDIN_URL', 'https://www.linkedin.com/company/rifimedia'),
+        ],
+        [
+            'label' => 'YouTube',
+            'icon' => 'youtube',
+            'url' => env('SEO_YOUTUBE_URL', 'https://www.youtube.com/@rifimedia'),
+        ],
+        [
+            'label' => 'TikTok',
+            'icon' => 'music-4',
+            'url' => env('SEO_TIKTOK_URL', 'https://www.tiktok.com/@rifimedia'),
+        ],
+        [
+            'label' => 'Telegram',
+            'icon' => 'send',
+            'url' => env('SEO_TELEGRAM_URL', 'https://t.me/Rifimediabot'),
+        ],
+        [
+            'label' => 'WhatsApp',
+            'icon' => 'message-circle-more',
+            'url' => env('SEO_WHATSAPP_URL', 'https://wa.me/212600000000'),
+        ],
+    ],
 ];
 

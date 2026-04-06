@@ -10,8 +10,11 @@
     $brandPhone = data_get($seoConfig, 'contact_phone');
     $defaultOgImage = asset(ltrim((string) data_get($seoConfig, 'default_og_image', '/images/hero-light.png'), '/'));
     $socialProfiles = collect(data_get($seoConfig, 'social_profiles', []))->filter()->values();
+    $socialLinks = collect(data_get($seoConfig, 'social_links', []))
+        ->filter(fn (array $link) => filled(data_get($link, 'url')))
+        ->values();
     $localeLabels = trans('site.locales');
-    $nav = array_merge(trans('site.nav'), ['sign_in' => $isArabic ? 'ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„' : 'Sign in']);
+    $nav = array_merge(trans('site.nav'), ['sign_in' => $isArabic ? 'تسجيل الدخول' : 'Sign in']);
     $footer = trans('site.footer');
     $legalUi = [
         'hub_kicker' => trans('legal.hub.kicker'),
@@ -366,6 +369,16 @@
                                 <a href="{{ route('sitemap') }}">Sitemap</a>
                                 <a href="{{ route('robots') }}">Robots</a>
                             </div>
+                            @if ($socialLinks->isNotEmpty())
+                                <div class="social-links-grid mb-3" aria-label="Social links">
+                                    @foreach ($socialLinks as $socialLink)
+                                        <a href="{{ $socialLink['url'] }}" class="social-link-chip" target="_blank" rel="noopener noreferrer me">
+                                            <i data-lucide="{{ $socialLink['icon'] }}" class="icon-sm"></i>
+                                            <span>{{ $socialLink['label'] }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
                             <div class="locale-pills">
                                 @foreach ($supportedLocales as $locale)
                                     <a href="{{ $localeUrls[$locale] }}" class="locale-pill {{ app()->getLocale() === $locale ? 'active' : '' }}">

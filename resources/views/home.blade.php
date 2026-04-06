@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', __('site.home.title'))
 @section('meta_description', __('site.home.meta_description'))
@@ -40,7 +40,7 @@
         'description' => __('site.home.meta_description'),
         'url' => request()->url(),
         'inLanguage' => app()->getLocale(),
-        'primaryImageOfPage' => asset('images/hero-light.png'),
+        'primaryImageOfPage' => asset('/public/images/hero-light.png'),
     ];
 
     $homePlansSchema = [

@@ -46,7 +46,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=DM+Sans:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ asset('css/rifiptv.css') }}" rel="stylesheet">
+    <link href="{{ asset('/public/css/rifiptv.css') }}" rel="stylesheet">
     <script>
         (function () {
             const storedTheme = localStorage.getItem('rif-theme');

@@ -139,7 +139,7 @@ return [
             'view_proof' => 'View payment proof',
         ],
         'credentials' => [
-            'kicker' => 'Streaming access',
+            'kicker' => 'Service access',
             'title' => 'Your access details',
             'username' => 'Username',
             'password' => 'Password',

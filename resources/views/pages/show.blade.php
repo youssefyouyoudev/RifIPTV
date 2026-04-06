@@ -62,9 +62,11 @@
     @php
         $isArabic = app()->isLocale('ar');
         $ctaPrimary = config('seo.whatsapp_url', 'https://wa.me/212663323824');
-        $ctaSecondary = route('home').'#plans';
+        $ctaSecondary = route('pages.packages');
         $supportHours = config('seo.support_hours', 'Monday to Saturday, 09:00 to 22:00');
         $supportEmail = config('seo.contact_email', 'contact@rifimedia.com');
+        $sections = $page['sections'] ?? [];
+        $faqs = $page['faqs'] ?? [];
     @endphp
 
     <section class="section-space internal-page-shell">
@@ -145,7 +147,7 @@
                             {{ $isArabic ? 'ابدأ من الصفحة المناسبة ثم أكمل مع الفريق.' : 'Start from the right page and continue with the team.' }}
                         </h2>
                         <p class="text-soft-rif mb-4">
-                            {{ $isArabic ? 'يمكنك التواصل مباشرة عبر واتساب أو الرجوع إلى الباقات لاختيار الخدمة المناسبة قبل المتابعة.' : 'You can contact support directly on WhatsApp or go back to the packages section to choose the service that fits your needs.' }}
+                            {{ $isArabic ? 'يمكنك التواصل مباشرة عبر واتساب أو الرجوع إلى صفحة الباقات لاختيار خطة الدعم المناسبة قبل المتابعة.' : 'You can contact support directly on WhatsApp or go back to the packages section to choose the service that fits your needs.' }}
                         </p>
                         <div class="d-flex flex-column gap-3">
                             <a href="{{ $ctaPrimary }}" class="btn-rif-secondary" target="_blank" rel="noopener">
@@ -162,6 +164,21 @@
                 </div>
             </div>
 
+            @if (! empty($sections))
+                <div class="surface-card p-4 p-lg-5 mt-4 reveal-up">
+                    <div class="row g-3">
+                        @foreach ($sections as $section)
+                            <div class="col-md-6">
+                                <article class="page-feature-card h-100 p-4">
+                                    <h2 class="h4 text-body-rif mb-2">{{ $section['title'] }}</h2>
+                                    <p class="text-soft-rif mb-0">{{ $section['text'] }}</p>
+                                </article>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             @if (!empty($page['links']))
                 <div class="surface-card p-4 p-lg-5 mt-4">
                     <span class="section-kicker mb-3">{{ $isArabic ? 'روابط مفيدة' : 'Helpful links' }}</span>
@@ -177,7 +194,20 @@
                     </div>
                 </div>
             @endif
+
+            @if (! empty($faqs))
+                <div class="surface-card p-4 p-lg-5 mt-4 reveal-up">
+                    <span class="section-kicker mb-3">FAQ</span>
+                    <div class="d-grid gap-3">
+                        @foreach ($faqs as $faq)
+                            <details class="faq-item-card">
+                                <summary>{{ $faq['q'] }}</summary>
+                                <p class="text-soft-rif mb-0">{{ $faq['a'] }}</p>
+                            </details>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 @endsection
-

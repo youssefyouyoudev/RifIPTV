@@ -2,7 +2,7 @@
 
 @section('title', $page['meta_title'])
 @section('meta_description', $page['meta_description'])
-@section('canonical', request()->url())
+@section('canonical', route('pages.faq'))
 
 @php
     $faqPageSchema = [
@@ -11,13 +11,9 @@
         'mainEntity' => collect($faqItems)->map(fn (array $item) => [
             '@type' => 'Question',
             'name' => $item['q'],
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => $item['a'],
-            ],
+            'acceptedAnswer' => ['@type' => 'Answer', 'text' => $item['a']],
         ])->all(),
     ];
-
     $faqBreadcrumbSchema = [
         '@context' => 'https://schema.org',
         '@type' => 'BreadcrumbList',
@@ -31,12 +27,8 @@
 @endphp
 
 @section('structured_data')
-    <script type="application/ld+json">
-        {!! json_encode($faqPageSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-    </script>
-    <script type="application/ld+json">
-        {!! json_encode($faqBreadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-    </script>
+    <script type="application/ld+json">{!! json_encode($faqPageSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    <script type="application/ld+json">{!! json_encode($faqBreadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 @endsection
 
 @section('content')
@@ -67,9 +59,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="page-quickfacts-card h-100">
-                            <div class="small text-uppercase fw-semibold text-soft-rif mb-3">
-                                {{ $isArabic ? 'ملخص سريع' : 'Quick summary' }}
-                            </div>
+                            <div class="small text-uppercase fw-semibold text-soft-rif mb-3">{{ $isArabic ? 'ملخص سريع' : 'Quick summary' }}</div>
                             <div class="page-quickfacts-list">
                                 <div>
                                     <span>{{ $isArabic ? 'نوع المساعدة' : 'Help type' }}</span>
@@ -80,7 +70,7 @@
                                     <strong>{{ config('seo.service_region', 'Morocco') }}</strong>
                                 </div>
                                 <div>
-                                    <span>{{ $isArabic ? 'ساعات الدعم' : 'Support hours' }}</span>
+                                    <span>{{ $isArabic ? 'أوقات الدعم' : 'Support hours' }}</span>
                                     <strong>{{ config('seo.support_hours', 'Monday to Saturday, 09:00 to 22:00') }}</strong>
                                 </div>
                             </div>
@@ -106,16 +96,10 @@
                 <div class="col-lg-4">
                     <div class="surface-card p-4 p-lg-5 h-100 page-action-card faq-sidebar-card">
                         <span class="section-kicker mb-3">{{ $isArabic ? 'هل تحتاج مساعدة؟' : 'Need help?' }}</span>
-                        <h2 class="h3 text-body-rif mb-3">
-                            {{ $isArabic ? 'تواصل مع الفريق إذا كنت تريد شرحًا إضافيًا.' : 'Talk to the team if you need extra clarification.' }}
-                        </h2>
-                        <p class="text-soft-rif mb-4">
-                            {{ $isArabic ? 'نساعدك في فهم خطوات الإعداد والدفع والمتابعة التقنية واختيار الصفحة المناسبة لجهازك.' : 'We can help you understand setup steps, payment flow, technical follow-up, and the right service page for your device.' }}
-                        </p>
+                        <h2 class="h3 text-body-rif mb-3">{{ $isArabic ? 'تواصل مع الفريق إذا كنت تحتاج إلى توضيح إضافي.' : 'Talk to the team if you need extra clarification.' }}</h2>
+                        <p class="text-soft-rif mb-4">{{ $isArabic ? 'نساعدك على فهم خطوات الإعداد، ومسار الدفع، والمتابعة التقنية، واختيار الصفحة المناسبة لجهازك.' : 'We can help you understand setup steps, payment flow, technical follow-up, and the right service page for your device.' }}</p>
                         <div class="d-flex flex-column gap-3">
-                            <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-secondary" target="_blank" rel="noopener">
-                                {{ $isArabic ? 'تواصل عبر واتساب' : 'Talk on WhatsApp' }}
-                            </a>
+                            <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-secondary" target="_blank" rel="noopener">{{ $isArabic ? 'تواصل عبر واتساب' : 'Talk on WhatsApp' }}</a>
                             <a href="{{ route('pages.contact') }}" class="btn-rif-outline">{{ __('site.nav.support') }}</a>
                             <a href="{{ route('pages.services') }}" class="btn-rif-outline">{{ __('site.nav.features') }}</a>
                         </div>

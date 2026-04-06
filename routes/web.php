@@ -20,6 +20,7 @@ Route::get('/services/{slug}', [PageController::class, 'service'])->name('pages.
 Route::get('/about', [PageController::class, 'about'])->name('pages.about');
 Route::get('/contact', [PageController::class, 'contact'])->name('pages.contact');
 Route::get('/faq', [PageController::class, 'faq'])->name('pages.faq');
+Route::get('/packages', [PageController::class, 'packages'])->name('pages.packages');
 Route::get('/legal', [PageController::class, 'legacyLegal']);
 Route::get('/trust-center', function () {
     return view('legal.index');
@@ -40,6 +41,18 @@ Route::get('/locale/{locale}', function (string $locale, Request $request) {
 Route::get('/trust-center/legal', function () {
     return view('legal.index');
 })->name('legal.index');
+
+$serviceLandingRedirects = [
+    'smart-tv-setup-morocco',
+    'app-installation-help-morocco',
+    'device-troubleshooting-morocco',
+    'technical-support-marrakech',
+    'account-setup-help-morocco',
+];
+
+foreach ($serviceLandingRedirects as $slug) {
+    Route::get("/{$slug}", fn () => redirect()->route('pages.service', ['slug' => $slug] + request()->query(), 301));
+}
 
 $legalRoutes = [
     'privacy-policy' => 'privacy',
@@ -62,14 +75,15 @@ Route::get('/sitemap.xml', function () use ($legalRoutes) {
     $paths = [
         route('home', absolute: false),
         route('pages.services', absolute: false),
-        route('pages.service', 'smart-tv-setup', absolute: false),
-        route('pages.service', 'app-installation-guidance', absolute: false),
-        route('pages.service', 'device-troubleshooting', absolute: false),
-        route('pages.service', 'account-onboarding-help', absolute: false),
-        route('pages.service', 'technical-support-morocco', absolute: false),
+        route('pages.service', 'smart-tv-setup-morocco', absolute: false),
+        route('pages.service', 'app-installation-help-morocco', absolute: false),
+        route('pages.service', 'device-troubleshooting-morocco', absolute: false),
+        route('pages.service', 'technical-support-marrakech', absolute: false),
+        route('pages.service', 'account-setup-help-morocco', absolute: false),
         route('pages.about', absolute: false),
         route('pages.contact', absolute: false),
         route('pages.faq', absolute: false),
+        route('pages.packages', absolute: false),
         route('pages.trust', absolute: false),
         route('legal.index', absolute: false),
         ...array_map(fn (string $pageKey) => route("legal.{$pageKey}", absolute: false), array_values($legalRoutes)),

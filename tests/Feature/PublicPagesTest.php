@@ -30,25 +30,36 @@ class PublicPagesTest extends TestCase
 
     public function test_it_renders_the_public_seo_pages(): void
     {
+        $this->get('/')
+            ->assertSuccessful()
+            ->assertSee('Smart TV, Device Setup &amp; Technical Support in Morocco', false);
+
         $this->get('/services')
             ->assertSuccessful()
-            ->assertSee('Device Setup Services', false);
+            ->assertSee('Device setup and technical support services in Morocco.', false);
 
         $this->get('/about')
             ->assertSuccessful()
-            ->assertSee('About Rifi Media', false);
+            ->assertSee('Rifi Media is a Morocco-based technical support and device setup company.', false);
 
         $this->get('/contact')
             ->assertSuccessful()
-            ->assertSee('Contact Rifi Media', false);
+            ->assertSee('Talk to the team about setup, troubleshooting, or billing follow-up.', false);
+
+        $this->get('/packages')
+            ->assertSuccessful()
+            ->assertSee('Choose the support plan that fits your setup and follow-up needs.', false);
 
         $this->get('/faq')
             ->assertSuccessful()
             ->assertSee('Answers to common setup, onboarding, and technical support questions.', false);
 
-        $this->get('/services/smart-tv-setup')
+        $this->get('/services/smart-tv-setup-morocco')
             ->assertSuccessful()
             ->assertSee('Smart TV setup in Morocco', false);
+
+        $this->get('/smart-tv-setup-morocco')
+            ->assertRedirect('/services/smart-tv-setup-morocco');
     }
 
     public function test_it_renders_seo_helper_files(): void
@@ -57,6 +68,7 @@ class PublicPagesTest extends TestCase
             ->assertSuccessful()
             ->assertHeader('Content-Type', 'application/xml')
             ->assertSee('/services?lang=en', false)
+            ->assertSee('/packages?lang=en', false)
             ->assertSee('/about?lang=en', false)
             ->assertSee('/contact?lang=en', false);
 

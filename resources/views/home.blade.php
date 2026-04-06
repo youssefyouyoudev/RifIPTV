@@ -2,71 +2,7 @@
 
 @section('title', __('site.home.title'))
 @section('meta_description', __('site.home.meta_description'))
-@section('canonical', route('home'))
 @section('body_class', 'page-home')
-
-@php
-    $seoFaqItems = match (app()->getLocale()) {
-        'fr' => [
-            ['q' => 'Que fait exactement Rifi Media ?', 'a' => 'Nous aidons les clients pour la configuration Smart TV, l installation d applications, le depannage des appareils et le support technique.'],
-            ['q' => 'Fournissez-vous du contenu media ?', 'a' => 'Non. Nous ne fournissons ni n hebergeons de contenu media. Nous aidons uniquement a la configuration et au support technique.'],
-            ['q' => 'Travaillez-vous dans tout le Maroc ?', 'a' => 'Oui. Notre zone de service couvre le Maroc avec accompagnement a distance et support humain.'],
-            ['q' => 'Quelles options de paiement sont disponibles ?', 'a' => 'Le paiement par carte peut etre traite via Paddle, et les transferts bancaires locaux sont verifies manuellement.'],
-        ],
-        'es' => [
-            ['q' => 'Que hace exactamente Rifi Media?', 'a' => 'Ayudamos con configuracion de Smart TV, instalacion de aplicaciones, solucion de problemas y soporte tecnico.'],
-            ['q' => 'Ofrecen contenido multimedia?', 'a' => 'No. No proporcionamos ni alojamos contenido multimedia. Solo ofrecemos ayuda tecnica y configuracion.'],
-            ['q' => 'Trabajan en todo Marruecos?', 'a' => 'Si. Nuestra area de servicio cubre Marruecos con asistencia remota y soporte humano.'],
-            ['q' => 'Que opciones de pago existen?', 'a' => 'El pago con tarjeta puede gestionarse mediante Paddle y las transferencias bancarias locales se revisan manualmente.'],
-        ],
-        'ar' => [
-            ['q' => 'ما الذي تقدمه Rifi Media بالضبط؟', 'a' => 'نساعد في إعداد Smart TV، وتثبيت التطبيقات، وحل مشاكل الأجهزة، والمتابعة التقنية.'],
-            ['q' => 'هل توفرون محتوى إعلاميًا؟', 'a' => 'لا. نحن لا نوفر ولا نستضيف محتوى إعلاميًا، بل نقدم فقط خدمات الإعداد والدعم التقني.'],
-            ['q' => 'هل تعملون في جميع أنحاء المغرب؟', 'a' => 'نعم. نطاق الخدمة يشمل المغرب مع متابعة عن بُعد ودعم بشري واضح.'],
-            ['q' => 'ما هي خيارات الدفع المتاحة؟', 'a' => 'يمكن استخدام الدفع بالبطاقة عبر Paddle، كما تتم مراجعة التحويلات البنكية المحلية يدويًا.'],
-        ],
-        default => [
-            ['q' => 'What does Rifi Media actually do?', 'a' => 'We help clients with Smart TV setup, app installation guidance, connected device troubleshooting, and practical technical support.'],
-            ['q' => 'Do you provide media content?', 'a' => 'No. We do not provide or host media content. We only assist with device configuration, app setup, and technical support.'],
-            ['q' => 'Do you work across Morocco?', 'a' => 'Yes. Our service area covers Morocco with remote guidance and human support.'],
-            ['q' => 'What payment options are available?', 'a' => 'Card payments can be handled through Paddle, and local bank transfers are reviewed manually.'],
-        ],
-    };
-
-    $homePageSchema = [
-        '@context' => 'https://schema.org',
-        '@type' => 'WebPage',
-        'name' => __('site.home.title'),
-        'description' => __('site.home.meta_description'),
-        'url' => request()->url(),
-        'inLanguage' => app()->getLocale(),
-        'primaryImageOfPage' => asset('/public/images/hero-light.png'),
-    ];
-
-    $homePlansSchema = [
-        '@context' => 'https://schema.org',
-        '@type' => 'ItemList',
-        'name' => __('site.home.pricing.title'),
-        'itemListElement' => [
-            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Basic / SUP'],
-            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Advanced / MAX'],
-            ['@type' => 'ListItem', 'position' => 3, 'name' => 'Premium / TREX'],
-        ],
-    ];
-
-    $homeFaqSchema = [
-        '@context' => 'https://schema.org',
-        '@type' => 'FAQPage',
-        'mainEntity' => collect($seoFaqItems)->map(fn (array $item) => [
-            '@type' => 'Question',
-            'name' => $item['q'],
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => $item['a'],
-            ],
-        ])->all(),
-    ];
-@endphp
 
 @push('preloads')
     <link rel="preload" as="image" href="{{ asset('/public/images/rifmedia-logo-512.png') }}" imagesrcset="{{ asset('/public/images/rifmedia-logo-320.png') }} 320w, {{ asset('/public/images/rifmedia-logo-512.png') }} 512w" imagesizes="(min-width: 1200px) 320px, (min-width: 768px) 280px, 220px" fetchpriority="high">
@@ -74,13 +10,27 @@
 
 @section('structured_data')
     <script type="application/ld+json">
-        {!! json_encode($homePageSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+        {!! json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'WebPage',
+            'name' => __('site.home.title'),
+            'description' => __('site.home.meta_description'),
+            'url' => request()->url(),
+            'inLanguage' => app()->getLocale(),
+            'primaryImageOfPage' => asset('/public/images/hero-light.png'),
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
     <script type="application/ld+json">
-        {!! json_encode($homePlansSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-    </script>
-    <script type="application/ld+json">
-        {!! json_encode($homeFaqSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+        {!! json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'ItemList',
+            'name' => __('site.home.pricing.title'),
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Basic / SUP'],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Advanced / MAX'],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => 'Premium / TREX'],
+            ],
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
 @endsection
 
@@ -92,11 +42,7 @@
         $heroLogo = asset('/public/images/rifmedia-logo-512.png');
         $heroLogoCompact = asset('/public/images/rifmedia-logo-320.png');
         $primaryCta = auth()->check() && Route::has('onboarding.show') ? route('onboarding.show') : route('register');
-        $secondaryCta = config('seo.whatsapp_url', 'https://wa.me/212663323824');
-        $businessName = config('seo.organization_name', 'Rifi Media');
-        $businessEmail = config('seo.contact_email', 'contact@rifimedia.com');
-        $supportHours = config('seo.support_hours', 'Monday to Saturday, 09:00 to 22:00');
-        $serviceArea = $locale === 'ar' ? 'المغرب' : 'Morocco';
+        $secondaryCta = 'https://wa.me/212600000000';
         $paymentLogos = [
             'paddle' => ['path' => '/public/images/payment-paddle.jpg', 'width' => 600, 'height' => 315],
             'cih' => ['path' => '/public/images/payment-cih-bank.jpg', 'width' => 569, 'height' => 429],
@@ -110,9 +56,9 @@
         $ui = match ($locale) {
             'fr' => [
                 'hero_eyebrow' => 'Service professionnel de configuration',
-                'hero_title_top' => 'Smart TV et configuration',
-                'hero_title_bottom' => 'technique au Maroc.',
-                'hero_description' => 'Rifi Media accompagne les clients dans tout le Maroc pour la configuration d appareils, le guidage applicatif et le support technique pratique.',
+                'hero_title_top' => 'Une installation bien faite.',
+                'hero_title_bottom' => 'Un support qui reste avec vous.',
+                'hero_description' => 'Nous vous aidons a configurer vos appareils, installer vos applications utiles, organiser vos comptes et garder un suivi technique clair.',
                 'hero_tagline' => 'Une presentation plus simple, plus fiable et plus rassurante pour vos besoins de mise en route.',
                 'hero_points' => ['Processus securise', 'Support WhatsApp', 'Guide technique clair'],
                 'hero_stats' => ['Setup professionnel', 'Suivi quotidien', 'TV / Mobile / Tablette'],
@@ -136,9 +82,9 @@
             ],
             'es' => [
                 'hero_eyebrow' => 'Servicio profesional de configuracion',
-                'hero_title_top' => 'Smart TV y configuracion',
-                'hero_title_bottom' => 'tecnica en Marruecos.',
-                'hero_description' => 'Rifi Media ayuda a clientes en todo Marruecos con configuracion de dispositivos, guia de aplicaciones y soporte tecnico practico.',
+                'hero_title_top' => 'Configuracion bien hecha.',
+                'hero_title_bottom' => 'Soporte que sigue contigo.',
+                'hero_description' => 'Te ayudamos a configurar tus dispositivos, instalar aplicaciones utiles, organizar tus cuentas y mantener un soporte tecnico claro.',
                 'hero_tagline' => 'Una presentacion mas limpia y profesional para clientes que quieren confianza y pasos faciles.',
                 'hero_points' => ['Proceso seguro', 'Soporte por WhatsApp', 'Guia tecnica clara'],
                 'hero_stats' => ['Setup profesional', 'Seguimiento diario', 'TV / Movil / Tablet'],
@@ -162,9 +108,9 @@
             ],
             'ar' => [
                 'hero_eyebrow' => 'خدمة إعداد أجهزة احترافية',
-                'hero_title_top' => 'إعداد Smart TV',
-                'hero_title_bottom' => 'ودعم تقني في المغرب',
-                'hero_description' => 'تساعدك Rifi Media في إعداد الأجهزة الذكية، وضبط التطبيقات، وحل المشكلات التقنية بخطوات واضحة ودعم بشري منظم في مختلف أنحاء المغرب.',
+                'hero_title_top' => 'إعداد صحيح',
+                'hero_title_bottom' => 'ودعم يبقى معك',
+                'hero_description' => 'نساعدك في إعداد التلفاز الذكي والتطبيقات والحسابات والمتابعة التقنية بخطوات واضحة وواجهة سهلة وفريق دعم حقيقي.',
                 'hero_tagline' => 'من أول إعداد إلى آخر متابعة، نبقي التجربة مرتبة وآمنة وسهلة الفهم.',
                 'hero_points' => ['إجراء آمن', 'متابعة عبر واتساب', 'إرشاد تقني واضح'],
                 'hero_stats' => ['إعداد احترافي', 'استجابة يومية', 'TV / Mobile / Tablet'],
@@ -188,9 +134,9 @@
             ],
             default => [
                 'hero_eyebrow' => 'Professional device setup service',
-                'hero_title_top' => 'Smart TV, device setup,',
-                'hero_title_bottom' => 'and technical support in Morocco.',
-                'hero_description' => 'Rifi Media helps clients across Morocco with device setup, app guidance, onboarding help, and practical technical troubleshooting.',
+                'hero_title_top' => 'Setup done right.',
+                'hero_title_bottom' => 'Support that stays with you.',
+                'hero_description' => 'We help clients configure devices, install the right apps, organize account details, and keep technical support simple from the first step onward.',
                 'hero_tagline' => 'A cleaner front-end experience that feels trustworthy, practical, and easy to follow.',
                 'hero_points' => ['Secure process', 'WhatsApp support', 'Clear technical guidance'],
                 'hero_stats' => ['Professional setup', 'Daily follow-up', 'TV / Mobile / Tablet'],
@@ -211,48 +157,6 @@
                 'support_description' => 'Talk to our team if you need help choosing the right package or understanding the setup and payment process.',
                 'support_primary' => 'WhatsApp support',
                 'support_secondary' => 'View packages',
-            ],
-        };
-        $napBlock = match ($locale) {
-            'fr' => [
-                'kicker' => 'Confiance et informations',
-                'items' => [
-                    ['label' => 'Entreprise', 'value' => $businessName],
-                    ['label' => 'Email', 'value' => $businessEmail],
-                    ['label' => 'WhatsApp', 'value' => preg_replace('/^https:\/\/wa\.me\//', '+', $secondaryCta)],
-                    ['label' => 'Zone de service', 'value' => 'Maroc'],
-                    ['label' => 'Horaires', 'value' => $supportHours],
-                ],
-            ],
-            'es' => [
-                'kicker' => 'Confianza y datos',
-                'items' => [
-                    ['label' => 'Empresa', 'value' => $businessName],
-                    ['label' => 'Correo', 'value' => $businessEmail],
-                    ['label' => 'WhatsApp', 'value' => preg_replace('/^https:\/\/wa\.me\//', '+', $secondaryCta)],
-                    ['label' => 'Zona de servicio', 'value' => 'Marruecos'],
-                    ['label' => 'Horario', 'value' => $supportHours],
-                ],
-            ],
-            'ar' => [
-                'kicker' => 'بيانات الثقة',
-                'items' => [
-                    ['label' => 'اسم النشاط', 'value' => $businessName],
-                    ['label' => 'البريد الإلكتروني', 'value' => $businessEmail],
-                    ['label' => 'واتساب', 'value' => preg_replace('/^https:\/\/wa\.me\//', '+', $secondaryCta)],
-                    ['label' => 'نطاق الخدمة', 'value' => 'المغرب'],
-                    ['label' => 'ساعات الدعم', 'value' => $supportHours],
-                ],
-            ],
-            default => [
-                'kicker' => 'Business trust block',
-                'items' => [
-                    ['label' => 'Business', 'value' => $businessName],
-                    ['label' => 'Support email', 'value' => $businessEmail],
-                    ['label' => 'WhatsApp', 'value' => preg_replace('/^https:\/\/wa\.me\//', '+', $secondaryCta)],
-                    ['label' => 'Service area', 'value' => 'Morocco'],
-                    ['label' => 'Support hours', 'value' => $supportHours],
-                ],
             ],
         };
     @endphp
@@ -453,31 +357,6 @@
         </div>
     </section>
 
-    <section class="section-space pt-0">
-        <div class="container-xxl px-3 px-md-4 px-lg-5">
-            <div class="surface-card p-4 p-lg-5 reveal-up">
-                <div class="d-flex flex-column flex-lg-row align-items-lg-end justify-content-between gap-3 mb-4">
-                    <div>
-                        <span class="section-kicker mb-3">{{ $napBlock['kicker'] }}</span>
-                        <h2 class="h3 text-body-rif mb-2">{{ $locale === 'ar' ? 'معلومات واضحة عن النشاط والدعم' : ($locale === 'fr' ? 'Informations claires sur le service et le support' : ($locale === 'es' ? 'Informacion clara sobre la empresa y el soporte' : 'Clear business and support details')) }}</h2>
-                        <p class="text-soft-rif mb-0">{{ $locale === 'ar' ? 'هذه المعلومات تساعد العملاء ومحركات البحث على فهم النشاط ومنطقة الخدمة وقنوات التواصل الرسمية.' : ($locale === 'fr' ? 'Ces informations aident les clients et les moteurs de recherche a comprendre l activite, la zone de service et les canaux officiels.' : ($locale === 'es' ? 'Estos datos ayudan a clientes y motores de busqueda a entender la actividad, la zona de servicio y los canales oficiales.' : 'This block helps clients and search engines understand the business, the service area, and the official contact paths.')) }}</p>
-                    </div>
-                    <a href="{{ route('pages.contact') }}" class="btn-rif-outline">{{ $locale === 'ar' ? 'صفحة التواصل' : ($locale === 'fr' ? 'Page contact' : ($locale === 'es' ? 'Pagina de contacto' : 'Contact page')) }}</a>
-                </div>
-                <div class="row g-3">
-                    @foreach ($napBlock['items'] as $item)
-                        <div class="col-md-6 col-xl">
-                            <article class="metric-pill h-100 p-3">
-                                <div class="small text-soft-rif mb-2">{{ $item['label'] }}</div>
-                                <div class="fw-semibold text-body-rif">{{ $item['value'] }}</div>
-                            </article>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="section-space-lg">
         <div class="container-xxl px-3 px-md-4 px-lg-5">
             <div class="section-shell p-4 p-lg-5">
@@ -602,35 +481,6 @@
                                 <h3 class="h4 text-body-rif mt-3 mb-2">{{ $item['title'] }}</h3>
                                 <p class="text-soft-rif mb-0">{{ $item['text'] }}</p>
                             </article>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-space pt-0">
-        <div class="container-xxl px-3 px-md-4 px-lg-5">
-            <div class="surface-card p-4 p-lg-5 reveal-up">
-                <div class="text-center mx-auto mb-5" style="max-width: 760px;">
-                    <span class="section-kicker mb-3">{{ $locale === 'ar' ? 'روابط مفيدة' : ($locale === 'fr' ? 'Liens utiles' : ($locale === 'es' ? 'Enlaces utiles' : 'Helpful internal links')) }}</span>
-                    <h2 class="section-title text-body-rif mb-3">{{ $locale === 'ar' ? 'اكتشف صفحات الخدمة والثقة الأكثر أهمية' : ($locale === 'fr' ? 'Decouvrez les pages les plus utiles du site' : ($locale === 'es' ? 'Explora las paginas mas utiles del sitio' : 'Explore the most useful service and trust pages')) }}</h2>
-                    <p class="text-soft-rif fs-5 mb-0">{{ $locale === 'ar' ? 'روابط داخلية وصفية تساعد الزائر على الوصول السريع وتساعد محركات البحث على فهم بنية الموقع.' : ($locale === 'fr' ? 'Des liens internes descriptifs qui aident les visiteurs et les moteurs de recherche a mieux comprendre la structure du site.' : ($locale === 'es' ? 'Enlaces internos descriptivos que ayudan a los usuarios y a los motores de busqueda a comprender mejor el sitio.' : 'Descriptive internal links make the journey clearer for visitors and easier to crawl for search engines.')) }}</p>
-                </div>
-                <div class="row g-3">
-                    @foreach ([
-                        ['url' => route('pages.services'), 'title' => $locale === 'ar' ? 'خدمات إعداد الأجهزة' : ($locale === 'fr' ? 'Services de configuration' : ($locale === 'es' ? 'Servicios de configuracion' : 'Device setup services')), 'text' => $locale === 'ar' ? 'اعرف كل خدمات إعداد الأجهزة وضبط التطبيقات.' : ($locale === 'fr' ? 'Voir l ensemble des services de configuration et de guidage.' : ($locale === 'es' ? 'Consulta todos los servicios de configuracion y guia.' : 'Browse the full list of setup and guidance services.'))],
-                        ['url' => route('pages.service', 'smart-tv-setup'), 'title' => $locale === 'ar' ? 'إعداد Smart TV' : 'Smart TV setup', 'text' => $locale === 'ar' ? 'صفحة مخصصة لإعداد التلفاز الذكي والخطوات الأساسية.' : ($locale === 'fr' ? 'Une page dediee a l installation Smart TV et aux reglages de base.' : ($locale === 'es' ? 'Una pagina dedicada a la configuracion de Smart TV y ajustes iniciales.' : 'A dedicated page for Smart TV setup and first-time configuration.'))],
-                        ['url' => route('pages.service', 'technical-support-morocco'), 'title' => $locale === 'ar' ? 'الدعم التقني في المغرب' : ($locale === 'fr' ? 'Support technique au Maroc' : ($locale === 'es' ? 'Soporte tecnico en Marruecos' : 'Technical support in Morocco')), 'text' => $locale === 'ar' ? 'تعرف على طريقة المتابعة التقنية ونطاق الخدمة داخل المغرب.' : ($locale === 'fr' ? 'Comprendre le support humain et la zone de service au Maroc.' : ($locale === 'es' ? 'Entender el soporte humano y el area de servicio en Marruecos.' : 'Understand the support model and the Morocco-wide service area.'))],
-                        ['url' => route('pages.faq'), 'title' => $locale === 'ar' ? 'الأسئلة الشائعة' : 'FAQ', 'text' => $locale === 'ar' ? 'إجابات واضحة عن الإعداد والدفع والمتابعة.' : ($locale === 'fr' ? 'Des reponses rapides sur l installation, le paiement et le suivi.' : ($locale === 'es' ? 'Respuestas claras sobre configuracion, pago y seguimiento.' : 'Clear answers about setup, payment, and support.'))],
-                        ['url' => route('pages.trust'), 'title' => trans('legal.hub.kicker'), 'text' => $locale === 'ar' ? 'راجع الخصوصية والاسترجاع وشروط الخدمة في مكان واحد.' : ($locale === 'fr' ? 'Consultez les politiques de confidentialite, remboursement et conditions.' : ($locale === 'es' ? 'Consulta privacidad, reembolsos y condiciones en un solo lugar.' : 'Review privacy, refund, and service policies in one trust center.'))],
-                        ['url' => route('pages.contact'), 'title' => $locale === 'ar' ? 'التواصل مع الفريق' : ($locale === 'fr' ? 'Contacter l equipe' : ($locale === 'es' ? 'Contactar al equipo' : 'Contact the team')), 'text' => $locale === 'ar' ? 'وسائل التواصل الرسمية للدعم والإرشاد داخل المغرب.' : ($locale === 'fr' ? 'Les canaux officiels pour le support et le guidage au Maroc.' : ($locale === 'es' ? 'Los canales oficiales para soporte y guia en Marruecos.' : 'Official support and contact paths for clients in Morocco.'))],
-                    ] as $linkCard)
-                        <div class="col-md-6 col-xl-4">
-                            <a href="{{ $linkCard['url'] }}" class="surface-card feature-card home-feature-card p-4 reveal-up text-decoration-none d-block h-100">
-                                <h3 class="h5 text-body-rif mb-2">{{ $linkCard['title'] }}</h3>
-                                <p class="text-soft-rif mb-0">{{ $linkCard['text'] }}</p>
-                            </a>
                         </div>
                     @endforeach
                 </div>
@@ -985,7 +835,7 @@
                     ['title' => 'Services', 'text' => 'Decouvrez nos services de configuration et d assistance.', 'url' => route('pages.services')],
                     ['title' => 'A propos', 'text' => 'Comprenez notre approche, notre ton et notre methode de support.', 'url' => route('pages.about')],
                     ['title' => 'Contact', 'text' => 'Contactez l equipe pour une aide avant ou apres la commande.', 'url' => route('pages.contact')],
-                    ['title' => 'Centre de confiance', 'text' => 'Consultez les politiques de confidentialite, securite et remboursement.', 'url' => route('pages.trust')],
+                    ['title' => 'Centre de confiance', 'text' => 'Consultez les politiques de confidentialite, securite et remboursement.', 'url' => route('legal.index')],
                 ],
             ],
             'es' => [
@@ -995,7 +845,7 @@
                     ['title' => 'Servicios', 'text' => 'Descubre nuestros servicios de configuracion y asistencia.', 'url' => route('pages.services')],
                     ['title' => 'Nosotros', 'text' => 'Conoce nuestro enfoque, tono y metodo de soporte.', 'url' => route('pages.about')],
                     ['title' => 'Contacto', 'text' => 'Habla con el equipo antes o despues de tu pedido.', 'url' => route('pages.contact')],
-                    ['title' => 'Centro legal', 'text' => 'Consulta privacidad, seguridad, reembolsos y reglas del servicio.', 'url' => route('pages.trust')],
+                    ['title' => 'Centro legal', 'text' => 'Consulta privacidad, seguridad, reembolsos y reglas del servicio.', 'url' => route('legal.index')],
                 ],
             ],
             'ar' => [
@@ -1005,7 +855,7 @@
                     ['title' => 'الخدمات', 'text' => 'تعرّف على خدمات الإعداد والمساعدة التقنية.', 'url' => route('pages.services')],
                     ['title' => 'من نحن', 'text' => 'اقرأ عن نهج الفريق وطريقة المتابعة والدعم.', 'url' => route('pages.about')],
                     ['title' => 'التواصل', 'text' => 'تواصل مع الفريق قبل الطلب أو بعده.', 'url' => route('pages.contact')],
-                    ['title' => 'مركز الثقة', 'text' => 'راجع الخصوصية والأمان وشروط الخدمة والاسترجاع.', 'url' => route('pages.trust')],
+                    ['title' => 'مركز الثقة', 'text' => 'راجع الخصوصية والأمان وشروط الخدمة والاسترجاع.', 'url' => route('legal.index')],
                 ],
             ],
             default => [
@@ -1015,7 +865,7 @@
                     ['title' => 'Services', 'text' => 'Review our setup, guidance, and technical support services.', 'url' => route('pages.services')],
                     ['title' => 'About', 'text' => 'Learn how the team approaches setup, support, and follow-up.', 'url' => route('pages.about')],
                     ['title' => 'Contact', 'text' => 'Talk to the team before or after placing an order.', 'url' => route('pages.contact')],
-                    ['title' => 'Trust center', 'text' => 'Read our privacy, security, refund, and service policies.', 'url' => route('pages.trust')],
+                    ['title' => 'Trust center', 'text' => 'Read our privacy, security, refund, and service policies.', 'url' => route('legal.index')],
                 ],
             ],
         };

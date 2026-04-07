@@ -23,56 +23,8 @@
             'item' => $item['url'],
         ])->all(),
     ];
-@endphp
 
-@php
-    $locale = app()->getLocale();
-    $ui = match ($locale) {
-        'fr' => [
-            'service_area' => 'Zone de service',
-            'support_hours' => 'Horaires du support',
-            'whatsapp' => 'WhatsApp',
-            'scope' => 'Portee',
-            'devices' => 'Appareils',
-            'response' => 'Reponse',
-            'follow_up' => 'Suivi',
-            'months' => 'mois',
-            'get_started' => 'Commencer',
-        ],
-        'es' => [
-            'service_area' => 'Zona de servicio',
-            'support_hours' => 'Horario de soporte',
-            'whatsapp' => 'WhatsApp',
-            'scope' => 'Cobertura',
-            'devices' => 'Dispositivos',
-            'response' => 'Respuesta',
-            'follow_up' => 'Seguimiento',
-            'months' => 'meses',
-            'get_started' => 'Comenzar',
-        ],
-        'ar' => [
-            'service_area' => 'منطقة الخدمة',
-            'support_hours' => 'ساعات الدعم',
-            'whatsapp' => 'واتساب',
-            'scope' => 'النطاق',
-            'devices' => 'الأجهزة',
-            'response' => 'الاستجابة',
-            'follow_up' => 'المتابعة',
-            'months' => 'أشهر',
-            'get_started' => 'ابدأ الآن',
-        ],
-        default => [
-            'service_area' => 'Service area',
-            'support_hours' => 'Support hours',
-            'whatsapp' => 'WhatsApp',
-            'scope' => 'Scope',
-            'devices' => 'Devices',
-            'response' => 'Response',
-            'follow_up' => 'Follow-up',
-            'months' => 'months',
-            'get_started' => 'Get started',
-        ],
-    };
+    $initialPlanSlug = data_get($plans, '0.slug', 'basic');
 @endphp
 
 @section('structured_data')
@@ -111,58 +63,111 @@
                     <div class="col-lg-4">
                         <div class="page-quickfacts-card h-100">
                             <div class="page-quickfacts-list">
-                                <div><span>{{ $ui['service_area'] }}</span><strong>{{ config('seo.service_region', 'Morocco') }}</strong></div>
-                                <div><span>{{ $ui['support_hours'] }}</span><strong>{{ config('seo.support_hours', 'Monday to Saturday, 09:00 to 22:00') }}</strong></div>
-                                <div><span>{{ $ui['whatsapp'] }}</span><strong>+212 663 323 824</strong></div>
+                                <div><span>{{ app()->isLocale('ar') ? 'منطقة الخدمة' : (app()->isLocale('fr') ? 'Zone de service' : (app()->isLocale('es') ? 'Zona de servicio' : 'Service area')) }}</span><strong>{{ config('seo.service_region', 'Morocco') }}</strong></div>
+                                <div><span>{{ app()->isLocale('ar') ? 'ساعات الدعم' : (app()->isLocale('fr') ? 'Horaires du support' : (app()->isLocale('es') ? 'Horario de soporte' : 'Support hours')) }}</span><strong>{{ config('seo.support_hours', 'Monday to Saturday, 09:00 to 22:00') }}</strong></div>
+                                <div><span>WhatsApp</span><strong>+212 663 323 824</strong></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row g-4">
+            <div class="pack-switcher reveal-up" data-pack-switcher data-pack-default="{{ $initialPlanSlug }}">
+                <div class="pack-toggle-bar mb-4" role="tablist" aria-label="Package families">
+                    @foreach ($plans as $plan)
+                        <button type="button" class="pack-toggle-btn {{ $plan['slug'] === $initialPlanSlug ? 'is-active' : '' }}" data-pack-toggle="{{ $plan['slug'] }}">
+                            <span class="pack-toggle-logo-wrap"><strong>{{ $plan['code'] }}</strong></span>
+                            <span class="pack-toggle-copy">
+                                <strong>{{ $plan['label'] }} / {{ $plan['code'] }}</strong>
+                                <small>{{ $plan['summary'] }}</small>
+                            </span>
+                        </button>
+                    @endforeach
+                </div>
+
                 @foreach ($plans as $plan)
-                    @php($featuredPrice = collect($plan['prices'])->firstWhere('featured', true) ?? $plan['prices'][0])
-                    <div class="col-lg-4">
-                        <article class="family-plan-mini h-100 {{ $plan['slug'] === 'advanced' ? 'family-plan-tone-popular' : ($plan['slug'] === 'premium' ? 'family-plan-tone-value' : '') }}">
-                            @if (! empty($plan['highlight']))
-                                <span class="family-plan-badge {{ $plan['slug'] === 'advanced' ? 'family-plan-badge-popular' : 'family-plan-badge-value' }}">{{ $plan['highlight'] }}</span>
-                            @endif
-                            <span class="family-plan-label">{{ $plan['label'] }}</span>
-                            <h2 class="family-plan-name">{{ $plan['name'] }}</h2>
-                            <p class="family-plan-subtitle">{{ $plan['summary'] }}</p>
-                            <div class="service-plan-meta-grid">
-                                <div><span>{{ $ui['scope'] }}</span><strong>{{ $plan['scope'] }}</strong></div>
-                                <div><span>{{ $ui['devices'] }}</span><strong>{{ $plan['devices'] }}</strong></div>
-                                <div><span>{{ $ui['response'] }}</span><strong>{{ $plan['response'] }}</strong></div>
-                                <div><span>{{ $ui['follow_up'] }}</span><strong>{{ $plan['follow_up'] }}</strong></div>
+                    <article class="surface-card family-pricing-shell p-4 p-lg-5 pack-panel {{ $plan['slug'] === $initialPlanSlug ? 'is-active' : '' }}" data-pack-panel="{{ $plan['slug'] }}">
+                        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-4 mb-4">
+                            <div class="family-pricing-brand">
+                                <span class="family-pricing-logo-wrap d-inline-flex align-items-center justify-content-center">{{ $plan['code'] }}</span>
+                                <div>
+                                    <div class="text-soft-rif small text-uppercase fw-bold mb-2">{{ $page['kicker'] }}</div>
+                                    <h2 class="h2 text-body-rif mb-2">{{ $plan['name'] }}</h2>
+                                    <p class="text-soft-rif mb-0">{{ $plan['summary'] }}</p>
+                                </div>
                             </div>
-                            <div class="family-plan-price">{{ $featuredPrice['price'] }}<span>MAD</span></div>
-                            <div class="duration-chip-row">
-                                @foreach ($plan['prices'] as $price)
-                                    <span class="duration-chip {{ $price['featured'] ? 'is-featured' : '' }}">{{ $price['duration_label'] ?? ($price['months'].' '.$ui['months']) }}</span>
-                                @endforeach
-                            </div>
-                            <ul class="family-plan-benefits">
-                                @foreach ($plan['features'] as $feature)
-                                    <li>
-                                        <span class="family-plan-check"><i data-lucide="check" class="icon-xs"></i></span>
-                                        <span>{{ $feature }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
-                            <div class="d-flex flex-column gap-3 mt-auto">
-                                @auth
-                                    <a href="{{ route('onboarding.show') }}" class="btn-rif-secondary w-100">{{ $ui['get_started'] }}</a>
-                                @else
-                                    <a href="{{ route('register') }}" class="btn-rif-secondary w-100">{{ $ui['get_started'] }}</a>
-                                @endauth
-                                <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-outline w-100" target="_blank" rel="noopener">{{ $plan['talk_cta'] }}</a>
-                            </div>
-                        </article>
-                    </div>
+
+                            @auth
+                                <a href="{{ route('onboarding.show') }}" class="btn-rif-outline family-pricing-cta">{{ $plan['choose_cta'] }}</a>
+                            @else
+                                <a href="{{ route('register') }}" class="btn-rif-outline family-pricing-cta">{{ $plan['choose_cta'] }}</a>
+                            @endauth
+                        </div>
+
+                        <div class="row g-3">
+                            @foreach ($plan['prices'] as $price)
+                                <div class="col-md-6 col-xl-4">
+                                    <article class="service-plan-card {{ $price['featured'] ? 'service-plan-card-featured' : '' }}">
+                                        @if ($price['featured'])
+                                            <span class="service-plan-badge">{{ $plan['featured_badge'] }}</span>
+                                        @endif
+                                        <div class="service-plan-head">
+                                            <div>
+                                                <span class="service-plan-label">{{ $plan['code'] }}</span>
+                                                <h3 class="service-plan-name">{{ $price['duration_label'] }}</h3>
+                                            </div>
+                                        </div>
+                                        <div class="service-plan-price">{{ $price['price'] }} <span>MAD</span></div>
+                                        <ul class="service-plan-features">
+                                            @foreach ($plan['features'] as $feature)
+                                                <li>
+                                                    <span class="family-plan-check"><i data-lucide="check" class="icon-sm"></i></span>
+                                                    <span>{{ $feature }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <div class="d-flex flex-column gap-3 mt-auto">
+                                            @auth
+                                                <a href="{{ route('onboarding.show') }}" class="{{ $price['featured'] ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100">{{ $plan['continue_cta'] }}</a>
+                                            @else
+                                                <a href="{{ route('register') }}" class="{{ $price['featured'] ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100">{{ $plan['continue_cta'] }}</a>
+                                            @endauth
+                                            <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-outline w-100" target="_blank" rel="noopener">{{ $plan['talk_cta'] }}</a>
+                                        </div>
+                                    </article>
+                                </div>
+                            @endforeach
+                        </div>
+                    </article>
                 @endforeach
             </div>
         </div>
     </section>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-pack-switcher]').forEach(function (switcher) {
+        const buttons = switcher.querySelectorAll('[data-pack-toggle]');
+        const panels = switcher.querySelectorAll('[data-pack-panel]');
+
+        const activate = function (slug) {
+            buttons.forEach(function (button) {
+                button.classList.toggle('is-active', button.getAttribute('data-pack-toggle') === slug);
+            });
+
+            panels.forEach(function (panel) {
+                panel.classList.toggle('is-active', panel.getAttribute('data-pack-panel') === slug);
+            });
+        };
+
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                activate(button.getAttribute('data-pack-toggle'));
+            });
+        });
+    });
+});
+</script>
+@endpush

@@ -15,7 +15,9 @@ class SecurityHeadersTest extends TestCase
             ->assertHeader('X-Frame-Options', 'SAMEORIGIN')
             ->assertHeader('X-Content-Type-Options', 'nosniff')
             ->assertHeader('Referrer-Policy', config('security.referrer_policy'))
-            ->assertHeader('Permissions-Policy', config('security.permissions_policy'));
+            ->assertHeader('Permissions-Policy', config('security.permissions_policy'))
+            ->assertHeader('Cross-Origin-Resource-Policy', config('security.cross_origin_resource_policy'))
+            ->assertHeader('Content-Security-Policy', config('security.content_security_policy'));
     }
 
     public function test_secure_requests_include_hsts_header(): void

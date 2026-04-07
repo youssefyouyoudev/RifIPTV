@@ -37,18 +37,29 @@
     $loginRoute = Route::has('login') ? route('login') : '#';
     $registerRoute = Route::has('register') ? route('register') : '#';
     $supportedLocales = config('app.supported_locales', ['en']);
-    $localizedBaseUrl = request()->url();
+    $canonicalBase = trim($__env->yieldContent('canonical')) ?: request()->url();
+    $localizedBaseUrl = \App\Support\SeoUrl::xDefault($canonicalBase);
     $metaTitle = trim($__env->yieldContent('title')) ?: data_get($seoConfig, 'default_title', $brandName);
     $metaDescription = trim($__env->yieldContent('meta_description')) ?: data_get($seoConfig, 'default_description', __('site.home.meta_description'));
-    $metaRobots = trim($__env->yieldContent('meta_robots')) ?: 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1';
-    $canonicalUrl = trim($__env->yieldContent('canonical')) ?: $localizedBaseUrl;
-    $localeUrls = collect($supportedLocales)->mapWithKeys(fn (string $locale) => [$locale => $localizedBaseUrl.'?lang='.$locale]);
+    $metaRobots = trim($__env->yieldContent('meta_robots')) ?: data_get($seoConfig, 'default_robots', 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1');
+    $canonicalUrl = \App\Support\SeoUrl::withLocale($canonicalBase, app()->getLocale());
+    $localeUrls = collect(\App\Support\SeoUrl::localeMap($canonicalBase, $supportedLocales));
     $ogLocale = [
         'en' => 'en_US',
         'fr' => 'fr_FR',
         'es' => 'es_ES',
         'ar' => 'ar_MA',
     ][app()->getLocale()] ?? 'en_US';
+    $ogLocaleAlternates = collect($supportedLocales)
+        ->reject(fn (string $locale) => $locale === app()->getLocale())
+        ->map(fn (string $locale) => [
+            'en' => 'en_US',
+            'fr' => 'fr_FR',
+            'es' => 'es_ES',
+            'ar' => 'ar_MA',
+        ][$locale] ?? null)
+        ->filter()
+        ->values();
     $organizationSchema = [
         '@context' => 'https://schema.org',
         '@type' => 'Organization',

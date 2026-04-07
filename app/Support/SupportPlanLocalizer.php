@@ -157,7 +157,7 @@ class SupportPlanLocalizer
                     'summary' => 'Para necesidades simples de configuracion, instalacion guiada y seguimiento inicial.',
                     'scope' => 'Configuracion base',
                     'devices' => '1 dispositivo',
-                    'response' => 'Estándar',
+                    'response' => 'Estandar',
                     'follow_up' => 'Seguimiento esencial',
                     'features' => [
                         'Ayuda paso a paso para configurar el equipo',
@@ -206,7 +206,7 @@ class SupportPlanLocalizer
                 'basic' => [
                     'label' => 'أساسي',
                     'name' => 'الدعم الأساسي',
-                    'summary' => 'للإعدادات الأبسط، وخطوات التثبيت الموجهة، والمتابعة الأولى المريحة.',
+                    'summary' => 'للإعدادات الأبسط، وخطوات التثبيت الموجّهة، والمتابعة الأولى المريحة.',
                     'scope' => 'إعداد أساسي',
                     'devices' => 'جهاز واحد',
                     'response' => 'عادي',
@@ -224,7 +224,7 @@ class SupportPlanLocalizer
                     'name' => 'الدعم المتقدم',
                     'summary' => 'لنطاق إعداد أوسع، وأولوية أعلى، وفترة متابعة أطول عبر أكثر من جهاز.',
                     'highlight' => 'الأكثر اختيارًا',
-                    'scope' => 'إعداد موسع',
+                    'scope' => 'إعداد موسّع',
                     'devices' => 'حتى جهازين',
                     'response' => 'أولوية',
                     'follow_up' => 'متابعة ممتدة',

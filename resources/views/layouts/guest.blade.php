@@ -23,12 +23,14 @@
     $metaTitle = trim($__env->yieldContent('title')) ?: $brandName;
     $metaDescription = trim($__env->yieldContent('meta_description')) ?: __('portal.auth.login.meta_description');
     $metaRobots = trim($__env->yieldContent('meta_robots')) ?: 'noindex,nofollow';
-    $localizedBaseUrl = request()->url();
-    $localeUrls = collect($supportedLocales)->mapWithKeys(fn (string $locale) => [$locale => $localizedBaseUrl.'?lang='.$locale]);
+    $canonicalBase = trim($__env->yieldContent('canonical')) ?: request()->url();
+    $localizedBaseUrl = \App\Support\SeoUrl::xDefault($canonicalBase);
+    $localeUrls = collect(\App\Support\SeoUrl::localeMap($canonicalBase, $supportedLocales));
 @endphp
 <head>
-    @php($canonicalUrl = $localizedBaseUrl)
+    @php($canonicalUrl = \App\Support\SeoUrl::withLocale($canonicalBase, app()->getLocale()))
     @php($ogLocale = ['en' => 'en_US', 'fr' => 'fr_FR', 'es' => 'es_ES', 'ar' => 'ar_MA'][app()->getLocale()] ?? 'en_US')
+    @php($ogLocaleAlternates = collect($supportedLocales)->reject(fn (string $locale) => $locale === app()->getLocale())->map(fn (string $locale) => ['en' => 'en_US', 'fr' => 'fr_FR', 'es' => 'es_ES', 'ar' => 'ar_MA'][$locale] ?? null)->filter()->values())
     @include('partials.seo-meta')
 
     @stack('preloads')

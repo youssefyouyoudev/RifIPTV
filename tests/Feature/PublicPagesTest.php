@@ -55,12 +55,24 @@ class PublicPagesTest extends TestCase
             ->assertSuccessful()
             ->assertSee('Answers to common setup, onboarding, and technical support questions.', false);
 
-        $this->get('/services/smart-tv-setup-morocco')
+        $this->get('/smart-tv-setup-morocco')
             ->assertSuccessful()
             ->assertSee('Smart TV setup in Morocco', false);
 
-        $this->get('/smart-tv-setup-morocco')
-            ->assertRedirect('/services/smart-tv-setup-morocco');
+        $this->get('/app-installation-help')
+            ->assertSuccessful()
+            ->assertSee('App installation help in Morocco', false);
+
+        $this->get('/device-troubleshooting-morocco')
+            ->assertSuccessful()
+            ->assertSee('Device troubleshooting in Morocco', false);
+
+        $this->get('/technical-support-morocco')
+            ->assertSuccessful()
+            ->assertSee('Technical support in Morocco', false);
+
+        $this->get('/services/smart-tv-setup-morocco')
+            ->assertRedirect('/smart-tv-setup-morocco');
     }
 
     public function test_it_renders_seo_helper_files(): void
@@ -68,10 +80,12 @@ class PublicPagesTest extends TestCase
         $this->get('/sitemap.xml')
             ->assertSuccessful()
             ->assertHeader('Content-Type', 'application/xml')
-            ->assertSee('/services?lang=en', false)
-            ->assertSee('/packages?lang=en', false)
-            ->assertSee('/about?lang=en', false)
-            ->assertSee('/contact?lang=en', false);
+            ->assertSee(route('pages.services'), false)
+            ->assertSee(route('pages.packages'), false)
+            ->assertSee(route('pages.about'), false)
+            ->assertSee(route('pages.contact'), false)
+            ->assertSee(route('pages.service', 'app-installation-help'), false)
+            ->assertSee(route('pages.service', 'technical-support-morocco'), false);
 
         $this->get('/robots.txt')
             ->assertSuccessful()
@@ -105,27 +119,29 @@ class PublicPagesTest extends TestCase
         $this->get('/?lang=ar')
             ->assertSuccessful()
             ->assertSee('dir="rtl"', false)
-            ->assertSee('الدعم الأساسي', false)
+            ->assertSee('إعداد صحيح', false)
             ->assertDontSee('Basic Support', false)
-            ->assertDontSee('Ã˜', false)
-            ->assertDontSee('Ã™', false);
+            ->assertDontSee('ÃƒËœ', false)
+            ->assertDontSee('Ãƒâ„¢', false);
 
         $this->get('/faq?lang=ar')
             ->assertSuccessful()
             ->assertSee('dir="rtl"', false)
-            ->assertDontSee('Ã˜', false)
-            ->assertDontSee('Ã™', false);
+            ->assertSee('الأسئلة الشائعة', false)
+            ->assertDontSee('ÃƒËœ', false)
+            ->assertDontSee('Ãƒâ„¢', false);
 
         $this->get('/packages?lang=ar')
             ->assertSuccessful()
-            ->assertSee('الدعم الأساسي', false)
+            ->assertSee('خطط الدعم', false)
             ->assertDontSee('Basic Support', false)
-            ->assertDontSee('Ã˜', false)
-            ->assertDontSee('Ã™', false);
+            ->assertDontSee('ÃƒËœ', false)
+            ->assertDontSee('Ãƒâ„¢', false);
 
         $this->get('/about?lang=ar')
             ->assertSuccessful()
-            ->assertDontSee('Ã˜', false)
-            ->assertDontSee('Ã™', false);
+            ->assertSee('من نحن', false)
+            ->assertDontSee('ÃƒËœ', false)
+            ->assertDontSee('Ãƒâ„¢', false);
     }
 }

@@ -17,6 +17,11 @@ class SecurityHeaders
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('Referrer-Policy', config('security.referrer_policy', 'strict-origin-when-cross-origin'));
         $response->headers->set('Permissions-Policy', config('security.permissions_policy'));
+        $response->headers->set('Cross-Origin-Resource-Policy', config('security.cross_origin_resource_policy', 'same-site'));
+
+        if ($policy = config('security.content_security_policy')) {
+            $response->headers->set('Content-Security-Policy', $policy);
+        }
 
         if ($request->isSecure() || app()->environment('production')) {
             $response->headers->set(

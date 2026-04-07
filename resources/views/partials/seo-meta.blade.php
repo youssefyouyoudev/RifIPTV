@@ -19,9 +19,15 @@
 <meta property="og:description" content="{{ $metaDescription }}">
 <meta property="og:url" content="{{ $canonicalUrl }}">
 <meta property="og:locale" content="{{ $ogLocale }}">
+@foreach ($ogLocaleAlternates as $alternateLocale)
+<meta property="og:locale:alternate" content="{{ $alternateLocale }}">
+@endforeach
 <meta property="og:image" content="{{ $defaultOgImage }}">
 <meta property="og:image:alt" content="{{ $brandName }} device setup and technical support preview">
 <meta name="twitter:card" content="summary_large_image">
+@if (filled(config('seo.twitter_handle')))
+<meta name="twitter:site" content="{{ config('seo.twitter_handle') }}">
+@endif
 <meta name="twitter:title" content="{{ $metaTitle }}">
 <meta name="twitter:description" content="{{ $metaDescription }}">
 <meta name="twitter:image" content="{{ $defaultOgImage }}">

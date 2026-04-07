@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Onboarding\StorePaymentRequest;
+use App\Http\Requests\Onboarding\StorePlanRequest;
 use App\Models\Client;
 use App\Models\Plan;
 use App\Models\Subscription;
@@ -68,11 +70,9 @@ class OnboardingController extends Controller
         ]);
     }
 
-    public function storePlan(Request $request): RedirectResponse
+    public function storePlan(StorePlanRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'plan_id' => ['required', 'exists:plans,id'],
-        ]);
+        $data = $request->validated();
 
         $user = $request->user();
         $client = $this->clientFor($user->id);
@@ -100,12 +100,9 @@ class OnboardingController extends Controller
         return redirect()->route('checkout')->with('status', 'plan-selected');
     }
 
-    public function storePayment(Request $request): RedirectResponse
+    public function storePayment(StorePaymentRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'payment_method' => ['required', 'in:card,bank_transfer'],
-            'bank_name' => ['nullable', 'string', 'max:255'],
-        ]);
+        $data = $request->validated();
 
         $user = $request->user();
         $client = $this->clientFor($user->id);
@@ -114,12 +111,6 @@ class OnboardingController extends Controller
         abort_unless($subscription?->plan, 422, 'Plan selection is required before payment.');
 
         $bankOptions = $this->bankOptions();
-
-        if ($data['payment_method'] === 'bank_transfer') {
-            $request->validate([
-                'bank_name' => ['required', 'in:'.implode(',', array_keys($bankOptions))],
-            ]);
-        }
 
         $existingTransaction = $this->currentDraftTransaction($client, $subscription);
         $transaction = $existingTransaction ?? new Transaction();
@@ -257,7 +248,7 @@ class OnboardingController extends Controller
             ->first();
     }
 
-    protected function bankOptions(): array
+    public function bankOptions(): array
     {
         return [
             'attijariwafa' => 'Attijariwafa Bank',

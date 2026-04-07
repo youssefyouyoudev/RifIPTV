@@ -6,6 +6,7 @@ use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TelegramWebhookController;
+use App\Support\SeoUrl;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +17,6 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/services', [PageController::class, 'services'])->name('pages.services');
-Route::get('/services/{slug}', [PageController::class, 'service'])->name('pages.service');
 Route::get('/about', [PageController::class, 'about'])->name('pages.about');
 Route::get('/contact', [PageController::class, 'contact'])->name('pages.contact');
 Route::get('/faq', [PageController::class, 'faq'])->name('pages.faq');
@@ -25,6 +25,7 @@ Route::get('/legal', [PageController::class, 'legacyLegal']);
 Route::get('/trust-center', function () {
     return view('legal.index');
 })->name('pages.trust');
+Route::get('/trust-center/legal', fn () => redirect()->route('pages.trust', request()->query(), 301))->name('legal.index');
 
 Route::get('/locale/{locale}', function (string $locale, Request $request) {
     abort_unless(in_array($locale, config('app.supported_locales', ['en']), true), 404);
@@ -38,21 +39,33 @@ Route::get('/locale/{locale}', function (string $locale, Request $request) {
         ->withCookie(cookie()->forever('locale', $locale));
 })->name('locale.switch');
 
-Route::get('/trust-center/legal', function () {
-    return view('legal.index');
-})->name('legal.index');
-
-$serviceLandingRedirects = [
+$serviceLandingSlugs = [
     'smart-tv-setup-morocco',
-    'app-installation-help-morocco',
+    'app-installation-help',
     'device-troubleshooting-morocco',
-    'technical-support-marrakech',
+    'technical-support-morocco',
     'account-setup-help-morocco',
 ];
 
-foreach ($serviceLandingRedirects as $slug) {
-    Route::get("/{$slug}", fn () => redirect()->route('pages.service', ['slug' => $slug] + request()->query(), 301));
+Route::get('/{slug}', [PageController::class, 'service'])
+    ->whereIn('slug', $serviceLandingSlugs)
+    ->name('pages.service');
+
+$legacyServiceRedirects = [
+    'app-installation-help-morocco' => 'app-installation-help',
+    'technical-support-marrakech' => 'technical-support-morocco',
+];
+
+foreach ($legacyServiceRedirects as $legacySlug => $targetSlug) {
+    Route::get("/{$legacySlug}", fn () => redirect()->route('pages.service', ['slug' => $targetSlug] + request()->query(), 301));
 }
+
+Route::get('/services/{slug}', function (string $slug) use ($serviceLandingSlugs, $legacyServiceRedirects) {
+    $targetSlug = $legacyServiceRedirects[$slug] ?? $slug;
+    abort_unless(in_array($targetSlug, $serviceLandingSlugs, true), 404);
+
+    return redirect()->route('pages.service', ['slug' => $targetSlug] + request()->query(), 301);
+});
 
 $legalRoutes = [
     'privacy-policy' => 'privacy',
@@ -72,27 +85,31 @@ foreach ($legalRoutes as $slug => $pageKey) {
 
 Route::get('/sitemap.xml', function () use ($legalRoutes) {
     $supportedLocales = config('app.supported_locales', ['en']);
-    $paths = [
-        route('home', absolute: false),
-        route('pages.services', absolute: false),
-        route('pages.service', 'smart-tv-setup-morocco', absolute: false),
-        route('pages.service', 'app-installation-help-morocco', absolute: false),
-        route('pages.service', 'device-troubleshooting-morocco', absolute: false),
-        route('pages.service', 'technical-support-marrakech', absolute: false),
-        route('pages.service', 'account-setup-help-morocco', absolute: false),
-        route('pages.about', absolute: false),
-        route('pages.contact', absolute: false),
-        route('pages.faq', absolute: false),
-        route('pages.packages', absolute: false),
-        route('pages.trust', absolute: false),
-        route('legal.index', absolute: false),
-        ...array_map(fn (string $pageKey) => route("legal.{$pageKey}", absolute: false), array_values($legalRoutes)),
-    ];
+    $paths = array_values(array_unique([
+        route('home'),
+        route('pages.services'),
+        route('pages.service', 'smart-tv-setup-morocco'),
+        route('pages.service', 'app-installation-help'),
+        route('pages.service', 'device-troubleshooting-morocco'),
+        route('pages.service', 'technical-support-morocco'),
+        route('pages.service', 'account-setup-help-morocco'),
+        route('pages.about'),
+        route('pages.contact'),
+        route('pages.faq'),
+        route('pages.packages'),
+        route('pages.trust'),
+        ...array_map(fn (string $pageKey) => route("legal.{$pageKey}"), array_values($legalRoutes)),
+    ]));
+
+    $items = collect($paths)->map(fn (string $path) => [
+        'loc' => SeoUrl::xDefault($path),
+        'alternates' => SeoUrl::localeMap($path, $supportedLocales),
+        'priority' => $path === route('home') ? '1.0' : '0.7',
+    ])->all();
 
     return response()
         ->view('seo.sitemap', [
-            'paths' => $paths,
-            'supportedLocales' => $supportedLocales,
+            'items' => $items,
         ])
         ->header('Content-Type', 'application/xml');
 })->name('sitemap');
@@ -107,6 +124,11 @@ Route::get('/robots.txt', function () {
         'Disallow: /register',
         'Disallow: /forgot-password',
         'Disallow: /reset-password',
+        'Disallow: /onboarding',
+        'Disallow: /checkout',
+        'Disallow: /admin',
+        'Disallow: /verify-email',
+        'Disallow: /confirm-password',
         'Host: '.parse_url(config('app.url'), PHP_URL_HOST),
         'Sitemap: '.route('sitemap'),
     ];
@@ -151,10 +173,10 @@ Route::post('/telegram/webhook/{secret}', TelegramWebhookController::class)
 Route::middleware('auth')->group(function () {
     Route::get('/onboarding', [OnboardingController::class, 'show'])->name('onboarding.show');
     Route::get('/checkout', [OnboardingController::class, 'checkout'])->name('checkout');
-    Route::post('/onboarding/plan', [OnboardingController::class, 'storePlan'])->name('onboarding.plan');
-    Route::post('/onboarding/payment', [OnboardingController::class, 'storePayment'])->name('onboarding.payment');
+    Route::post('/onboarding/plan', [OnboardingController::class, 'storePlan'])->middleware('throttle:support-flow')->name('onboarding.plan');
+    Route::post('/onboarding/payment', [OnboardingController::class, 'storePayment'])->middleware('throttle:support-flow')->name('onboarding.payment');
     Route::get('/checkout/card', [OnboardingController::class, 'cardCheckout'])->name('checkout.card');
-    Route::post('/checkout/card/confirm', [OnboardingController::class, 'confirmCardCheckout'])->name('checkout.card.confirm');
+    Route::post('/checkout/card/confirm', [OnboardingController::class, 'confirmCardCheckout'])->middleware('throttle:support-flow')->name('checkout.card.confirm');
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/admin/clients/{client}', [DashboardController::class, 'showAdminClient'])->name('admin.clients.show');
 });
@@ -164,6 +186,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/admin/clients/{client}/workflow', [AdminClientWorkflowController::class, 'update'])
+        ->middleware('throttle:admin-workflow')
         ->name('admin.clients.workflow');
 });
 

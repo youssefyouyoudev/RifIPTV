@@ -6,7 +6,9 @@ return [
         'SEO_DEFAULT_DESCRIPTION',
         'Rifi Media helps clients across Morocco with device setup, app guidance, troubleshooting, payment follow-up, and practical technical support for connected devices.'
     ),
+    'default_robots' => env('SEO_DEFAULT_ROBOTS', 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'),
     'default_og_image' => env('SEO_DEFAULT_OG_IMAGE', '/images/hero-light.png'),
+    'twitter_handle' => env('SEO_TWITTER_HANDLE', '@rifimedia'),
     'business_type' => env('SEO_BUSINESS_TYPE', 'ProfessionalService'),
     'contact_email' => env('SEO_CONTACT_EMAIL', 'contact@rifimedia.com'),
     'contact_phone' => env('SEO_CONTACT_PHONE', ''),
@@ -74,4 +76,3 @@ return [
         ],
     ],
 ];
-

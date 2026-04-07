@@ -29,7 +29,7 @@ return [
             env('SEO_LINKEDIN_URL', 'https://www.linkedin.com/company/rifimedia'),
             env('SEO_YOUTUBE_URL', 'https://www.youtube.com/@rifimedia'),
             env('SEO_TIKTOK_URL', 'https://www.tiktok.com/@rifimedia'),
-            env('SEO_TELEGRAM_URL', 'https://t.me/Rifimediabot'),
+            env('SEO_TELEGRAM_URL', 'https://t.me/Rifimedia'),
             env('SEO_WHATSAPP_URL', 'https://wa.me/212663323824'),
         ]
     ))),
@@ -67,7 +67,7 @@ return [
         [
             'label' => 'Telegram',
             'icon' => 'send',
-            'url' => env('SEO_TELEGRAM_URL', 'https://t.me/Rifimediabot'),
+            'url' => env('SEO_TELEGRAM_URL', 'https://t.me/Rifimedia'),
         ],
         [
             'label' => 'WhatsApp',

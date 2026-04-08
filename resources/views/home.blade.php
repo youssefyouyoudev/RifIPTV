@@ -40,7 +40,7 @@
             ],
             'payment_kicker' => 'خيارات الدفع',
             'payment_title' => 'دفع واضح وآمن للعملاء المحليين والدوليين.',
-            'payment_text' => 'نوفر مسار دفع واضح عبر Paddle مع مراجعة بشرية للتحويلات المحلية قبل متابعة الدعم.',
+            'payment_text' => 'نوفر مسار دفع واضح عبر Paddle مع مراجعة بشرية للتحويلات المحلية وخيار الدفع النقدي قبل متابعة الدعم.',
             'plans_kicker' => 'خطط الدعم',
             'plans_title' => 'اختر مستوى الدعم المناسب لجهازك وتجربتك.',
             'plans_text' => 'الخطط مبنية حول عمق الإعداد، وعدد الأجهزة، وأولوية المتابعة، وسرعة الرد.',
@@ -71,7 +71,7 @@
             ],
             'payment_kicker' => 'Payment options',
             'payment_title' => 'Secure payment options for local and international clients.',
-            'payment_text' => 'International card payment is available through Paddle, while local transfers are reviewed manually before support continues.',
+            'payment_text' => 'International card payment is available through Paddle, while local transfers and cash payments are reviewed manually before support continues.',
             'plans_kicker' => 'Support plans',
             'plans_title' => 'Choose the support level that fits your setup needs.',
             'plans_text' => 'Each plan is designed around setup depth, device count, response priority, and follow-up.',
@@ -93,13 +93,13 @@
             ['q' => 'ما الذي تقدمه Rifi Media بالضبط؟', 'a' => 'نقدم المساعدة في إعداد الأجهزة، وضبط التطبيقات، والمتابعة التقنية، والدعم البشري الواضح.'],
             ['q' => 'هل توفرون محتوى إعلاميًا؟', 'a' => 'لا. نحن لا نوفر ولا نستضيف أي محتوى، بل نقدم فقط خدمات الإعداد والدعم التقني.'],
             ['q' => 'هل تعملون في كل المغرب؟', 'a' => 'نعم، نقدّم الخدمة على مستوى المغرب، مع حضور محلي أقوى في مراكش.'],
-            ['q' => 'كيف يتم الدفع؟', 'a' => 'الدفع الدولي يتم عبر Paddle، أما التحويلات المحلية فتتم مراجعتها يدويًا قبل المتابعة.'],
+            ['q' => 'كيف يتم الدفع؟', 'a' => 'الدفع الدولي يتم عبر Paddle، أما التحويلات المحلية والدفع النقدي فتتم مراجعتهما يدويًا قبل المتابعة.'],
         ],
         default => [
             ['q' => 'What does Rifi Media actually provide?', 'a' => 'We provide device setup help, app guidance, technical troubleshooting, and practical follow-up from a real team.'],
             ['q' => 'Do you provide media content?', 'a' => 'No. We do not provide or host media content. We only assist with device configuration, app setup, and technical support.'],
             ['q' => 'Do you work across Morocco?', 'a' => 'Yes. We support clients across Morocco, with additional local relevance for Marrakech.'],
-            ['q' => 'How are payments handled?', 'a' => 'International card payments can be reviewed through Paddle, while local transfers are confirmed manually.'],
+            ['q' => 'How are payments handled?', 'a' => 'International card payments use Paddle, while local transfers and cash payments are confirmed manually.'],
         ],
     };
 

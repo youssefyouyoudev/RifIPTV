@@ -432,25 +432,25 @@ class PageController extends Controller
                 ['q' => 'Que propose exactement Rifi Media ?', 'a' => 'Nous aidons pour le setup Smart TV, l installation d applications, le depannage d appareils connectes et le suivi technique pratique.'],
                 ['q' => 'Fournissez-vous du contenu media ?', 'a' => 'Non. Nous ne fournissons ni n hebergeons de contenu media. Nous proposons uniquement de l aide a la configuration et au support technique.'],
                 ['q' => 'Travaillez-vous dans tout le Maroc ?', 'a' => 'Oui. Le service couvre le Maroc avec une pertinence locale naturelle pour Marrakech.'],
-                ['q' => 'Quels paiements acceptez-vous ?', 'a' => 'Les cartes internationales peuvent etre traitees via Paddle et les virements locaux sont verifies manuellement.'],
+                ['q' => 'Quels paiements acceptez-vous ?', 'a' => 'Les cartes internationales peuvent etre traitees via Paddle, tandis que les virements locaux et les paiements cash sont verifies manuellement.'],
             ],
             'es' => [
                 ['q' => 'Que hace exactamente Rifi Media?', 'a' => 'Ayudamos con configuracion de Smart TV, instalacion de apps, solucion de problemas de dispositivos conectados y seguimiento tecnico practico.'],
                 ['q' => 'Proporcionan contenido multimedia?', 'a' => 'No. No proporcionamos ni alojamos contenido multimedia. Solo ayudamos con configuracion y soporte tecnico.'],
                 ['q' => 'Trabajan en todo Marruecos?', 'a' => 'Si. El servicio cubre Marruecos con relevancia local natural para Marrakech.'],
-                ['q' => 'Que metodos de pago aceptan?', 'a' => 'Las tarjetas internacionales pueden gestionarse mediante Paddle y las transferencias locales se revisan manualmente.'],
+                ['q' => 'Que metodos de pago aceptan?', 'a' => 'Las tarjetas internacionales pueden gestionarse mediante Paddle, mientras que las transferencias locales y los pagos en efectivo se revisan manualmente.'],
             ],
             'ar' => [
                 ['q' => 'ما الذي تقدمه Rifi Media بالضبط؟', 'a' => 'نساعد في إعداد التلفاز الذكي، وتثبيت التطبيقات، وحل مشكلات الأجهزة المتصلة، والمتابعة التقنية العملية.'],
                 ['q' => 'هل توفرون محتوى إعلاميًا؟', 'a' => 'لا. نحن لا نوفر ولا نستضيف أي محتوى إعلامي. نحن نقدم فقط المساعدة في إعداد الأجهزة والدعم التقني.'],
                 ['q' => 'هل تعملون في جميع أنحاء المغرب؟', 'a' => 'نعم. نطاق الخدمة يشمل المغرب مع حضور محلي طبيعي لطلبات مراكش.'],
-                ['q' => 'ما طرق الدفع المتاحة؟', 'a' => 'يمكن معالجة البطاقات الدولية عبر Paddle بينما تتم مراجعة التحويلات المحلية يدويًا من طرف الفريق.'],
+                ['q' => 'ما طرق الدفع المتاحة؟', 'a' => 'يمكن معالجة البطاقات الدولية عبر Paddle بينما تتم مراجعة التحويلات المحلية والدفع النقدي يدويًا من طرف الفريق.'],
             ],
             default => [
                 ['q' => 'What does Rifi Media actually do?', 'a' => 'We help clients with Smart TV setup, app installation guidance, connected device troubleshooting, and practical technical support.'],
                 ['q' => 'Do you provide media content?', 'a' => 'No. We do not provide or host media content. We only assist with device configuration, app setup, and technical support.'],
                 ['q' => 'Do you work across Morocco?', 'a' => 'Yes. Our service area covers Morocco, with stronger local relevance for Marrakech.'],
-                ['q' => 'What payment options are available?', 'a' => 'Card payments can be handled through Paddle, and local bank transfers are reviewed manually.'],
+                ['q' => 'What payment options are available?', 'a' => 'Card payments can be handled through Paddle, while local bank transfers and cash payments are reviewed manually.'],
             ],
         };
     }

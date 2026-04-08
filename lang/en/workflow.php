@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 return [
     'common' => [
@@ -12,6 +12,7 @@ return [
         'assigned_to' => 'Assigned to',
         'card' => 'Card payment',
         'bank_transfer' => 'Bank transfer',
+        'cash' => 'Cash payment',
         'currency' => 'MAD',
         'months' => 'months',
     ],
@@ -33,24 +34,26 @@ return [
         'paid' => 'Paid',
         'initiated' => 'Checkout started',
         'awaiting_transfer' => 'Awaiting transfer review',
+        'awaiting_cash' => 'Awaiting cash follow-up',
         'cancelled' => 'Cancelled',
         'failed' => 'Failed',
     ],
     'flash' => [
         'plan-selected' => 'Package selected. Choose your payment method to continue.',
         'bank-transfer-waiting' => 'Your bank transfer request is recorded. Our team will contact you on WhatsApp to continue.',
+        'cash-payment-waiting' => 'Your cash payment request is recorded. Our team will contact you on WhatsApp to confirm the next step.',
         'card-paid' => 'Card payment confirmed. Your admin will now complete setup and send your access details.',
         'client-workflow-updated' => 'Client workflow updated successfully.',
     ],
     'onboarding' => [
         'title' => 'Checkout setup | Rifi Media',
-        'meta_description' => 'Choose your Rifi Media service package, select card or bank transfer, and continue the onboarding flow.',
+        'meta_description' => 'Choose your Rifi Media service package, select card, bank transfer, or cash, and continue the onboarding flow.',
         'kicker' => 'Client onboarding',
         'headline' => 'Choose your service package and continue the setup smoothly',
         'description' => 'Register once, choose the right support window, pick your payment method, and let the team continue the technical setup with you.',
         'steps' => [
             ['title' => 'Choose package', 'text' => 'Pick the support window that fits your needs and budget.'],
-            ['title' => 'Pick payment', 'text' => 'Use Paddle card checkout or national bank transfer.'],
+            ['title' => 'Pick payment', 'text' => 'Use Paddle card checkout, national bank transfer, or cash follow-up.'],
             ['title' => 'Get activated', 'text' => 'Support follows up on WhatsApp and delivers your setup.'],
         ],
         'plan_kicker' => 'Step 1',
@@ -61,7 +64,7 @@ return [
         'summary_title' => 'Your current order',
         'next_kicker' => 'Need help?',
         'next_title' => 'Support stays with you through the whole setup',
-        'next_text' => 'If you choose bank transfer, an admin follows up manually. If you choose card payment, you continue to the secure Paddle checkout step.',
+        'next_text' => 'If you choose bank transfer or cash, an admin follows up manually. If you choose card payment, you continue to the secure Paddle checkout step.',
         'family_label' => 'Service line',
         'duration_caption' => ':months month access',
         'durations' => [
@@ -79,11 +82,14 @@ return [
         'card_text' => 'Best for international clients and fast secure checkout.',
         'bank_title' => 'Pay by national transfer',
         'bank_text' => 'Choose your Moroccan bank and wait for support on WhatsApp.',
+        'cash_title' => 'Pay by cash',
+        'cash_text' => 'Best for clients who prefer manual confirmation and a WhatsApp follow-up before the next step.',
         'bank_label' => 'Choose your bank',
         'bank_placeholder' => 'Select a bank',
         'continue_payment' => 'Continue',
         'whatsapp' => 'Open WhatsApp',
         'dashboard' => 'Go to dashboard',
+        'family_tabs' => 'Service lines',
     ],
     'checkout' => [
         'title' => 'Paddle checkout | Rifi Media',
@@ -151,7 +157,7 @@ return [
             'empty' => 'No transactions yet.',
             'columns' => [
                 'date' => 'Date',
-            'plan' => 'Package',
+                'plan' => 'Package',
                 'amount' => 'Amount',
                 'method' => 'Method',
                 'status' => 'Status',
@@ -171,8 +177,8 @@ return [
             'this_month_meta' => 'Current month paid revenue.',
             'supported_today' => 'Supported today',
             'supported_today_meta' => 'Clients contacted, started, or completed today.',
-            'pending_transfers' => 'Pending transfers',
-            'pending_transfers_meta' => 'Bank-transfer clients waiting for confirmation.',
+            'pending_transfers' => 'Manual payments',
+            'pending_transfers_meta' => 'Bank-transfer and cash clients waiting for confirmation.',
         ],
         'revenue' => [
             'kicker' => 'Revenue pulse',
@@ -187,10 +193,10 @@ return [
             'revenue' => 'Paid revenue',
         ],
         'bank_queue' => [
-            'kicker' => 'National transfer queue',
-            'title' => 'Clients waiting for bank-transfer handling',
+            'kicker' => 'Manual payment queue',
+            'title' => 'Clients waiting for bank-transfer or cash handling',
             'total' => ':count clients',
-            'empty' => 'No bank-transfer clients are waiting right now.',
+            'empty' => 'No manual-payment clients are waiting right now.',
         ],
         'card_queue' => [
             'kicker' => 'Card payment queue',
@@ -241,5 +247,3 @@ return [
         ],
     ],
 ];
-
-

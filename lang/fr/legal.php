@@ -139,7 +139,7 @@ return [
                 ],
                 [
                     'title' => 'Bonnes pratiques de support',
-                    'body' => 'Les echanges de support doivent rester professionnels, limites au necessaire et traÃ§ables lorsque possible.',
+                    'body' => 'Les echanges de support doivent rester professionnels, limites au necessaire et traçables lorsque possible.',
                     'items' => [
                         'Les clients doivent eviter d envoyer des informations sensibles non necessaires.',
                         'Le support doit confirmer l identifiant de commande, les informations du compte ou la reference de paiement avant toute modification importante.',

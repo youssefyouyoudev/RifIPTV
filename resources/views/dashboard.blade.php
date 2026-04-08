@@ -7,6 +7,12 @@
 @section('content')
 @php
     $isAdmin = ($dashboardMode ?? 'client') === 'admin';
+    $managePlansLabel = match (app()->getLocale()) {
+        'ar' => 'إدارة الخطط',
+        'fr' => 'Gerer les plans',
+        'es' => 'Gestionar planes',
+        default => 'Manage plans',
+    };
     $currency = __('portal.dashboard.shared.currency');
     $statusClasses = [
         'new' => 'status-warning',
@@ -26,6 +32,7 @@
         'paid' => 'status-success',
         'initiated' => 'status-warning',
         'awaiting_transfer' => 'status-warning',
+        'awaiting_cash' => 'status-warning',
         'cancelled' => 'status-danger',
         'failed' => 'status-danger',
     ];
@@ -93,7 +100,7 @@
                             </div>
                         </div>
                         @if ($isAdmin)
-                            <a href="{{ route('admin.plans.index') }}" class="btn-rif-outline w-100">Manage plans</a>
+                            <a href="{{ route('admin.plans.index') }}" class="btn-rif-outline w-100">{{ $managePlansLabel }}</a>
                         @endif
                     </div>
                 </div>
@@ -203,7 +210,7 @@
                                             <td>
                                                 <div class="fw-semibold text-body-rif">{{ $queueClient->user->name }}</div>
                                                 <div class="small text-soft-rif">{{ $formatClientPhone($queueClient) }}</div>
-                                                <div class="small text-soft-rif">{{ $queueTransaction?->bank_name ?: __('portal.dashboard.shared.not_set') }}</div>
+                                                <div class="small text-soft-rif">{{ $queueTransaction?->bank_name ?: ($queueTransaction?->provider ?: __('portal.dashboard.shared.not_set')) }}</div>
                                             </td>
                                             <td>
                                                 <div>{{ optional($queueSubscription?->plan)->name ?: __('portal.dashboard.shared.unknown_plan') }}</div>
@@ -322,7 +329,7 @@
                                         <div class="small text-soft-rif">{{ $managedClient->user->email }}</div>
                                     </td>
                                     <td>{{ $managedClient->phone ?: $managedClient->user->phone_country_code.' '.$managedClient->user->phone_number }}</td>
-                                    <td>{{ $managedTransaction?->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : __('workflow.common.card') }}</td>
+                                    <td>{{ $managedTransaction?->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : ($managedTransaction?->payment_method === 'cash' ? __('workflow.common.cash') : __('workflow.common.card')) }}</td>
                                     <td>{{ $managedTransaction?->bank_name ?: '-' }}</td>
                                     <td>{{ optional($managedClient->assignedAdmin)->name ?: __('portal.dashboard.shared.unassigned') }}</td>
                                     <td><span class="status-badge {{ $statusClasses[$managedStatus] ?? 'status-warning' }}">{{ $workflowStatusLabels[$managedStatus] ?? ucfirst(str_replace('_', ' ', $managedStatus)) }}</span></td>
@@ -374,7 +381,7 @@
                                     <td>{{ $transaction->reference }}</td>
                                     <td>{{ optional($transaction->client->user)->name ?: __('portal.dashboard.shared.unknown_client') }}</td>
                                     <td>{{ number_format((float) $transaction->amount_mad, 2) }} {{ $currency }}</td>
-                                    <td>{{ $transaction->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : __('workflow.common.card') }}</td>
+                                    <td>{{ $transaction->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : ($transaction->payment_method === 'cash' ? __('workflow.common.cash') : __('workflow.common.card')) }}</td>
                                     <td><span class="status-badge {{ $statusClasses[$transactionStatus] ?? 'status-warning' }}">{{ $workflowStatusLabels[$transactionStatus] ?? ucfirst(str_replace('_', ' ', $transactionStatus)) }}</span></td>
                                     <td>{{ optional($transaction->paid_at)->format('M d, Y H:i') ?: __('portal.dashboard.shared.status_pending') }}</td>
                                 </tr>
@@ -397,7 +404,7 @@
                 <div class="col-md-6 col-xl-4">
                     <article class="surface-card metric-card p-4 h-100">
                         <div class="small text-uppercase text-soft-rif fw-bold mb-3">{{ __('workflow.client.metrics.payment') }}</div>
-                        <h3 class="dashboard-metric-value text-body-rif mb-3">{{ $latestPaymentMethod === 'bank_transfer' ? __('workflow.common.bank_transfer') : ($latestPaymentMethod === 'card' ? __('workflow.common.card') : __('workflow.client.metrics.pending')) }}</h3>
+                        <h3 class="dashboard-metric-value text-body-rif mb-3">{{ $latestPaymentMethod === 'bank_transfer' ? __('workflow.common.bank_transfer') : ($latestPaymentMethod === 'cash' ? __('workflow.common.cash') : ($latestPaymentMethod === 'card' ? __('workflow.common.card') : __('workflow.client.metrics.pending'))) }}</h3>
                         <p class="text-soft-rif mb-0">{{ $latestTransaction?->bank_name ?: ($latestTransaction?->provider ?: __('workflow.client.metrics.payment_meta')) }}</p>
                     </article>
                 </div>
@@ -471,7 +478,7 @@
                             <div class="small text-uppercase fw-bold mb-2" style="color: var(--rif-green);">{{ __('workflow.client.payment.kicker') }}</div>
                             <h2 class="h2 text-body-rif mb-3">{{ __('workflow.client.payment.title') }}</h2>
                             <div class="workflow-meta-grid">
-                                <div class="workflow-meta-item"><span>{{ __('workflow.common.payment') }}</span><strong>{{ $latestPaymentMethod === 'bank_transfer' ? __('workflow.common.bank_transfer') : ($latestPaymentMethod === 'card' ? __('workflow.common.card') : '-') }}</strong></div>
+                                <div class="workflow-meta-item"><span>{{ __('workflow.common.payment') }}</span><strong>{{ $latestPaymentMethod === 'bank_transfer' ? __('workflow.common.bank_transfer') : ($latestPaymentMethod === 'cash' ? __('workflow.common.cash') : ($latestPaymentMethod === 'card' ? __('workflow.common.card') : '-')) }}</strong></div>
                                 <div class="workflow-meta-item"><span>{{ __('workflow.common.provider') }}</span><strong>{{ $latestTransaction?->provider ?: '-' }}</strong></div>
                                 <div class="workflow-meta-item"><span>{{ __('workflow.common.bank') }}</span><strong>{{ $latestTransaction?->bank_name ?: '-' }}</strong></div>
                                 <div class="workflow-meta-item"><span>{{ __('workflow.common.reference') }}</span><strong>{{ $latestTransaction?->reference ?: '-' }}</strong></div>
@@ -524,7 +531,7 @@
                                     <td>{{ optional($transaction->paid_at)->format('M d, Y H:i') ?: __('portal.dashboard.shared.status_pending') }}</td>
                                     <td>{{ optional(optional($transaction->subscription)->plan)->name ?: __('portal.dashboard.client.plan_fallback') }}</td>
                                     <td>{{ number_format((float) $transaction->amount_mad, 2) }} {{ $currency }}</td>
-                                    <td>{{ $transaction->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : __('workflow.common.card') }}</td>
+                                    <td>{{ $transaction->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : ($transaction->payment_method === 'cash' ? __('workflow.common.cash') : __('workflow.common.card')) }}</td>
                                     <td><span class="status-badge {{ $statusClasses[$transactionStatus] ?? 'status-warning' }}">{{ $workflowStatusLabels[$transactionStatus] ?? ucfirst(str_replace('_', ' ', $transactionStatus)) }}</span></td>
                                     <td>
                                         @if ($transaction->proof_path)
@@ -584,4 +591,3 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
-

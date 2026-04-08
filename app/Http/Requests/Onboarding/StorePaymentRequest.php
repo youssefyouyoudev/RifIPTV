@@ -24,7 +24,7 @@ class StorePaymentRequest extends FormRequest
         ];
 
         return [
-            'payment_method' => ['required', 'in:card,bank_transfer'],
+            'payment_method' => ['required', 'in:card,bank_transfer,cash'],
             'bank_name' => [
                 Rule::requiredIf(fn () => $this->input('payment_method') === 'bank_transfer'),
                 'nullable',

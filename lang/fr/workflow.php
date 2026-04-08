@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 return [
     'common' => [
@@ -12,6 +12,7 @@ return [
         'assigned_to' => 'Assigne a',
         'card' => 'Paiement par carte',
         'bank_transfer' => 'Virement bancaire',
+        'cash' => 'Paiement cash',
         'currency' => 'MAD',
         'months' => 'mois',
     ],
@@ -33,24 +34,26 @@ return [
         'paid' => 'Paye',
         'initiated' => 'Paiement lance',
         'awaiting_transfer' => 'Virement a verifier',
+        'awaiting_cash' => 'Cash en attente de confirmation',
         'cancelled' => 'Annule',
         'failed' => 'Echoue',
     ],
     'flash' => [
         'plan-selected' => 'Package enregistre. Choisissez maintenant votre mode de paiement.',
         'bank-transfer-waiting' => 'Votre demande de virement a ete enregistree. Notre equipe vous contactera sur WhatsApp.',
+        'cash-payment-waiting' => 'Votre demande de paiement cash a ete enregistree. Notre equipe vous contactera sur WhatsApp pour confirmer la suite.',
         'card-paid' => 'Paiement carte confirme. Votre admin va maintenant finaliser la configuration et vous envoyer les acces.',
         'client-workflow-updated' => 'Le parcours client a ete mis a jour.',
     ],
     'onboarding' => [
         'title' => 'Configuration de commande | Rifi Media',
-        'meta_description' => 'Choisissez votre package de service Rifi Media, selectionnez carte ou virement national, puis continuez le parcours client.',
+        'meta_description' => 'Choisissez votre package de service Rifi Media, selectionnez carte, virement national ou cash, puis continuez le parcours client.',
         'kicker' => 'Onboarding client',
         'headline' => 'Choisissez votre package et continuez l installation simplement',
         'description' => 'Inscrivez-vous une fois, choisissez la bonne periode de support, selectionnez votre paiement et laissez l equipe terminer la configuration avec vous.',
         'steps' => [
             ['title' => 'Choisir le package', 'text' => 'Selectionnez la periode de support adaptee a votre besoin.'],
-            ['title' => 'Choisir le paiement', 'text' => 'Utilisez Paddle ou un virement bancaire national.'],
+            ['title' => 'Choisir le paiement', 'text' => 'Utilisez Paddle, un virement bancaire national ou un paiement cash.'],
             ['title' => 'Recevoir la configuration', 'text' => 'Le support suit votre dossier sur WhatsApp.'],
         ],
         'plan_kicker' => 'Etape 1',
@@ -61,7 +64,7 @@ return [
         'summary_title' => 'Votre commande actuelle',
         'next_kicker' => 'Besoin d aide ?',
         'next_title' => 'Le support vous accompagne jusqu a la fin de l installation',
-        'next_text' => 'Si vous choisissez le virement, un admin suit le dossier manuellement. Si vous choisissez la carte, vous continuez vers Paddle.',
+        'next_text' => 'Si vous choisissez le virement ou le cash, un admin suit le dossier manuellement. Si vous choisissez la carte, vous continuez vers Paddle.',
         'family_label' => 'Ligne de service',
         'duration_caption' => 'Support sur :months mois',
         'durations' => [
@@ -79,11 +82,14 @@ return [
         'card_text' => 'Ideal pour les clients internationaux et un checkout rapide.',
         'bank_title' => 'Payer par virement national',
         'bank_text' => 'Choisissez votre banque marocaine puis attendez le support sur WhatsApp.',
+        'cash_title' => 'Payer en cash',
+        'cash_text' => 'Ideal pour les clients qui preferent une confirmation manuelle et une suite pratique sur WhatsApp.',
         'bank_label' => 'Choisissez votre banque',
         'bank_placeholder' => 'Selectionner une banque',
         'continue_payment' => 'Continuer',
         'whatsapp' => 'Ouvrir WhatsApp',
         'dashboard' => 'Aller au tableau de bord',
+        'family_tabs' => 'Lignes de service',
     ],
     'checkout' => [
         'title' => 'Paiement Paddle | Rifi Media',
@@ -171,8 +177,8 @@ return [
             'this_month_meta' => 'Revenu paye du mois en cours.',
             'supported_today' => 'Aides aujourd hui',
             'supported_today_meta' => 'Clients contactes, demarres ou termines aujourd hui.',
-            'pending_transfers' => 'Virements en attente',
-            'pending_transfers_meta' => 'Clients en attente de confirmation de virement.',
+            'pending_transfers' => 'Paiements manuels',
+            'pending_transfers_meta' => 'Clients virement et cash en attente de confirmation.',
         ],
         'revenue' => [
             'kicker' => 'Revenu',
@@ -187,10 +193,10 @@ return [
             'revenue' => 'Revenu paye',
         ],
         'bank_queue' => [
-            'kicker' => 'File virement',
-            'title' => 'Clients en attente de traitement bancaire',
+            'kicker' => 'File paiement manuel',
+            'title' => 'Clients en attente de traitement bancaire ou cash',
             'total' => ':count clients',
-            'empty' => 'Aucun client virement en attente.',
+            'empty' => 'Aucun client paiement manuel en attente.',
         ],
         'card_queue' => [
             'kicker' => 'File carte',
@@ -241,4 +247,3 @@ return [
         ],
     ],
 ];
-

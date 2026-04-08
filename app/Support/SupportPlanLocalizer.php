@@ -219,7 +219,7 @@ class SupportPlanLocalizer
                     'summary' => 'Para onboarding más profundo, respuesta prioritaria y continuidad técnica más fuerte.',
                     'highlight' => 'Mejor valor',
                     'scope' => 'Soporte completo',
-                    'devices' => 'Ayuda multi-dispositivo',
+                    'devices' => 'Ayuda multidispositivo',
                     'response' => 'Prioridad alta',
                     'follow_up' => 'Seguimiento largo',
                     'features' => [
@@ -235,7 +235,7 @@ class SupportPlanLocalizer
                 'basic' => [
                     'label' => 'أساسي',
                     'name' => 'الدعم الأساسي',
-                    'summary' => 'للاحتياجات الأبسط، وخطوات التثبيت الموجّهة، والمتابعة الأولى المريحة.',
+                    'summary' => 'للاحتياجات الأبسط، وخطوات التثبيت الموجهة، والمتابعة الأولى المريحة.',
                     'scope' => 'إعداد أساسي',
                     'devices' => 'جهاز واحد',
                     'response' => 'عادي',

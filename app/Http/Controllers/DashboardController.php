@@ -91,7 +91,7 @@ class DashboardController extends Controller
             ->values();
 
         $bankTransferClients = $actionableClients
-            ->filter(fn (Client $client) => optional($client->latest_transaction)->payment_method === 'bank_transfer')
+            ->filter(fn (Client $client) => in_array(optional($client->latest_transaction)->payment_method, ['bank_transfer', 'cash'], true))
             ->values();
 
         $cardPaymentClients = $actionableClients
@@ -252,7 +252,7 @@ class DashboardController extends Controller
         $transaction = $client->latest_transaction;
         $paymentMethod = $transaction?->payment_method;
 
-        if ($paymentMethod === 'bank_transfer') {
+        if (in_array($paymentMethod, ['bank_transfer', 'cash'], true)) {
             $paymentConfirmed = ($transaction?->status === 'paid') || filled($transaction?->proof_path);
 
             return [

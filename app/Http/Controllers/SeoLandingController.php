@@ -339,19 +339,19 @@ class SeoLandingController extends Controller
                 ['q' => 'Que fait exactement Rifi Media ?', 'a' => 'Rifi Media aide à configurer les appareils, les applications, les comptes et le support technique au Maroc.'],
                 ['q' => 'Fournissez-vous du contenu ?', 'a' => 'Non. Le service couvre uniquement l’aide à la mise en route, aux comptes, aux applications et au support.'],
                 ['q' => 'Travaillez-vous partout au Maroc ?', 'a' => 'Oui. Le service est disponible au Maroc avec une pertinence locale naturelle pour Nador.'],
-                ['q' => 'Comment fonctionnent les paiements ?', 'a' => 'Les paiements internationaux passent par Paddle et les virements locaux sont revus manuellement.'],
+                    ['q' => 'Comment fonctionnent les paiements ?', 'a' => 'Les paiements internationaux passent par Paddle et les virements locaux ainsi que le cash sont revus manuellement.'],
             ],
             'ar' => [
                 ['q' => 'ما الذي تقدمه Rifi Media؟', 'a' => 'تساعد Rifi Media في إعداد الأجهزة والتطبيقات والحسابات وتقديم الدعم التقني داخل المغرب.'],
                 ['q' => 'هل توفّرون محتوى؟', 'a' => 'لا. تغطي الخدمة الإعداد والحسابات والتطبيقات والدعم فقط.'],
                 ['q' => 'هل تعملون في كل المغرب؟', 'a' => 'نعم. الخدمة متاحة في المغرب مع حضور محلي طبيعي في الناظور.'],
-                ['q' => 'كيف تتم المدفوعات؟', 'a' => 'تتم المدفوعات الدولية عبر Paddle وتراجع التحويلات المحلية يدويًا.'],
+                    ['q' => 'كيف تتم المدفوعات؟', 'a' => 'تتم المدفوعات الدولية عبر Paddle وتراجع التحويلات المحلية والدفع النقدي يدويًا.'],
             ],
             default => [
                 ['q' => 'What does Rifi Media do?', 'a' => 'Rifi Media helps with device setup, app guidance, account support, and practical technical troubleshooting in Morocco.'],
                 ['q' => 'Do you provide content?', 'a' => 'No. The service focuses only on setup, onboarding, apps, and technical support.'],
                 ['q' => 'Do you work across Morocco?', 'a' => 'Yes. The service is available across Morocco with natural local relevance for Nador.'],
-                ['q' => 'How are payments handled?', 'a' => 'International card payments use Paddle while local transfers are reviewed manually.'],
+                    ['q' => 'How are payments handled?', 'a' => 'International card payments use Paddle while local transfers and cash payments are reviewed manually.'],
             ],
         };
     }

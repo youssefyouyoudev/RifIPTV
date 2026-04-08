@@ -133,8 +133,16 @@ class OperationalAlertService
         $client->loadMissing('user', 'assignedAdmin');
         $transaction->loadMissing('subscription.plan', 'assignedAdmin');
 
-        $methodLabel = $transaction->payment_method === 'bank_transfer' ? 'Bank transfer' : 'Card payment';
-        $providerLabel = $transaction->provider ?: ($transaction->payment_method === 'bank_transfer' ? 'Manual review' : 'Paddle');
+        $methodLabel = match ($transaction->payment_method) {
+            'bank_transfer' => 'Bank transfer',
+            'cash' => 'Cash payment',
+            default => 'Card payment',
+        };
+        $providerLabel = $transaction->provider ?: match ($transaction->payment_method) {
+            'bank_transfer' => 'Manual review',
+            'cash' => 'Cash collection follow-up',
+            default => 'Paddle',
+        };
 
         return [
             'client_name' => $client->user->name,

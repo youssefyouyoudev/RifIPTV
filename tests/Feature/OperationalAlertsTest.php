@@ -65,6 +65,7 @@ class OperationalAlertsTest extends TestCase
             'duration_months' => 3,
             'price_mad' => 89,
             'features' => ['Basic setup'],
+            'is_enabled' => true,
             'sort_order' => 1,
         ]);
 
@@ -132,6 +133,7 @@ class OperationalAlertsTest extends TestCase
             'duration_months' => 6,
             'price_mad' => 249,
             'features' => ['Advanced setup'],
+            'is_enabled' => true,
             'sort_order' => 2,
         ]);
 
@@ -157,5 +159,73 @@ class OperationalAlertsTest extends TestCase
         Http::assertSentCount(2);
         Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '7001' && str_contains((string) data_get($request->data(), 'text'), 'Provider: Paddle'));
         Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '9001' && str_contains((string) data_get($request->data(), 'text'), 'Status: Paid'));
+    }
+
+    public function test_cash_checkout_sends_email_and_telegram_alerts(): void
+    {
+        Config::set('services.telegram.bot_token', 'test-token');
+        Config::set('services.telegram.admin_chat_ids', ['9001']);
+        Config::set('mail.admin_recipients', ['ops@rifimedia.com']);
+
+        Http::fake([
+            'https://api.telegram.org/*' => Http::response(['ok' => true], 200),
+        ]);
+        Mail::fake();
+
+        $admin = User::factory()->create([
+            'role' => 'admin',
+            'email' => 'admin@rifimedia.com',
+        ]);
+
+        $clientUser = User::factory()->create([
+            'role' => 'client',
+            'name' => 'Cash Client',
+            'email' => 'cash-client@rifimedia.com',
+        ]);
+
+        Client::create([
+            'user_id' => $clientUser->id,
+            'assigned_admin_id' => $admin->id,
+        ]);
+
+        TelegramSubscriber::create([
+            'chat_id' => '7001',
+            'first_name' => 'Subscriber',
+            'is_active' => true,
+            'subscribed_at' => now(),
+        ]);
+
+        $plan = Plan::create([
+            'name' => 'SUP 12 Months',
+            'family' => 'Basic / SUP',
+            'family_slug' => 'sup',
+            'duration_months' => 12,
+            'price_mad' => 199,
+            'features' => ['Annual setup support'],
+            'is_enabled' => true,
+            'sort_order' => 3,
+        ]);
+
+        $this->actingAs($clientUser)->post(route('onboarding.plan'), [
+            'plan_id' => $plan->id,
+        ]);
+
+        $response = $this->actingAs($clientUser)->post(route('onboarding.payment'), [
+            'payment_method' => 'cash',
+        ]);
+
+        $response->assertRedirect(route('dashboard'));
+
+        Mail::assertSent(ClientSubscribedMail::class, function (ClientSubscribedMail $mail) {
+            return $mail->hasTo('ops@rifimedia.com')
+                && $mail->hasTo('admin@rifimedia.com')
+                && $mail->subjectLine === 'New client checkout submitted'
+                && collect($mail->details)->contains(fn ($detail) => $detail['label'] === 'Payment method' && $detail['value'] === 'Cash payment')
+                && collect($mail->details)->contains(fn ($detail) => $detail['label'] === 'Provider' && $detail['value'] === 'Cash payment');
+        });
+
+        Http::assertSentCount(2);
+        Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '7001' && str_contains((string) data_get($request->data(), 'text'), 'Method: Cash payment'));
+        Http::assertSent(fn ($request) => data_get($request->data(), 'chat_id') === '9001' && str_contains((string) data_get($request->data(), 'text'), 'Provider: Cash payment'));
     }
 }

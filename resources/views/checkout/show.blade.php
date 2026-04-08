@@ -21,10 +21,10 @@
     ];
     $summaryPlan = ($familyMeta[$subscription->plan->family_slug] ?? strtoupper((string) $subscription->plan->family_slug)).' - '.($durationLabels[$subscription->plan->duration_months] ?? $subscription->plan->name);
     $paymentIntro = match ($locale) {
-        'ar' => 'اختر طريقة الدفع المناسبة لإكمال الطلب. البطاقة تنتقل إلى Paddle، أما التحويل البنكي فيُتابَع يدويًا مع فريق الدعم عبر واتساب.',
-        'fr' => 'Choisissez votre methode de paiement. La carte continue avec Paddle, tandis que le virement est suivi manuellement via WhatsApp.',
-        'es' => 'Elige tu metodo de pago. La tarjeta continua con Paddle, mientras que la transferencia bancaria se sigue manualmente por WhatsApp.',
-        default => 'Choose your payment method. Card payments continue with Paddle, while bank transfers move to manual WhatsApp follow-up.',
+        'ar' => 'اختر طريقة الدفع المناسبة لإكمال الطلب. البطاقة تنتقل إلى Paddle، أما التحويل البنكي أو الدفع النقدي فيتم متابعتهما يدويًا مع فريق الدعم عبر واتساب.',
+        'fr' => 'Choisissez votre methode de paiement. La carte continue avec Paddle, tandis que le virement bancaire ou le paiement cash sont suivis manuellement via WhatsApp.',
+        'es' => 'Elige tu metodo de pago. La tarjeta continua con Paddle, mientras que la transferencia bancaria o el pago en efectivo se siguen manualmente por WhatsApp.',
+        default => 'Choose your payment method. Card payments continue with Paddle, while bank transfer and cash move to manual WhatsApp follow-up.',
     };
     $stagePill = match ($locale) {
         'ar' => 'الخطوة 2 من 2',
@@ -46,10 +46,10 @@
         [
             'title' => __('workflow.onboarding.payment_title'),
             'text' => match ($locale) {
-                'ar' => 'اختر الآن البطاقة أو التحويل البنكي لإكمال الطلب.',
-                'fr' => 'Choisissez maintenant carte ou virement bancaire pour finaliser la demande.',
-                'es' => 'Ahora elige tarjeta o transferencia bancaria para terminar el pedido.',
-                default => 'Choose card or bank transfer to finish the order.',
+                'ar' => 'اختر الآن البطاقة أو التحويل البنكي أو الدفع النقدي لإكمال الطلب.',
+                'fr' => 'Choisissez maintenant carte, virement bancaire ou paiement cash pour finaliser la demande.',
+                'es' => 'Ahora elige tarjeta, transferencia bancaria o pago en efectivo para terminar el pedido.',
+                default => 'Choose card, bank transfer, or cash to finish the order.',
             },
             'state' => 'active',
         ],
@@ -159,13 +159,13 @@
                             </strong>
                             <span class="text-soft-rif small">
                                 @if ($locale === 'ar')
-                                    البطاقة تفتح خطوة الدفع السريع، والتحويل البنكي يفعّل متابعة يدوية مع الدعم.
+                                    البطاقة تفتح خطوة الدفع السريع، بينما يفعّل التحويل البنكي أو الدفع النقدي متابعة يدوية مع الدعم.
                                 @elseif ($locale === 'fr')
-                                    La carte ouvre un paiement rapide, tandis que le virement active un suivi manuel.
+                                    La carte ouvre un paiement rapide, tandis que le virement bancaire ou le cash activent un suivi manuel.
                                 @elseif ($locale === 'es')
-                                    La tarjeta abre un pago rapido, mientras que la transferencia activa un seguimiento manual.
+                                    La tarjeta abre un pago rapido, mientras que la transferencia o el efectivo activan un seguimiento manual.
                                 @else
-                                    Card opens the fast checkout flow, while transfer starts manual support follow-up.
+                                    Card opens the fast checkout flow, while bank transfer and cash start manual support follow-up.
                                 @endif
                             </span>
                         </div>
@@ -174,8 +174,8 @@
                     <form method="POST" action="{{ route('onboarding.payment') }}" data-payment-form>
                         @csrf
                         <div class="row g-3 mb-4">
-                            <div class="col-md-6">
-                                <label class="payment-choice-card payment-choice-card-large {{ $currentMethod === 'card' ? 'is-selected' : '' }}" data-select-card="payment" data-payment-label="{{ __('workflow.common.card') }}">
+                            <div class="col-md-4">
+                                <label class="payment-choice-card payment-choice-card-large {{ $currentMethod === 'card' ? 'is-selected' : '' }}" data-select-card="payment">
                                     <input type="radio" name="payment_method" value="card" class="visually-hidden" {{ $currentMethod === 'card' ? 'checked' : '' }}>
                                     <span class="selection-indicator" aria-hidden="true"><i data-lucide="check" class="icon-sm"></i></span>
                                     <span class="payment-choice-badge">{{ __('workflow.common.card') }}</span>
@@ -188,8 +188,8 @@
                                     </div>
                                 </label>
                             </div>
-                            <div class="col-md-6">
-                                <label class="payment-choice-card payment-choice-card-large {{ $currentMethod === 'bank_transfer' ? 'is-selected' : '' }}" data-select-card="payment" data-payment-label="{{ __('workflow.common.bank_transfer') }}">
+                            <div class="col-md-4">
+                                <label class="payment-choice-card payment-choice-card-large {{ $currentMethod === 'bank_transfer' ? 'is-selected' : '' }}" data-select-card="payment">
                                     <input type="radio" name="payment_method" value="bank_transfer" class="visually-hidden" {{ $currentMethod === 'bank_transfer' ? 'checked' : '' }}>
                                     <span class="selection-indicator" aria-hidden="true"><i data-lucide="check" class="icon-sm"></i></span>
                                     <span class="payment-choice-badge payment-choice-badge-bank">{{ __('workflow.common.bank_transfer') }}</span>
@@ -199,6 +199,20 @@
                                         <span class="workflow-feature-pill">{{ $locale === 'ar' ? 'بنوك محلية' : ($locale === 'fr' ? 'Banques locales' : ($locale === 'es' ? 'Bancos locales' : 'Local banks')) }}</span>
                                         <span class="workflow-feature-pill">WhatsApp</span>
                                         <span class="workflow-feature-pill">{{ $locale === 'ar' ? 'مراجعة يدوية' : ($locale === 'fr' ? 'Revue manuelle' : ($locale === 'es' ? 'Revision manual' : 'Manual review')) }}</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="payment-choice-card payment-choice-card-large {{ $currentMethod === 'cash' ? 'is-selected' : '' }}" data-select-card="payment">
+                                    <input type="radio" name="payment_method" value="cash" class="visually-hidden" {{ $currentMethod === 'cash' ? 'checked' : '' }}>
+                                    <span class="selection-indicator" aria-hidden="true"><i data-lucide="check" class="icon-sm"></i></span>
+                                    <span class="payment-choice-badge payment-choice-badge-bank">{{ __('workflow.common.cash') }}</span>
+                                    <strong class="d-block h4 text-body-rif mt-3 mb-2">{{ __('workflow.onboarding.cash_title') }}</strong>
+                                    <p class="text-soft-rif mb-3">{{ __('workflow.onboarding.cash_text') }}</p>
+                                    <div class="workflow-feature-pills">
+                                        <span class="workflow-feature-pill">{{ $locale === 'ar' ? 'تأكيد يدوي' : ($locale === 'fr' ? 'Confirmation manuelle' : ($locale === 'es' ? 'Confirmacion manual' : 'Manual confirmation')) }}</span>
+                                        <span class="workflow-feature-pill">WhatsApp</span>
+                                        <span class="workflow-feature-pill">{{ $locale === 'ar' ? 'مرن' : ($locale === 'fr' ? 'Flexible' : ($locale === 'es' ? 'Flexible' : 'Flexible')) }}</span>
                                     </div>
                                 </label>
                             </div>
@@ -225,6 +239,20 @@
                             </p>
                         </div>
 
+                        <div class="workflow-bank-panel {{ $currentMethod === 'cash' ? 'is-visible' : '' }}" data-cash-panel>
+                            <p class="text-soft-rif mb-0">
+                                @if ($locale === 'ar')
+                                    بعد اختيار الدفع النقدي، سيتواصل معك فريق الدعم لتأكيد طريقة التسليم أو التحصيل والخطوة التالية المناسبة.
+                                @elseif ($locale === 'fr')
+                                    Apres avoir choisi le paiement cash, le support vous contactera pour confirmer la meilleure suite pratique.
+                                @elseif ($locale === 'es')
+                                    Despues de elegir el pago en efectivo, el soporte te contactara para confirmar el siguiente paso practico.
+                                @else
+                                    After choosing cash payment, support will contact you to confirm the most practical next step.
+                                @endif
+                            </p>
+                        </div>
+
                         @error('payment_method')
                             <p class="small text-rif-danger mt-3 mb-0">{{ $message }}</p>
                         @enderror
@@ -234,7 +262,7 @@
 
                         <div class="workflow-submit-bar mt-4">
                             <div class="text-soft-rif small" data-payment-summary-copy>
-                                {{ $currentMethod === 'bank_transfer' ? __('workflow.onboarding.bank_text') : __('workflow.onboarding.card_text') }}
+                                {{ $currentMethod === 'bank_transfer' ? __('workflow.onboarding.bank_text') : ($currentMethod === 'cash' ? __('workflow.onboarding.cash_text') : __('workflow.onboarding.card_text')) }}
                             </div>
                             <button type="submit" class="btn-rif-secondary">{{ __('workflow.onboarding.continue_payment') }}</button>
                         </div>
@@ -250,6 +278,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const bankPanel = document.querySelector('[data-bank-panel]');
+    const cashPanel = document.querySelector('[data-cash-panel]');
     const summaryCopy = document.querySelector('[data-payment-summary-copy]');
 
     const updateSelectedCards = function () {
@@ -265,6 +294,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const syncPaymentUi = function (value) {
         if (bankPanel) {
             bankPanel.classList.toggle('is-visible', value === 'bank_transfer');
+        }
+
+        if (cashPanel) {
+            cashPanel.classList.toggle('is-visible', value === 'cash');
         }
 
         if (summaryCopy) {

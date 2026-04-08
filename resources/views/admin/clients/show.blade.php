@@ -25,13 +25,16 @@
         'paid' => 'status-success',
         'initiated' => 'status-warning',
         'awaiting_transfer' => 'status-warning',
+        'awaiting_cash' => 'status-warning',
         'cancelled' => 'status-danger',
         'failed' => 'status-danger',
     ];
     $workflowStatusLabels = __('workflow.statuses');
     $clientStatus = $clientRecord->onboarding_status ?: 'new';
     $clientPhone = $clientRecord->phone ?: trim(($clientRecord->user->phone_country_code ?? '').' '.($clientRecord->user->phone_number ?? ''));
-    $paymentMethodLabel = $latestTransaction?->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : __('workflow.common.card');
+    $paymentMethodLabel = $latestTransaction?->payment_method === 'bank_transfer'
+        ? __('workflow.common.bank_transfer')
+        : ($latestTransaction?->payment_method === 'cash' ? __('workflow.common.cash') : __('workflow.common.card'));
     $providerLabel = $latestTransaction?->provider ?: ($latestTransaction?->payment_method === 'card' ? 'Paddle' : '-');
     $stepOrder = [
         'assign' => __('workflow.admin.actions.assign'),
@@ -264,7 +267,7 @@
                                         <tr>
                                             <td>{{ $transaction->reference }}</td>
                                             <td>{{ number_format((float) $transaction->amount_mad, 2) }} {{ $currency }}</td>
-                                            <td>{{ $transaction->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : __('workflow.common.card') }}</td>
+                                            <td>{{ $transaction->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : ($transaction->payment_method === 'cash' ? __('workflow.common.cash') : __('workflow.common.card')) }}</td>
                                             <td><span class="status-badge {{ $statusClasses[$transactionStatus] ?? 'status-warning' }}">{{ $workflowStatusLabels[$transactionStatus] ?? ucfirst(str_replace('_', ' ', $transactionStatus)) }}</span></td>
                                             <td>{{ optional($transaction->paid_at)->format('M d, Y H:i') ?: __('portal.dashboard.shared.status_pending') }}</td>
                                         </tr>

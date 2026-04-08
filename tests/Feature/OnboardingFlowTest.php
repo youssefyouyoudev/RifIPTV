@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Client;
 use App\Models\Plan;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -30,6 +31,7 @@ class OnboardingFlowTest extends TestCase
             'price_mad' => 89,
             'features' => ['Setup help', 'WhatsApp support'],
             'is_featured' => false,
+            'is_enabled' => true,
             'sort_order' => 1,
         ]);
 
@@ -58,6 +60,7 @@ class OnboardingFlowTest extends TestCase
             'price_mad' => 249,
             'features' => ['Guided setup', 'Longer support'],
             'is_featured' => true,
+            'is_enabled' => true,
             'sort_order' => 2,
         ]);
 
@@ -70,6 +73,50 @@ class OnboardingFlowTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('Paddle')
-            ->assertSee('bank', false);
+            ->assertSee('bank', false)
+            ->assertSee('cash', false);
+    }
+
+    public function test_cash_payment_creates_manual_cash_transaction_and_redirects_to_dashboard(): void
+    {
+        $user = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $client = Client::create([
+            'user_id' => $user->id,
+        ]);
+
+        $plan = Plan::create([
+            'name' => 'SUP 12 Months',
+            'family' => 'Basic / SUP',
+            'family_slug' => 'sup',
+            'duration_months' => 12,
+            'price_mad' => 199,
+            'features' => ['Step-by-step setup help'],
+            'is_featured' => true,
+            'is_enabled' => true,
+            'sort_order' => 3,
+        ]);
+
+        $this->actingAs($user)->post(route('onboarding.plan'), [
+            'plan_id' => $plan->id,
+        ]);
+
+        $response = $this->actingAs($user)->post(route('onboarding.payment'), [
+            'payment_method' => 'cash',
+        ]);
+
+        $response
+            ->assertRedirect(route('dashboard'))
+            ->assertSessionHas('status', 'cash-payment-waiting');
+
+        $transaction = Transaction::query()->latest('id')->first();
+
+        $this->assertNotNull($transaction);
+        $this->assertSame($client->id, $transaction->client_id);
+        $this->assertSame('cash', $transaction->payment_method);
+        $this->assertSame('Cash payment', $transaction->provider);
+        $this->assertSame('awaiting_cash', $transaction->status);
     }
 }

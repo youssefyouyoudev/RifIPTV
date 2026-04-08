@@ -142,6 +142,34 @@ class OnboardingController extends Controller
             return redirect()->route('checkout.card');
         }
 
+        if ($data['payment_method'] === 'cash') {
+            $transaction->payment_method = 'cash';
+            $transaction->provider = 'Cash payment';
+            $transaction->bank_name = null;
+            $transaction->status = 'awaiting_cash';
+            $transaction->save();
+
+            $client->update([
+                'preferred_payment_method' => 'cash',
+                'preferred_bank' => null,
+                'onboarding_status' => 'awaiting_whatsapp',
+            ]);
+
+            $subscription->update([
+                'status' => 'awaiting_payment',
+            ]);
+
+            $transaction->loadMissing('subscription.plan');
+            $client->loadMissing('user');
+            if ($existingTransaction) {
+                $this->alerts->notifyCheckoutUpdated($client, $transaction, 'The client switched the checkout to cash payment and is waiting for manual follow-up.');
+            } else {
+                $this->alerts->notifyCheckoutSubmitted($client, $transaction);
+            }
+
+            return redirect()->route('dashboard')->with('status', 'cash-payment-waiting');
+        }
+
         $transaction->payment_method = 'bank_transfer';
         $transaction->provider = 'National bank transfer';
         $transaction->bank_name = $bankOptions[$data['bank_name']];
@@ -244,7 +272,7 @@ class OnboardingController extends Controller
         }
 
         return $client->transactions()
-            ->whereIn('status', ['initiated', 'awaiting_transfer', 'awaiting_payment'])
+            ->whereIn('status', ['initiated', 'awaiting_transfer', 'awaiting_cash', 'awaiting_payment'])
             ->latest('id')
             ->first();
     }

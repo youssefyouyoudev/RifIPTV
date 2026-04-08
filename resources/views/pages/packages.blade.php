@@ -98,9 +98,9 @@
                             </div>
 
                             @auth
-                                <a href="{{ route('onboarding.show') }}" class="btn-rif-outline family-pricing-cta">{{ $plan['choose_cta'] }}</a>
+                                <a href="{{ route('onboarding.show') }}" class="btn-rif-outline family-pricing-cta" data-track-event="plan_select" data-track-label="packages_{{ $plan['slug'] }}_choose">{{ $plan['choose_cta'] }}</a>
                             @else
-                                <a href="{{ route('register') }}" class="btn-rif-outline family-pricing-cta">{{ $plan['choose_cta'] }}</a>
+                                <a href="{{ route('register') }}" class="btn-rif-outline family-pricing-cta" data-track-event="register_start" data-track-label="packages_{{ $plan['slug'] }}_register">{{ $plan['choose_cta'] }}</a>
                             @endauth
                         </div>
 
@@ -128,11 +128,11 @@
                                         </ul>
                                         <div class="d-flex flex-column gap-3 mt-auto">
                                             @auth
-                                                <a href="{{ route('onboarding.show') }}" class="{{ $price['featured'] ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100">{{ $plan['continue_cta'] }}</a>
+                                                <a href="{{ route('onboarding.show') }}" class="{{ $price['featured'] ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100" data-track-event="plan_select" data-track-label="packages_{{ $plan['slug'] }}_{{ $price['months'] }}m">{{ $plan['continue_cta'] }}</a>
                                             @else
-                                                <a href="{{ route('register') }}" class="{{ $price['featured'] ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100">{{ $plan['continue_cta'] }}</a>
+                                                <a href="{{ route('register') }}" class="{{ $price['featured'] ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100" data-track-event="register_start" data-track-label="packages_{{ $plan['slug'] }}_{{ $price['months'] }}m_register">{{ $plan['continue_cta'] }}</a>
                                             @endauth
-                                            <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-outline w-100" target="_blank" rel="noopener">{{ $plan['talk_cta'] }}</a>
+                                            <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-outline w-100" target="_blank" rel="noopener" data-track-event="whatsapp_click" data-track-label="packages_{{ $plan['slug'] }}_whatsapp">{{ $plan['talk_cta'] }}</a>
                                         </div>
                                     </article>
                                 </div>

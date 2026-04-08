@@ -20,8 +20,8 @@ class DashboardExperienceTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertSee('Setup done right.', false)
-            ->assertSee('Support that stays with you.', false)
+            ->assertSee('Digital entertainment solutions', false)
+            ->assertSee('for Morocco', false)
             ->assertSee('Secure payment options for local and international clients.', false);
     }
 

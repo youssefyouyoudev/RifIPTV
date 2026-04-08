@@ -82,14 +82,19 @@
                     </p>
                 </div>
                 <div class="col-xl-4">
-                    <div class="surface-card p-4 d-inline-flex align-items-center gap-3">
-                        <span class="dashboard-pulse"></span>
-                        <div>
-                            <div class="small text-uppercase text-soft-rif fw-bold mb-1">{{ __('workflow.common.live_space') }}</div>
-                            <div class="fw-semibold text-body-rif">
-                                {{ $isAdmin ? __('workflow.admin.live_badge') : __('workflow.client.live_badge') }}
+                    <div class="d-grid gap-3">
+                        <div class="surface-card p-4 d-inline-flex align-items-center gap-3">
+                            <span class="dashboard-pulse"></span>
+                            <div>
+                                <div class="small text-uppercase text-soft-rif fw-bold mb-1">{{ __('workflow.common.live_space') }}</div>
+                                <div class="fw-semibold text-body-rif">
+                                    {{ $isAdmin ? __('workflow.admin.live_badge') : __('workflow.client.live_badge') }}
+                                </div>
                             </div>
                         </div>
+                        @if ($isAdmin)
+                            <a href="{{ route('admin.plans.index') }}" class="btn-rif-outline w-100">Manage plans</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -579,5 +584,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
-
 

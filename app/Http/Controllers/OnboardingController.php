@@ -27,6 +27,7 @@ class OnboardingController extends Controller
         $familyOrder = ['sup' => 1, 'max' => 2, 'trex' => 3];
         $plans = Plan::query()
             ->whereIn('family_slug', array_keys($familyOrder))
+            ->where('is_enabled', true)
             ->whereIn('duration_months', [3, 6, 12])
             ->get()
             ->sortBy(fn (Plan $plan) => sprintf(

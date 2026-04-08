@@ -18,6 +18,7 @@ class Plan extends Model
         'duration_months',
         'features',
         'is_featured',
+        'is_enabled',
         'badge_text',
         'sort_order',
     ];
@@ -27,6 +28,7 @@ class Plan extends Model
         return [
             'features' => 'array',
             'is_featured' => 'boolean',
+            'is_enabled' => 'boolean',
             'duration_months' => 'integer',
             'sort_order' => 'integer',
             'price_mad' => 'decimal:2',

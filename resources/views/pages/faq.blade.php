@@ -2,7 +2,7 @@
 
 @section('title', $page['meta_title'])
 @section('meta_description', $page['meta_description'])
-@section('canonical', route('pages.faq'))
+@section('canonical', request()->url())
 
 @php
     $faqPageSchema = [
@@ -97,9 +97,9 @@
                     <div class="surface-card p-4 p-lg-5 h-100 page-action-card faq-sidebar-card">
                         <span class="section-kicker mb-3">{{ $isArabic ? 'هل تحتاج مساعدة؟' : 'Need help?' }}</span>
                         <h2 class="h3 text-body-rif mb-3">{{ $isArabic ? 'تواصل مع الفريق إذا كنت تحتاج إلى توضيح إضافي.' : 'Talk to the team if you need extra clarification.' }}</h2>
-                        <p class="text-soft-rif mb-4">{{ $isArabic ? 'نساعدك على فهم خطوات الإعداد، ومسار الدفع، والمتابعة التقنية، واختيار الصفحة المناسبة لجهازك.' : 'We can help you understand setup steps, payment flow, technical follow-up, and the right service page for your device.' }}</p>
+                        <p class="text-soft-rif mb-4">{{ $isArabic ? 'نساعدك على فهم خطوات الإعداد ومسار الدفع والمتابعة التقنية واختيار الصفحة المناسبة لجهازك.' : 'We can help you understand setup steps, payment flow, technical follow-up, and the right service page for your device.' }}</p>
                         <div class="d-flex flex-column gap-3">
-                            <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-secondary" target="_blank" rel="noopener">{{ $isArabic ? 'تواصل عبر واتساب' : 'Talk on WhatsApp' }}</a>
+                            <a href="{{ config('seo.whatsapp_url', 'https://wa.me/212663323824') }}" class="btn-rif-secondary" target="_blank" rel="noopener" data-track-event="whatsapp_click" data-track-label="faq_sidebar_whatsapp">{{ $isArabic ? 'تواصل عبر واتساب' : 'Talk on WhatsApp' }}</a>
                             <a href="{{ route('pages.contact') }}" class="btn-rif-outline">{{ __('site.nav.support') }}</a>
                             <a href="{{ route('pages.services') }}" class="btn-rif-outline">{{ __('site.nav.features') }}</a>
                         </div>

@@ -9,8 +9,9 @@ class SupportPlanLocalizer
         $translations = self::translations()[$locale] ?? [];
 
         return array_map(function (array $plan) use ($translations, $locale): array {
-            $slug = $plan['slug'] ?? '';
-            $localized = $translations[$slug] ?? [];
+            $slug = (string) ($plan['slug'] ?? '');
+            $translationKey = self::translationKey($slug);
+            $localized = $translations[$translationKey] ?? [];
             $monthsLabel = self::monthsLabel($locale);
 
             $plan = array_merge($plan, array_diff_key($localized, ['features' => true]));
@@ -26,7 +27,7 @@ class SupportPlanLocalizer
             $plan['talk_cta'] = $localized['talk_cta'] ?? self::defaultTalkCta($locale);
 
             $plan['prices'] = array_map(function (array $price) use ($monthsLabel): array {
-                $price['duration_label'] = str_replace(':months', (string) $price['months'], $monthsLabel);
+                $price['duration_label'] = str_replace(':months', (string) ($price['months'] ?? 0), $monthsLabel);
 
                 return $price;
             }, $plan['prices'] ?? []);
@@ -35,12 +36,40 @@ class SupportPlanLocalizer
         }, $plans);
     }
 
+    public static function codeForFamily(string $slug): string
+    {
+        return self::codeFor($slug);
+    }
+
+    public static function durationLabel(int $months, string $locale): string
+    {
+        return str_replace(':months', (string) $months, self::monthsLabel($locale));
+    }
+
+    public static function familyContent(string $slug, string $locale): array
+    {
+        $translations = self::translations()[$locale] ?? [];
+        $translationKey = self::translationKey($slug);
+
+        return $translations[$translationKey] ?? [];
+    }
+
+    protected static function translationKey(string $slug): string
+    {
+        return match ($slug) {
+            'sup', 'basic' => 'basic',
+            'max', 'advanced' => 'advanced',
+            'trex', 'premium' => 'premium',
+            default => $slug,
+        };
+    }
+
     protected static function codeFor(string $slug): string
     {
         return match ($slug) {
-            'basic' => 'SUP',
-            'advanced' => 'MAX',
-            'premium' => 'TREX',
+            'basic', 'sup' => 'SUP',
+            'advanced', 'max' => 'MAX',
+            'premium', 'trex' => 'TREX',
             default => strtoupper($slug),
         };
     }
@@ -50,7 +79,7 @@ class SupportPlanLocalizer
         return match ($locale) {
             'fr' => ':months mois',
             'es' => ':months meses',
-            'ar' => ':months أشهر',
+            'ar' => ':months شهرًا',
             default => ':months Months',
         };
     }
@@ -102,111 +131,111 @@ class SupportPlanLocalizer
                 'basic' => [
                     'label' => 'Essentiel',
                     'name' => 'Support essentiel',
-                    'summary' => 'Pour les demandes plus simples, l installation guidee et un premier suivi rassurant.',
+                    'summary' => 'Pour les besoins simples, l’installation guidée et un premier suivi rassurant.',
                     'scope' => 'Configuration de base',
                     'devices' => '1 appareil',
                     'response' => 'Standard',
                     'follow_up' => 'Suivi essentiel',
                     'features' => [
-                        'Aide pas a pas pour la configuration',
-                        'Guide d installation des applications',
-                        'Revue du compte et de l acces',
-                        'Clarifications WhatsApp',
+                        'Aide pas à pas pour la configuration',
+                        'Guide d’installation des applications',
+                        'Revue du compte et de l’accès',
+                        'Clarifications par WhatsApp',
                     ],
                     'featured_badge' => 'Populaire',
                 ],
                 'advanced' => [
-                    'label' => 'Avance',
-                    'name' => 'Support avance',
-                    'summary' => 'Pour une configuration plus large, une priorite renforcee et un suivi plus long.',
+                    'label' => 'Avancé',
+                    'name' => 'Support avancé',
+                    'summary' => 'Pour un périmètre plus large, une priorité plus forte et un suivi plus long.',
                     'highlight' => 'Le plus choisi',
-                    'scope' => 'Configuration etendue',
-                    'devices' => 'Jusqu a 2 appareils',
+                    'scope' => 'Configuration étendue',
+                    'devices' => 'Jusqu’à 2 appareils',
                     'response' => 'Prioritaire',
-                    'follow_up' => 'Suivi etendu',
+                    'follow_up' => 'Suivi étendu',
                     'features' => [
-                        'Configuration plus complete',
-                        'Organisation pratique des applications',
-                        'Verifications techniques prioritaires',
-                        'Fenetre de suivi plus longue',
+                        'Guidage de configuration plus complet',
+                        'Aide à l’organisation des applications',
+                        'Vérifications techniques prioritaires',
+                        'Fenêtre de suivi prolongée',
                     ],
-                    'featured_badge' => 'Recommande',
+                    'featured_badge' => 'Recommandé',
                 ],
                 'premium' => [
                     'label' => 'Premium',
                     'name' => 'Support premium',
-                    'summary' => 'Pour un onboarding plus pousse, un traitement plus prioritaire et une meilleure continuite.',
+                    'summary' => 'Pour un onboarding plus poussé, une priorité plus élevée et une continuité plus forte.',
                     'highlight' => 'Meilleure valeur',
                     'scope' => 'Accompagnement complet',
                     'devices' => 'Multi-appareils',
-                    'response' => 'Priorite haute',
-                    'follow_up' => 'Suivi longue duree',
+                    'response' => 'Priorité haute',
+                    'follow_up' => 'Suivi longue durée',
                     'features' => [
                         'Onboarding plus approfondi',
                         'Traitement plus prioritaire',
-                        'Revue technique avancee',
-                        'Continuite de support renforcee',
+                        'Revue technique avancée',
+                        'Continuité de support renforcée',
                     ],
                     'featured_badge' => 'Best seller',
                 ],
             ],
             'es' => [
                 'basic' => [
-                    'label' => 'Basico',
-                    'name' => 'Soporte basico',
-                    'summary' => 'Para necesidades simples de configuracion, instalacion guiada y seguimiento inicial.',
-                    'scope' => 'Configuracion base',
+                    'label' => 'Básico',
+                    'name' => 'Soporte básico',
+                    'summary' => 'Para necesidades simples de configuración, instalación guiada y seguimiento inicial.',
+                    'scope' => 'Configuración base',
                     'devices' => '1 dispositivo',
-                    'response' => 'Estandar',
+                    'response' => 'Estándar',
                     'follow_up' => 'Seguimiento esencial',
                     'features' => [
                         'Ayuda paso a paso para configurar el equipo',
-                        'Guia de instalacion de aplicaciones',
-                        'Revision de cuenta y acceso',
-                        'Soporte de aclaracion por WhatsApp',
+                        'Guía de instalación de aplicaciones',
+                        'Revisión de cuenta y acceso',
+                        'Aclaraciones por WhatsApp',
                     ],
                     'featured_badge' => 'Popular',
                 ],
                 'advanced' => [
                     'label' => 'Avanzado',
                     'name' => 'Soporte avanzado',
-                    'summary' => 'Para un alcance mas amplio, mayor prioridad y seguimiento mas largo.',
-                    'highlight' => 'Mas elegido',
-                    'scope' => 'Configuracion ampliada',
+                    'summary' => 'Para un alcance más amplio, mayor prioridad y seguimiento más largo.',
+                    'highlight' => 'Más elegido',
+                    'scope' => 'Configuración ampliada',
                     'devices' => 'Hasta 2 dispositivos',
                     'response' => 'Prioritario',
                     'follow_up' => 'Seguimiento extendido',
                     'features' => [
-                        'Guia de configuracion mas amplia',
+                        'Guía de configuración más amplia',
                         'Ayuda para organizar aplicaciones',
-                        'Revisiones tecnicas prioritarias',
-                        'Ventana de seguimiento mas larga',
+                        'Revisiones técnicas prioritarias',
+                        'Ventana de seguimiento más larga',
                     ],
                     'featured_badge' => 'Recomendado',
                 ],
                 'premium' => [
                     'label' => 'Premium',
                     'name' => 'Soporte premium',
-                    'summary' => 'Para onboarding mas profundo, respuesta prioritaria y continuidad tecnica mas fuerte.',
+                    'summary' => 'Para onboarding más profundo, respuesta prioritaria y continuidad técnica más fuerte.',
                     'highlight' => 'Mejor valor',
                     'scope' => 'Soporte completo',
                     'devices' => 'Ayuda multi-dispositivo',
                     'response' => 'Prioridad alta',
                     'follow_up' => 'Seguimiento largo',
                     'features' => [
-                        'Asistencia de onboarding mas profunda',
+                        'Asistencia de onboarding más profunda',
                         'Respuesta de mayor prioridad',
-                        'Revision avanzada de problemas',
-                        'Continuidad de soporte mas larga',
+                        'Revisión avanzada de problemas',
+                        'Continuidad de soporte más larga',
                     ],
-                    'featured_badge' => 'Mas vendido',
+                    'featured_badge' => 'Más vendido',
                 ],
             ],
             'ar' => [
                 'basic' => [
                     'label' => 'أساسي',
                     'name' => 'الدعم الأساسي',
-                    'summary' => 'للإعدادات الأبسط، وخطوات التثبيت الموجّهة، والمتابعة الأولى المريحة.',
+                    'summary' => 'للاحتياجات الأبسط، وخطوات التثبيت الموجّهة، والمتابعة الأولى المريحة.',
                     'scope' => 'إعداد أساسي',
                     'devices' => 'جهاز واحد',
                     'response' => 'عادي',
@@ -239,7 +268,7 @@ class SupportPlanLocalizer
                 'premium' => [
                     'label' => 'بريميوم',
                     'name' => 'الدعم البريميوم',
-                    'summary' => 'لبدء أكثر عمقًا، وأولوية أعلى، واستمرارية تقنية أقوى على المدى الطويل.',
+                    'summary' => 'لبدء أعمق، وأولوية أعلى، واستمرارية تقنية أقوى على المدى الطويل.',
                     'highlight' => 'أفضل قيمة',
                     'scope' => 'دعم كامل',
                     'devices' => 'مساعدة متعددة الأجهزة',

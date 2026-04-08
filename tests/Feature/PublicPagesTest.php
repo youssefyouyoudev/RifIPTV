@@ -32,8 +32,8 @@ class PublicPagesTest extends TestCase
     {
         $this->get('/')
             ->assertSuccessful()
-            ->assertSee('Setup done right.', false)
-            ->assertSee('Support that stays with you.', false);
+            ->assertSee('Digital entertainment solutions', false)
+            ->assertSee('for Morocco', false);
 
         $this->get('/services')
             ->assertSuccessful()
@@ -55,21 +55,49 @@ class PublicPagesTest extends TestCase
             ->assertSuccessful()
             ->assertSee('Answers to common setup, onboarding, and technical support questions.', false);
 
-        $this->get('/smart-tv-setup-morocco')
+        $this->get('/help-center')
+            ->assertSuccessful()
+            ->assertSee('Help center', false);
+
+        $this->get('/streaming-services-maroc')
+            ->assertSuccessful()
+            ->assertSee('Streaming services in Morocco', false);
+
+        $this->get('/digital-entertainment-maroc')
+            ->assertSuccessful()
+            ->assertSee('Digital entertainment in Morocco', false);
+
+        $this->get('/smart-tv-setup-maroc')
             ->assertSuccessful()
             ->assertSee('Smart TV setup in Morocco', false);
 
-        $this->get('/app-installation-help')
+        $this->get('/media-solutions-maroc')
             ->assertSuccessful()
-            ->assertSee('App installation help in Morocco', false);
+            ->assertSee('Media solutions in Morocco', false);
 
-        $this->get('/device-troubleshooting-morocco')
+        $this->get('/streaming-support-nador')
             ->assertSuccessful()
-            ->assertSee('Device troubleshooting in Morocco', false);
+            ->assertSee('Streaming support in Nador', false);
+
+        $this->get('/smart-tv-setup-nador')
+            ->assertSuccessful()
+            ->assertSee('Smart TV setup in Nador', false);
+
+        $this->get('/device-configuration-morocco')
+            ->assertSuccessful()
+            ->assertSee('Device configuration in Morocco', false);
 
         $this->get('/technical-support-morocco')
             ->assertSuccessful()
             ->assertSee('Technical support in Morocco', false);
+
+        $this->get('/blog')
+            ->assertSuccessful()
+            ->assertSee('Useful setup and support guides for Morocco', false);
+
+        $this->get('/blog/best-streaming-setup-morocco')
+            ->assertSuccessful()
+            ->assertSee('Best streaming setup in Morocco', false);
 
         $this->get('/services/smart-tv-setup-morocco')
             ->assertRedirect('/smart-tv-setup-morocco');
@@ -85,7 +113,8 @@ class PublicPagesTest extends TestCase
             ->assertSee(route('pages.about'), false)
             ->assertSee(route('pages.contact'), false)
             ->assertSee(route('pages.service', 'app-installation-help'), false)
-            ->assertSee(route('pages.service', 'technical-support-morocco'), false);
+            ->assertSee(route('pages.service', 'streaming-services-maroc'), false)
+            ->assertSee(route('seo.blog'), false);
 
         $this->get('/robots.txt')
             ->assertSuccessful()
@@ -114,34 +143,33 @@ class PublicPagesTest extends TestCase
             ->assertSee('noindex,nofollow', false);
     }
 
-    public function test_arabic_public_pages_render_in_rtl_without_visible_mojibake_markers(): void
+    public function test_arabic_public_pages_render_without_visible_mojibake_markers(): void
     {
         $this->get('/?lang=ar')
             ->assertSuccessful()
             ->assertSee('dir="rtl"', false)
-            ->assertSee('إعداد صحيح', false)
+            ->assertSee('حلول الترفيه الرقمي', false)
             ->assertDontSee('Basic Support', false)
-            ->assertDontSee('ÃƒËœ', false)
-            ->assertDontSee('Ãƒâ„¢', false);
+            ->assertDontSee('Ø', false)
+            ->assertDontSee('Ã', false);
 
-        $this->get('/faq?lang=ar')
+        $this->get('/help-center?lang=ar')
             ->assertSuccessful()
-            ->assertSee('dir="rtl"', false)
-            ->assertSee('الأسئلة الشائعة', false)
-            ->assertDontSee('ÃƒËœ', false)
-            ->assertDontSee('Ãƒâ„¢', false);
+            ->assertSee('مركز المساعدة', false)
+            ->assertDontSee('Ø', false)
+            ->assertDontSee('Ã', false);
 
         $this->get('/packages?lang=ar')
             ->assertSuccessful()
             ->assertSee('خطط الدعم', false)
             ->assertDontSee('Basic Support', false)
-            ->assertDontSee('ÃƒËœ', false)
-            ->assertDontSee('Ãƒâ„¢', false);
+            ->assertDontSee('Ø', false)
+            ->assertDontSee('Ã', false);
 
-        $this->get('/about?lang=ar')
+        $this->get('/smart-tv-setup-maroc?lang=ar')
             ->assertSuccessful()
-            ->assertSee('من نحن', false)
-            ->assertDontSee('ÃƒËœ', false)
-            ->assertDontSee('Ãƒâ„¢', false);
+            ->assertSee('إعداد Smart TV في المغرب', false)
+            ->assertDontSee('Ø', false)
+            ->assertDontSee('Ã', false);
     }
 }

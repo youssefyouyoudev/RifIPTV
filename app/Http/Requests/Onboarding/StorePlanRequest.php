@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Onboarding;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePlanRequest extends FormRequest
 {
@@ -14,7 +15,10 @@ class StorePlanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'plan_id' => ['required', 'exists:plans,id'],
+            'plan_id' => [
+                'required',
+                Rule::exists('plans', 'id')->where(fn ($query) => $query->where('is_enabled', true)),
+            ],
         ];
     }
 }

@@ -4,9 +4,9 @@
     $isArabic = app()->isLocale('ar');
     $brandName = data_get(trans('site.brand'), 'name', 'Rifi Media');
     $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
-    $brandLogo = asset('/public/images/rifmedia-logo-128.png');
-    $schemaLogo = asset('/public/images/rifmedia-logo-512.png');
-    $themeCss = app()->environment('production') ? asset('/public/css/rifiptv.min.css') : asset('/public/css/rifiptv.css');
+    $brandLogo = asset('images/rifmedia-logo-128.png');
+    $schemaLogo = asset('images/rifmedia-logo-512.png');
+    $themeCss = app()->environment('production') ? asset('css/rifiptv.min.css') : asset('css/rifiptv.css');
     $seoConfig = config('seo');
     $brandEmail = data_get($seoConfig, 'contact_email', 'contact@rifimedia.com');
     $brandPhone = data_get($seoConfig, 'contact_phone');
@@ -20,6 +20,8 @@
     $localeLabels = trans('site.locales');
     $nav = array_merge(trans('site.nav'), ['sign_in' => $isArabic ? 'تسجيل الدخول' : 'Sign in']);
     $footer = trans('site.footer');
+    $blogLabel = $isArabic ? 'المدونة' : 'Blog';
+    $helpCenterLabel = $isArabic ? 'مركز المساعدة' : (app()->isLocale('fr') ? 'Centre d’aide' : 'Help center');
     $legalUi = [
         'hub_kicker' => trans('legal.hub.kicker'),
         'hub_headline' => trans('legal.hub.headline'),
@@ -213,6 +215,7 @@
                             <a href="{{ route('pages.about') }}" class="nav-link-rif">{{ data_get($nav, 'about', 'About') }}</a>
                             <a href="{{ route('pages.packages') }}" class="nav-link-rif">{{ data_get($nav, 'pricing', 'Packages') }}</a>
                             <a href="{{ route('pages.contact') }}" class="nav-link-rif">{{ data_get($nav, 'support', 'Contact') }}</a>
+                            <a href="{{ route('seo.blog') }}" class="nav-link-rif">{{ $blogLabel }}</a>
                             <a href="{{ route('pages.trust') }}" class="nav-link-rif">{{ $legalUi['hub_kicker'] }}</a>
                         </nav>
 
@@ -296,6 +299,7 @@
                     <a href="{{ route('pages.about') }}">{{ data_get($nav, 'about', 'About') }}</a>
                     <a href="{{ route('pages.packages') }}">{{ data_get($nav, 'pricing', 'Packages') }}</a>
                     <a href="{{ route('pages.contact') }}">{{ data_get($nav, 'support', 'Contact') }}</a>
+                    <a href="{{ route('seo.blog') }}">{{ $blogLabel }}</a>
                     <a href="{{ route('pages.trust') }}">{{ $legalUi['hub_kicker'] }}</a>
 
                     @auth
@@ -376,6 +380,8 @@
                                 <a href="{{ route('pages.services') }}">{{ data_get($nav, 'features', 'Services') }}</a>
                                 <a href="{{ route('pages.about') }}">{{ data_get($nav, 'about', 'About') }}</a>
                                 <a href="{{ route('pages.contact') }}">{{ data_get($nav, 'support', 'Contact') }}</a>
+                                <a href="{{ route('seo.blog') }}">{{ $blogLabel }}</a>
+                                <a href="{{ route('help.center') }}">{{ $helpCenterLabel }}</a>
                                 <a href="{{ route('pages.trust') }}">{{ $legalUi['hub_headline'] }}</a>
                                 <a href="{{ route('legal.privacy') }}">{{ $legalUi['privacy'] }}</a>
                                 <a href="{{ route('legal.terms') }}">{{ $legalUi['terms'] }}</a>
@@ -424,6 +430,22 @@
             const mobileMenu = document.querySelector('[data-mobile-menu]');
             const themeButtons = document.querySelectorAll('[data-theme-toggle]');
             const revealItems = document.querySelectorAll('.reveal-up');
+            const locale = document.documentElement.lang || 'en';
+
+            window.rifiTrackEvent = function (eventName, params = {}) {
+                const payload = Object.assign({
+                    page_locale: locale,
+                    page_path: window.location.pathname,
+                    page_title: document.title
+                }, params);
+
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push(Object.assign({ event: eventName }, payload));
+
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', eventName, payload);
+                }
+            };
 
             const renderThemeButtons = function () {
                 const theme = root.getAttribute('data-theme') || 'dark';
@@ -454,6 +476,89 @@
                     mobileMenu.classList.toggle('is-open');
                 });
             }
+
+            document.addEventListener('click', function (event) {
+                const trackedLink = event.target.closest('a,button');
+
+                if (!trackedLink) {
+                    return;
+                }
+
+                const href = trackedLink.getAttribute('href') || '';
+                const eventName = trackedLink.dataset.trackEvent;
+                const eventLabel = trackedLink.dataset.trackLabel || trackedLink.textContent.trim().slice(0, 80);
+
+                if (eventName) {
+                    window.rifiTrackEvent(eventName, {
+                        label: eventLabel,
+                        destination: href || trackedLink.dataset.trackDestination || ''
+                    });
+
+                    return;
+                }
+
+                if (href.includes('wa.me')) {
+                    window.rifiTrackEvent('whatsapp_click', {
+                        label: eventLabel,
+                        destination: href
+                    });
+                } else if (href.startsWith('tel:')) {
+                    window.rifiTrackEvent('call_click', {
+                        label: eventLabel,
+                        destination: href
+                    });
+                } else if (href.includes('/contact')) {
+                    window.rifiTrackEvent('contact_click', {
+                        label: eventLabel,
+                        destination: href
+                    });
+                } else if (href.includes('/register')) {
+                    window.rifiTrackEvent('register_start', {
+                        label: eventLabel,
+                        destination: href
+                    });
+                } else if (href.includes('/onboarding')) {
+                    window.rifiTrackEvent('checkout_start', {
+                        label: eventLabel,
+                        destination: href
+                    });
+                }
+            }, { passive: true });
+
+            document.querySelectorAll('details.faq-item-card').forEach(function (detail) {
+                detail.addEventListener('toggle', function () {
+                    if (!detail.open) {
+                        return;
+                    }
+
+                    const summary = detail.querySelector('summary');
+
+                    window.rifiTrackEvent('faq_expand', {
+                        label: summary ? summary.textContent.trim().slice(0, 120) : 'faq'
+                    });
+                });
+            });
+
+            document.querySelectorAll('form').forEach(function (form) {
+                let started = false;
+
+                form.addEventListener('focusin', function () {
+                    if (started) {
+                        return;
+                    }
+
+                    started = true;
+                    window.rifiTrackEvent('form_start', {
+                        label: form.getAttribute('action') || window.location.pathname
+                    });
+                });
+
+                form.addEventListener('submit', function () {
+                    window.rifiTrackEvent('form_submit', {
+                        label: form.getAttribute('action') || window.location.pathname
+                    });
+                });
+            });
 
             if (revealItems.length) {
                 if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

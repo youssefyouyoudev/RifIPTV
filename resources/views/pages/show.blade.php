@@ -150,10 +150,10 @@
                             {{ $isArabic ? 'يمكنك التواصل مباشرة عبر واتساب أو الرجوع إلى صفحة الباقات لاختيار خطة الدعم المناسبة قبل المتابعة.' : 'You can contact support directly on WhatsApp or go back to the packages section to choose the service that fits your needs.' }}
                         </p>
                         <div class="d-flex flex-column gap-3">
-                            <a href="{{ $ctaPrimary }}" class="btn-rif-secondary" target="_blank" rel="noopener">
+                            <a href="{{ $ctaPrimary }}" class="btn-rif-secondary" target="_blank" rel="noopener" data-track-event="whatsapp_click" data-track-label="page_sidebar_whatsapp">
                                 {{ $isArabic ? 'تواصل عبر واتساب' : 'Talk on WhatsApp' }}
                             </a>
-                            <a href="{{ $ctaSecondary }}" class="btn-rif-outline">
+                            <a href="{{ $ctaSecondary }}" class="btn-rif-outline" data-track-event="purchase_intent" data-track-label="page_sidebar_packages">
                                 {{ $isArabic ? 'عرض الباقات' : 'View packages' }}
                             </a>
                             <a href="{{ route('pages.trust') }}" class="btn-rif-outline">

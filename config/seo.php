@@ -1,10 +1,10 @@
 ﻿<?php
 
 return [
-    'default_title' => env('SEO_DEFAULT_TITLE', 'Rifi Media | Device Setup, App Guidance & Technical Support in Morocco'),
+    'default_title' => env('SEO_DEFAULT_TITLE', 'Rifi Media | Smart TV Setup, Device Configuration & Technical Support in Morocco'),
     'default_description' => env(
         'SEO_DEFAULT_DESCRIPTION',
-        'Rifi Media helps clients across Morocco with device setup, app guidance, troubleshooting, payment follow-up, and practical technical support for connected devices.'
+        'Rifi Media helps clients across Morocco with Smart TV setup, device configuration, app guidance, troubleshooting, and practical technical support for connected devices.'
     ),
     'default_robots' => env('SEO_DEFAULT_ROBOTS', 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'),
     'default_og_image' => env('SEO_DEFAULT_OG_IMAGE', '/images/hero-light.png'),
@@ -18,7 +18,7 @@ return [
     'service_region' => env('SEO_SERVICE_REGION', 'Morocco'),
     'service_types' => array_values(array_filter(array_map(
         static fn (string $service) => trim($service),
-        explode(',', (string) env('SEO_SERVICE_TYPES', 'Device Setup Services,App Guidance,Technical Support,Troubleshooting,Payment Follow-up'))
+        explode(',', (string) env('SEO_SERVICE_TYPES', 'Smart TV Setup,Device Configuration,App Guidance,Technical Support,Troubleshooting,Client Follow-up'))
     ))),
     'social_profiles' => array_values(array_filter(array_map(
         static fn ($url) => trim((string) $url),

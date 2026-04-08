@@ -1,90 +1,90 @@
 ﻿@extends('layouts.app')
 
-@section('title', __('site.home.title'))
-@section('meta_description', __('site.home.meta_description'))
+@section('title', app()->isLocale('ar') ? 'حلول الترفيه الرقمي و Smart TV في المغرب | Rifi Media' : 'Digital entertainment and smart TV solutions in Morocco | Rifi Media')
+@section('meta_description', app()->isLocale('ar') ? 'تساعد Rifi Media في إعداد Smart TV وتطبيقات البث والأجهزة المنزلية والدعم التقني في المغرب.' : 'Rifi Media helps households and businesses set up Smart TVs, streaming apps, media devices, and technical support in Morocco.')
 @section('body_class', 'page-home')
 
 @php
     $locale = app()->getLocale();
     $isArabic = $locale === 'ar';
     $brandName = 'Rifi Media';
-    $heroLogo = asset('/public/images/rifmedia-logo-512.png');
-    $heroLogoCompact = asset('/public/images/rifmedia-logo-320.png');
+    $heroLogo = asset('images/rifmedia-logo-512.png');
+    $heroLogoCompact = asset('images/rifmedia-logo-320.png');
     $whatsappUrl = config('seo.whatsapp_url', 'https://wa.me/212663323824');
     $primaryCta = auth()->check() && Route::has('onboarding.show') ? route('onboarding.show') : route('register');
-    $plans = collect(\App\Support\SupportPlanLocalizer::localize(config('support_plans.plans', []), $locale));
+    $plans = \App\Support\SupportPlanCatalog::forStorefront($locale);
     $paymentLogos = [
-        ['src' => asset('/public/images/payment-paddle.jpg'), 'alt' => 'Paddle logo', 'width' => 600, 'height' => 315, 'featured' => true],
-        ['src' => asset('/public/images/payment-cih-bank.jpg'), 'alt' => 'CIH Bank logo', 'width' => 569, 'height' => 429],
-        ['src' => asset('/public/images/payment-attijariwafa-bank.png'), 'alt' => 'Attijariwafa Bank logo', 'width' => 331, 'height' => 284],
-        ['src' => asset('/public/images/payment-bank-of-africa.png'), 'alt' => 'Bank of Africa logo', 'width' => 225, 'height' => 225],
-        ['src' => asset('/public/images/payment-chaabi-bank.png'), 'alt' => 'Chaabi Bank logo', 'width' => 267, 'height' => 189],
-        ['src' => asset('/public/images/payment-saham-bank.webp'), 'alt' => 'Saham Bank logo', 'width' => 1080, 'height' => 1080],
-        ['src' => asset('/public/images/payment-cashplus.png'), 'alt' => 'Cash Plus logo', 'width' => 1920, 'height' => 1080],
+        ['src' => asset('images/payment-paddle.jpg'), 'alt' => 'Paddle logo', 'width' => 600, 'height' => 315, 'featured' => true],
+        ['src' => asset('images/payment-cih-bank.jpg'), 'alt' => 'CIH Bank logo', 'width' => 569, 'height' => 429],
+        ['src' => asset('images/payment-attijariwafa-bank.png'), 'alt' => 'Attijariwafa Bank logo', 'width' => 331, 'height' => 284],
+        ['src' => asset('images/payment-bank-of-africa.png'), 'alt' => 'Bank of Africa logo', 'width' => 225, 'height' => 225],
+        ['src' => asset('images/payment-chaabi-bank.png'), 'alt' => 'Chaabi Bank logo', 'width' => 267, 'height' => 189],
+        ['src' => asset('images/payment-saham-bank.webp'), 'alt' => 'Saham Bank logo', 'width' => 1080, 'height' => 1080],
+        ['src' => asset('images/payment-cashplus.png'), 'alt' => 'Cash Plus logo', 'width' => 1920, 'height' => 1080],
     ];
 
     $copy = match ($locale) {
         'ar' => [
-            'eyebrow' => 'خدمة إعداد أجهزة احترافية',
-            'title_top' => 'إعداد صحيح',
-            'title_bottom' => 'ودعم يبقى معك',
-            'description' => 'نساعدك في إعداد التلفاز الذكي والأجهزة، وتثبيت التطبيقات، وتنظيم الحسابات، ومتابعة الخطوات التقنية بشكل واضح ومريح.',
-            'tagline' => 'واجهة أكثر ترتيبًا وثقة حتى تبدو رحلة الإعداد واضحة من أول خطوة.',
-            'points' => ['إجراء آمن', 'متابعة عبر واتساب', 'إرشاد تقني واضح'],
-            'stats' => ['إعداد احترافي', 'متابعة يومية', 'TV / Mobile / Tablet'],
+            'eyebrow' => 'حلول Smart TV ودعم البث',
+            'title_top' => 'حلول الترفيه الرقمي',
+            'title_bottom' => 'و Smart TV في المغرب',
+            'description' => 'نساعد الأسر والشركات في إعداد Smart TV، وتطبيقات البث، وأجهزة الوسائط، وبدء الحسابات بخطوات واضحة ودعم تقني سريع.',
+            'tagline' => 'رحلة أوضح من أول إعداد حتى المتابعة، مع دعم محلي وشرح عملي يفهمه العميل بسرعة.',
+            'points' => ['دعم عبر واتساب', 'استجابة بشرية', 'إعداد واضح وآمن'],
+            'stats' => ['المغرب', 'الناظور', 'Smart TV / Media Box'],
             'tiles' => [
-                ['icon' => 'monitor-cog', 'title' => 'إعداد الأجهزة', 'text' => 'إعداد التلفاز الذكي والأجهزة المرتبطة به بخطوات مفهومة.'],
-                ['icon' => 'download', 'title' => 'تثبيت التطبيقات', 'text' => 'مساعدة عملية في التثبيت والتنظيم والخطوات الأولى.'],
-                ['icon' => 'shield-check', 'title' => 'خطوات موثوقة', 'text' => 'عرض أوضح للدفع والمراجعة والمتابعة البشرية.'],
-                ['icon' => 'messages-square', 'title' => 'دعم تقني', 'text' => 'فريق حقيقي يرافقك قبل الطلب وبعده.'],
+                ['icon' => 'tv-2', 'title' => 'إعداد Smart TV', 'text' => 'تجهيز التلفاز الذكي، وضبط الإعدادات، وتنظيم البداية بشكل أوضح.'],
+                ['icon' => 'download', 'title' => 'تثبيت تطبيقات البث', 'text' => 'مساعدة عملية في التطبيقات، والوصول للحساب، والخطوات الأولى.'],
+                ['icon' => 'cpu', 'title' => 'تفعيل الأجهزة', 'text' => 'إرشاد لتفعيل media box والأجهزة المتصلة وتنظيمها بشكل أفضل.'],
+                ['icon' => 'messages-square', 'title' => 'الدعم التقني', 'text' => 'فريق حقيقي يتابع المشكلات والأسئلة قبل الطلب وبعده.'],
             ],
             'payment_kicker' => 'خيارات الدفع',
             'payment_title' => 'دفع واضح وآمن للعملاء المحليين والدوليين.',
-            'payment_text' => 'الدفع الدولي متاح عبر Paddle مع مراجعة يدوية للتحويلات البنكية المحلية.',
-            'plans_kicker' => 'باقات الخدمة',
-            'plans_title' => 'اختر باقة الدعم والإعداد المناسبة لك.',
-            'plans_text' => 'باقات مرتبة حول عمق الإعداد، وسرعة الاستجابة، ومدة المتابعة.',
+            'payment_text' => 'نوفر مسار دفع واضح عبر Paddle مع مراجعة بشرية للتحويلات المحلية قبل متابعة الدعم.',
+            'plans_kicker' => 'خطط الدعم',
+            'plans_title' => 'اختر مستوى الدعم المناسب لجهازك وتجربتك.',
+            'plans_text' => 'الخطط مبنية حول عمق الإعداد، وعدد الأجهزة، وأولوية المتابعة، وسرعة الرد.',
             'benefits_kicker' => 'لماذا يختارنا العملاء',
-            'benefits_title' => 'واجهة أنظف، ودعم أوضح، وتجربة أكثر راحة.',
-            'benefits_text' => 'نحاول أن تكون كل خطوة مفهومة، وكل تواصل بشري، وكل مرحلة أسهل من السابقة.',
+            'benefits_title' => 'عرض أوضح، وثقة أعلى، وخدمة أسهل على العميل.',
+            'benefits_text' => 'كل قسم يشرح ما الذي نقدمه، ومتى نرد، وكيف تبدأ، وما الذي يحدث بعد الطلب.',
             'faq_kicker' => 'الأسئلة الشائعة',
             'faq_title' => 'إجابات سريعة على أهم الأسئلة.',
             'support_kicker' => 'الدعم',
-            'support_title' => 'هل تحتاج مساعدة قبل تنفيذ الطلب؟',
-            'support_text' => 'تواصل مع الفريق إذا كنت تريد فهم الخطوات أو اختيار الباقة المناسبة لك.',
+            'support_title' => 'هل تريد المساعدة قبل البدء؟',
+            'support_text' => 'تحدّث مع الفريق إذا كنت تريد اختيار الخطة المناسبة أو فهم مسار الإعداد خطوة بخطوة.',
             'support_primary' => 'دعم واتساب',
-            'support_secondary' => 'عرض الباقات',
+            'support_secondary' => 'ابدأ الدعم',
         ],
         default => [
-            'eyebrow' => 'Professional device setup service',
-            'title_top' => 'Setup done right.',
-            'title_bottom' => 'Support that stays with you.',
-            'description' => 'We help clients configure devices, install useful apps, organize account access, and keep technical support clear from the first step onward.',
-            'tagline' => 'A cleaner front-end experience that feels trustworthy, practical, and easy to follow.',
-            'points' => ['Secure process', 'WhatsApp support', 'Clear technical guidance'],
-            'stats' => ['Professional setup', 'Daily follow-up', 'TV / Mobile / Tablet'],
+            'eyebrow' => 'Smart TV and streaming support',
+            'title_top' => 'Digital entertainment solutions',
+            'title_bottom' => 'for Morocco',
+            'description' => 'We help households and businesses set up Smart TVs, streaming apps, media devices, and account access with fast technical support.',
+            'tagline' => 'A premium support experience built around clearer setup, trusted guidance, and a calmer next step.',
+            'points' => ['WhatsApp support', 'Human-reviewed help', 'Clear setup process'],
+            'stats' => ['Morocco', 'Nador', 'Smart TV / Media Box'],
             'tiles' => [
-                ['icon' => 'monitor-cog', 'title' => 'Device setup', 'text' => 'Smart TV and connected-device configuration done with guidance.'],
-                ['icon' => 'download', 'title' => 'App guidance', 'text' => 'Practical help for installation, login flow, and first-time setup.'],
-                ['icon' => 'shield-check', 'title' => 'Trusted process', 'text' => 'Clear support steps with secure payment follow-up.'],
-                ['icon' => 'messages-square', 'title' => 'Technical support', 'text' => 'A real support team stays available before and after your order.'],
+                ['icon' => 'tv-2', 'title' => 'Smart TV setup', 'text' => 'Clear first-time setup, settings review, and a smoother start for connected screens.'],
+                ['icon' => 'download', 'title' => 'Streaming app guidance', 'text' => 'Practical help with apps, sign-in flow, and subscription onboarding.'],
+                ['icon' => 'cpu', 'title' => 'Device activation support', 'text' => 'Guidance for media devices, connected screens, and account-ready setup.'],
+                ['icon' => 'messages-square', 'title' => 'Technical troubleshooting', 'text' => 'A real support team helps with buffering, login issues, and everyday setup questions.'],
             ],
             'payment_kicker' => 'Payment options',
             'payment_title' => 'Secure payment options for local and international clients.',
-            'payment_text' => 'International card payment is available through Paddle, while local transfers are reviewed and confirmed manually by support.',
-            'plans_kicker' => 'Service packages',
-            'plans_title' => 'Choose the support package that fits your setup needs.',
-            'plans_text' => 'Three clear service plans built around setup guidance, troubleshooting, and reliable follow-up.',
+            'payment_text' => 'International card payment is available through Paddle, while local transfers are reviewed manually before support continues.',
+            'plans_kicker' => 'Support plans',
+            'plans_title' => 'Choose the support level that fits your setup needs.',
+            'plans_text' => 'Each plan is designed around setup depth, device count, response priority, and follow-up.',
             'benefits_kicker' => 'Why clients choose us',
-            'benefits_title' => 'A cleaner interface, clearer support, and a calmer client experience.',
-            'benefits_text' => 'Every section is designed to reduce confusion, build trust, and make the next step obvious.',
+            'benefits_title' => 'A clearer offer, stronger trust, and a smoother client journey.',
+            'benefits_text' => 'Each section answers a real question: what we do, who it helps, how payment works, and what happens next.',
             'faq_kicker' => 'FAQ',
             'faq_title' => 'Clear answers to the questions clients ask most.',
             'support_kicker' => 'Support',
-            'support_title' => 'Need help before you place an order?',
-            'support_text' => 'Talk to our team if you need help choosing the right package or understanding the setup and payment process.',
-            'support_primary' => 'WhatsApp support',
-            'support_secondary' => 'View packages',
+            'support_title' => 'Need help before you get started?',
+            'support_text' => 'Talk to our team if you want help choosing the right support plan or understanding the setup flow.',
+            'support_primary' => 'Contact on WhatsApp',
+            'support_secondary' => 'Get Support',
         ],
     };
 
@@ -106,8 +106,10 @@
     $webPageSchema = [
         '@context' => 'https://schema.org',
         '@type' => 'WebPage',
-        'name' => __('site.home.title'),
-        'description' => __('site.home.meta_description'),
+        'name' => app()->isLocale('ar') ? 'حلول الترفيه الرقمي و Smart TV في المغرب | Rifi Media' : 'Digital entertainment and smart TV solutions in Morocco | Rifi Media',
+        'description' => app()->isLocale('ar')
+            ? 'تساعد Rifi Media في إعداد Smart TV وتطبيقات البث والأجهزة المنزلية والدعم التقني في المغرب.'
+            : 'Rifi Media helps households and businesses set up Smart TVs, streaming apps, media devices, and technical support in Morocco.',
         'url' => request()->url(),
         'inLanguage' => app()->getLocale(),
         'primaryImageOfPage' => $heroLogo,
@@ -142,8 +144,8 @@
                                     @endforeach
                                 </div>
                                 <div class="d-flex flex-column flex-sm-row gap-3 mb-4">
-                                    <a href="{{ $primaryCta }}" class="btn-rif-primary">{{ __('site.home.cta') }}</a>
-                                    <a href="{{ $whatsappUrl }}" class="btn-rif-outline" target="_blank" rel="noopener">{{ __('site.home.support.whatsapp') }}</a>
+                                    <a href="{{ $primaryCta }}" class="btn-rif-primary" data-track-event="purchase_intent" data-track-label="hero_primary_cta">{{ $copy['support_secondary'] }}</a>
+                                    <a href="{{ $whatsappUrl }}" class="btn-rif-outline" target="_blank" rel="noopener" data-track-event="whatsapp_click" data-track-label="hero_whatsapp_cta">{{ $copy['support_primary'] }}</a>
                                 </div>
                                 <div class="row g-3 hero-stats">
                                     @foreach ($copy['stats'] as $stat)
@@ -203,6 +205,60 @@
         </div>
     </section>
 
+    <section class="section-space">
+        <div class="container-xxl px-3 px-md-4 px-lg-5">
+            <div class="surface-card trust-strip-shell p-4 p-lg-5 reveal-up">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-5">
+                        <span class="section-kicker mb-3">{{ $isArabic ? 'الثقة والوضوح' : 'Trust and clarity' }}</span>
+                        <h2 class="h2 text-body-rif mb-3">{{ $isArabic ? 'خدمة محلية بخطوات واضحة واستجابة بشرية.' : 'Local support with clear steps and human response.' }}</h2>
+                        <p class="text-soft-rif mb-0">{{ $isArabic ? 'نعمل داخل المغرب، ونوضح مسار الإعداد والدفع والمتابعة دون وعود غامضة أو رسائل مربكة.' : 'We operate for Morocco-based clients with a clearer setup, billing, and follow-up flow that feels structured from the first click.' }}</p>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="trust-strip-grid">
+                            @foreach ($isArabic ? ['رد عبر واتساب', 'مراجعة بشرية', 'دعم داخل المغرب', 'خطوات دفع واضحة'] : ['WhatsApp response', 'Human review', 'Morocco-based support', 'Clear billing steps'] as $signal)
+                                <article class="trust-strip-item">
+                                    <i data-lucide="badge-check" class="icon-sm"></i>
+                                    <span>{{ $signal }}</span>
+                                </article>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-space">
+        <div class="container-xxl px-3 px-md-4 px-lg-5">
+            <div class="surface-card p-4 p-lg-5 reveal-up">
+                <div class="text-center mx-auto mb-5" style="max-width: 760px;">
+                    <span class="section-kicker mb-3">{{ $isArabic ? 'كيف نعمل' : 'How it works' }}</span>
+                    <h2 class="section-title text-body-rif mb-0">{{ $isArabic ? 'ثلاث خطوات بسيطة من السؤال إلى الدعم.' : 'Three simple steps from question to support.' }}</h2>
+                </div>
+                <div class="row g-4">
+                    @foreach ($isArabic ? [
+                        ['step' => '01', 'title' => 'اشرح احتياجك', 'text' => 'شارك نوع الجهاز أو التطبيق أو المشكلة التي تريد حلها.'],
+                        ['step' => '02', 'title' => 'نقترح الحل', 'text' => 'نحدد مستوى الدعم المناسب ونوضح أفضل خطوة تالية.'],
+                        ['step' => '03', 'title' => 'نرافقك عمليًا', 'text' => 'نساعد في الإعداد والمتابعة وحل المشكلات العملية بعد البداية.'],
+                    ] : [
+                        ['step' => '01', 'title' => 'Tell us your need', 'text' => 'Share the device, app, or issue you want help with.'],
+                        ['step' => '02', 'title' => 'We recommend the right path', 'text' => 'The team points you to the best support option and next step.'],
+                        ['step' => '03', 'title' => 'We guide the setup', 'text' => 'We help with installation, follow-up, and the practical issues that come after the first setup.'],
+                    ] as $item)
+                        <div class="col-md-4">
+                            <article class="workflow-card home-workflow-card h-100">
+                                <span class="workflow-step-number">{{ $item['step'] }}</span>
+                                <h3 class="h4 text-body-rif mt-3 mb-2">{{ $item['title'] }}</h3>
+                                <p class="text-soft-rif mb-0">{{ $item['text'] }}</p>
+                            </article>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section-space-lg">
         <div class="container-xxl px-3 px-md-4 px-lg-5">
             <div class="section-shell p-4 p-lg-5">
@@ -239,7 +295,7 @@
                 <h2 class="section-title text-body-rif mb-3">{{ $copy['plans_title'] }}</h2>
                 <p class="text-soft-rif fs-5 mb-0">{{ $copy['plans_text'] }}</p>
             </div>
-            <div class="pack-switcher reveal-up" data-pack-switcher data-pack-default="basic">
+            <div class="pack-switcher reveal-up" data-pack-switcher data-pack-default="{{ data_get($plans->first(), 'slug', 'sup') }}">
                 <div class="pack-toggle-bar mb-4" role="tablist" aria-label="Package families">
                     @foreach ($plans as $plan)
                         <button type="button" class="pack-toggle-btn {{ $loop->first ? 'is-active' : '' }}" data-pack-toggle="{{ $plan['slug'] }}">
@@ -262,7 +318,7 @@
                                     <p class="text-soft-rif mb-0">{{ $plan['summary'] }}</p>
                                 </div>
                             </div>
-                            <a href="{{ $primaryCta }}" class="btn-rif-outline family-pricing-cta">{{ $plan['choose_cta'] }}</a>
+                            <a href="{{ $primaryCta }}" class="btn-rif-outline family-pricing-cta" data-track-event="plan_select" data-track-label="plan_{{ $plan['slug'] }}_choose">{{ $plan['choose_cta'] }}</a>
                         </div>
                         <div class="row g-3">
                             @foreach ($plan['prices'] as $price)
@@ -283,7 +339,7 @@
                                                 <li><span class="family-plan-check"><i data-lucide="check" class="icon-sm"></i></span><span>{{ $feature }}</span></li>
                                             @endforeach
                                         </ul>
-                                        <a href="{{ $primaryCta }}" class="{{ $price['featured'] ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100 mt-auto">{{ $plan['continue_cta'] }}</a>
+                                        <a href="{{ $primaryCta }}" class="{{ $price['featured'] ? 'btn-rif-primary' : 'btn-rif-secondary' }} w-100 mt-auto" data-track-event="plan_select" data-track-label="plan_{{ $plan['slug'] }}_{{ $price['months'] }}m">{{ $plan['continue_cta'] }}</a>
                                     </article>
                                 </div>
                             @endforeach
@@ -344,8 +400,8 @@
                         <h2 class="section-title text-body-rif mb-3">{{ $copy['support_title'] }}</h2>
                         <p class="text-soft-rif fs-5 mb-4">{{ $copy['support_text'] }}</p>
                         <div class="d-flex flex-column flex-sm-row gap-3">
-                            <a href="{{ $whatsappUrl }}" class="btn-rif-secondary" target="_blank" rel="noopener">{{ $copy['support_primary'] }}</a>
-                            <a href="#plans" class="btn-rif-outline">{{ $copy['support_secondary'] }}</a>
+                            <a href="{{ $whatsappUrl }}" class="btn-rif-secondary" target="_blank" rel="noopener" data-track-event="whatsapp_click" data-track-label="final_whatsapp_cta">{{ $copy['support_primary'] }}</a>
+                            <a href="#plans" class="btn-rif-outline" data-track-event="purchase_intent" data-track-label="final_support_cta">{{ $copy['support_secondary'] }}</a>
                         </div>
                     </div>
                 </div>

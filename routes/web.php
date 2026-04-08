@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminClientWorkflowController;
+use App\Http\Controllers\AdminPlanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SeoLandingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TelegramWebhookController;
 use App\Support\SeoUrl;
@@ -21,6 +23,9 @@ Route::get('/about', [PageController::class, 'about'])->name('pages.about');
 Route::get('/contact', [PageController::class, 'contact'])->name('pages.contact');
 Route::get('/faq', [PageController::class, 'faq'])->name('pages.faq');
 Route::get('/packages', [PageController::class, 'packages'])->name('pages.packages');
+Route::get('/help-center', [SeoLandingController::class, 'helpCenter'])->name('help.center');
+Route::get('/blog', [SeoLandingController::class, 'blog'])->name('seo.blog');
+Route::get('/blog/{slug}', [SeoLandingController::class, 'article'])->name('seo.blog.show');
 Route::get('/legal', [PageController::class, 'legacyLegal']);
 Route::get('/trust-center', function () {
     return view('legal.index');
@@ -39,7 +44,7 @@ Route::get('/locale/{locale}', function (string $locale, Request $request) {
         ->withCookie(cookie()->forever('locale', $locale));
 })->name('locale.switch');
 
-$serviceLandingSlugs = [
+$legacyServiceLandingSlugs = [
     'smart-tv-setup-morocco',
     'app-installation-help',
     'device-troubleshooting-morocco',
@@ -47,8 +52,27 @@ $serviceLandingSlugs = [
     'account-setup-help-morocco',
 ];
 
-Route::get('/{slug}', [PageController::class, 'service'])
-    ->whereIn('slug', $serviceLandingSlugs)
+$serviceLandingSlugs = [
+    'streaming-services-maroc',
+    'digital-entertainment-maroc',
+    'smart-tv-setup-maroc',
+    'media-solutions-maroc',
+    'streaming-support-nador',
+    'smart-tv-setup-nador',
+    'device-configuration-morocco',
+];
+
+Route::get('/{slug}', function (string $slug) use ($legacyServiceLandingSlugs, $serviceLandingSlugs) {
+    if (in_array($slug, $legacyServiceLandingSlugs, true)) {
+        return app(PageController::class)->service($slug);
+    }
+
+    if (in_array($slug, $serviceLandingSlugs, true)) {
+        return app(SeoLandingController::class)->page($slug);
+    }
+
+    abort(404);
+})->whereIn('slug', array_merge($legacyServiceLandingSlugs, $serviceLandingSlugs))
     ->name('pages.service');
 
 $legacyServiceRedirects = [
@@ -57,12 +81,14 @@ $legacyServiceRedirects = [
 ];
 
 foreach ($legacyServiceRedirects as $legacySlug => $targetSlug) {
-    Route::get("/{$legacySlug}", fn () => redirect()->route('pages.service', ['slug' => $targetSlug] + request()->query(), 301));
+    Route::get("/{$legacySlug}", function () use ($targetSlug) {
+        return redirect()->route('pages.service', ['slug' => $targetSlug] + request()->query(), 301);
+    });
 }
 
-Route::get('/services/{slug}', function (string $slug) use ($serviceLandingSlugs, $legacyServiceRedirects) {
+Route::get('/services/{slug}', function (string $slug) use ($legacyServiceLandingSlugs, $serviceLandingSlugs, $legacyServiceRedirects) {
     $targetSlug = $legacyServiceRedirects[$slug] ?? $slug;
-    abort_unless(in_array($targetSlug, $serviceLandingSlugs, true), 404);
+    abort_unless(in_array($targetSlug, array_merge($legacyServiceLandingSlugs, $serviceLandingSlugs), true), 404);
 
     return redirect()->route('pages.service', ['slug' => $targetSlug] + request()->query(), 301);
 });
@@ -93,10 +119,24 @@ Route::get('/sitemap.xml', function () use ($legalRoutes) {
         route('pages.service', 'device-troubleshooting-morocco'),
         route('pages.service', 'technical-support-morocco'),
         route('pages.service', 'account-setup-help-morocco'),
+        route('pages.service', 'streaming-services-maroc'),
+        route('pages.service', 'digital-entertainment-maroc'),
+        route('pages.service', 'smart-tv-setup-maroc'),
+        route('pages.service', 'media-solutions-maroc'),
+        route('pages.service', 'streaming-support-nador'),
+        route('pages.service', 'smart-tv-setup-nador'),
+        route('pages.service', 'device-configuration-morocco'),
         route('pages.about'),
         route('pages.contact'),
         route('pages.faq'),
+        route('help.center'),
         route('pages.packages'),
+        route('seo.blog'),
+        route('seo.blog.show', 'best-streaming-setup-morocco'),
+        route('seo.blog.show', 'how-to-choose-smart-tv-service'),
+        route('seo.blog.show', 'streaming-vs-traditional-tv-morocco'),
+        route('seo.blog.show', 'fix-buffering-improve-streaming-quality'),
+        route('seo.blog.show', 'guide-digital-entertainment-systems'),
         route('pages.trust'),
         ...array_map(fn (string $pageKey) => route("legal.{$pageKey}"), array_values($legalRoutes)),
     ]));
@@ -179,6 +219,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout/card/confirm', [OnboardingController::class, 'confirmCardCheckout'])->middleware('throttle:support-flow')->name('checkout.card.confirm');
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/admin/clients/{client}', [DashboardController::class, 'showAdminClient'])->name('admin.clients.show');
+    Route::get('/admin/plans', [AdminPlanController::class, 'index'])->name('admin.plans.index');
+    Route::post('/admin/plans', [AdminPlanController::class, 'store'])->middleware('throttle:admin-workflow')->name('admin.plans.store');
+    Route::patch('/admin/plans/{plan}', [AdminPlanController::class, 'update'])->middleware('throttle:admin-workflow')->name('admin.plans.update');
 });
 
 Route::middleware('auth')->group(function () {

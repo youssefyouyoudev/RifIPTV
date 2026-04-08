@@ -5,8 +5,8 @@
     $portalCopy = trans('portal.guest');
     $brandName = 'Rifi Media';
     $brandSubtitle = data_get(trans('site.brand'), 'subtitle', 'Device Setup & Technical Support');
-    $brandLogo = asset('images/rifmedia-logo-128.png');
-    $themeCss = app()->environment('production') ? asset('css/rifiptv.min.css') : asset('css/rifiptv.css');
+    $brandLogo = asset('/public/images/rifmedia-logo-128.png');
+    $themeCss = app()->environment('production') ? asset('/public/css/rifiptv.min.css') : asset('/public/css/rifiptv.css');
     $seoConfig = config('seo');
     $brandEmail = data_get($seoConfig, 'contact_email', 'contact@rifimedia.com');
     $brandWhatsapp = data_get($seoConfig, 'whatsapp_url', 'https://wa.me/212663323824');

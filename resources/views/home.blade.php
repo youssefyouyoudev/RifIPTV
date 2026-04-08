@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', app()->isLocale('ar') ? 'حلول الترفيه الرقمي و Smart TV في المغرب | Rifi Media' : 'Digital entertainment and smart TV solutions in Morocco | Rifi Media')
 @section('meta_description', app()->isLocale('ar') ? 'تساعد Rifi Media في إعداد Smart TV وتطبيقات البث والأجهزة المنزلية والدعم التقني في المغرب.' : 'Rifi Media helps households and businesses set up Smart TVs, streaming apps, media devices, and technical support in Morocco.')
@@ -8,19 +8,19 @@
     $locale = app()->getLocale();
     $isArabic = $locale === 'ar';
     $brandName = 'Rifi Media';
-    $heroLogo = asset('images/rifmedia-logo-512.png');
-    $heroLogoCompact = asset('images/rifmedia-logo-320.png');
+    $heroLogo = asset('/public/images/rifmedia-logo-512.png');
+    $heroLogoCompact = asset('/public/images/rifmedia-logo-320.png');
     $whatsappUrl = config('seo.whatsapp_url', 'https://wa.me/212663323824');
     $primaryCta = auth()->check() && Route::has('onboarding.show') ? route('onboarding.show') : route('register');
     $plans = \App\Support\SupportPlanCatalog::forStorefront($locale);
     $paymentLogos = [
-        ['src' => asset('images/payment-paddle.jpg'), 'alt' => 'Paddle logo', 'width' => 600, 'height' => 315, 'featured' => true],
-        ['src' => asset('images/payment-cih-bank.jpg'), 'alt' => 'CIH Bank logo', 'width' => 569, 'height' => 429],
-        ['src' => asset('images/payment-attijariwafa-bank.png'), 'alt' => 'Attijariwafa Bank logo', 'width' => 331, 'height' => 284],
-        ['src' => asset('images/payment-bank-of-africa.png'), 'alt' => 'Bank of Africa logo', 'width' => 225, 'height' => 225],
-        ['src' => asset('images/payment-chaabi-bank.png'), 'alt' => 'Chaabi Bank logo', 'width' => 267, 'height' => 189],
-        ['src' => asset('images/payment-saham-bank.webp'), 'alt' => 'Saham Bank logo', 'width' => 1080, 'height' => 1080],
-        ['src' => asset('images/payment-cashplus.png'), 'alt' => 'Cash Plus logo', 'width' => 1920, 'height' => 1080],
+        ['src' => asset('/public/images/payment-paddle.jpg'), 'alt' => 'Paddle logo', 'width' => 600, 'height' => 315, 'featured' => true],
+        ['src' => asset('/public/images/payment-cih-bank.jpg'), 'alt' => 'CIH Bank logo', 'width' => 569, 'height' => 429],
+        ['src' => asset('/public/images/payment-attijariwafa-bank.png'), 'alt' => 'Attijariwafa Bank logo', 'width' => 331, 'height' => 284],
+        ['src' => asset('/public/images/payment-bank-of-africa.png'), 'alt' => 'Bank of Africa logo', 'width' => 225, 'height' => 225],
+        ['src' => asset('/public/images/payment-chaabi-bank.png'), 'alt' => 'Chaabi Bank logo', 'width' => 267, 'height' => 189],
+        ['src' => asset('/public/images/payment-saham-bank.webp'), 'alt' => 'Saham Bank logo', 'width' => 1080, 'height' => 1080],
+        ['src' => asset('/public/images/payment-cashplus.png'), 'alt' => 'Cash Plus logo', 'width' => 1920, 'height' => 1080],
     ];
 
     $copy = match ($locale) {

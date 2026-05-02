@@ -59,6 +59,7 @@ class SupportPlanCatalog
                     'featured' => (bool) $plan->is_featured,
                     'duration_label' => SupportPlanLocalizer::durationLabel((int) $plan->duration_months, $locale),
                     'badge' => $plan->badge_text,
+                    'name' => $plan->name,
                 ])
                 ->values()
                 ->all(),
@@ -68,20 +69,20 @@ class SupportPlanCatalog
     protected static function chooseCta(string $locale): string
     {
         return match ($locale) {
-            'fr' => 'Choisir',
-            'es' => 'Elegir',
-            'ar' => 'اختيار',
-            default => 'Choose',
+            'fr' => 'Commander maintenant',
+            'es' => 'Pedir ahora',
+            'ar' => 'اطلب الآن',
+            default => 'Order now',
         };
     }
 
     protected static function continueCta(string $locale): string
     {
         return match ($locale) {
-            'fr' => 'Continuer',
-            'es' => 'Continuar',
-            'ar' => 'متابعة',
-            default => 'Continue',
+            'fr' => 'Commander maintenant',
+            'es' => 'Continuar pedido',
+            'ar' => 'متابعة الطلب',
+            default => 'Continue order',
         };
     }
 

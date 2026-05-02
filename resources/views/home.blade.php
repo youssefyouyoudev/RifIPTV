@@ -325,7 +325,7 @@
                                 <div class="col-md-6 col-xl-4">
                                     <article class="service-plan-card {{ $price['featured'] ? 'service-plan-card-featured' : '' }}">
                                         @if ($price['featured'])
-                                            <span class="service-plan-badge">{{ $plan['featured_badge'] }}</span>
+                                            <span class="service-plan-badge">{{ $price['badge'] ?: $plan['featured_badge'] }}</span>
                                         @endif
                                         <div class="service-plan-head">
                                             <div>
@@ -333,7 +333,7 @@
                                                 <h3 class="service-plan-name">{{ $price['duration_label'] }}</h3>
                                             </div>
                                         </div>
-                                        <div class="service-plan-price">{{ $price['price'] }} <span>MAD</span></div>
+                                        <div class="service-plan-price">{{ $price['price'] }} <span>{{ __('workflow.common.currency') }}</span></div>
                                         <ul class="service-plan-features">
                                             @foreach ($plan['features'] as $feature)
                                                 <li><span class="family-plan-check"><i data-lucide="check" class="icon-sm"></i></span><span>{{ $feature }}</span></li>

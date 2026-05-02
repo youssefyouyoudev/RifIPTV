@@ -49,7 +49,11 @@ class PublicPagesTest extends TestCase
 
         $this->get('/packages')
             ->assertSuccessful()
-            ->assertSee('Choose the support plan that fits your setup and follow-up needs.', false);
+            ->assertSee('Choose the Smart TV pack that fits your setup and follow-up needs.', false)
+            ->assertSee('80', false)
+            ->assertSee('140', false)
+            ->assertSee('200', false)
+            ->assertSee('Best Value', false);
 
         $this->get('/faq')
             ->assertSuccessful()

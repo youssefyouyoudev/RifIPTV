@@ -13,7 +13,7 @@ return [
         'card' => 'الدفع بالبطاقة',
         'bank_transfer' => 'تحويل بنكي',
         'cash' => 'دفع نقدي',
-        'currency' => 'MAD',
+        'currency' => 'DH',
         'months' => 'أشهر',
     ],
     'statuses' => [

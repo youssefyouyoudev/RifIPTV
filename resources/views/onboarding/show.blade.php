@@ -11,14 +11,14 @@
     $selectedPlan = $plans->firstWhere('id', (int) $currentPlanId) ?? $selectedSubscription?->plan;
     $familyMeta = [
         'sup' => [
-            'display_name' => 'Basic / SUP',
+            'display_name' => 'Smart TV / SUP',
             'icon' => 'sparkles',
             'accent' => 'family-sup',
             'description' => match ($locale) {
                 'ar' => 'الخيار الأساسي للبداية الواضحة والسريعة.',
-                'fr' => 'La formule simple pour demarrer avec clarte et rapidite.',
-                'es' => 'La opcion sencilla para empezar con claridad y rapidez.',
-                default => 'The simple package for a clear and fast start.',
+                'fr' => 'Des packs Smart TV clairs avec installation guidee et suivi pratique.',
+                'es' => 'Packs Smart TV claros con instalacion guiada y seguimiento practico.',
+                default => 'Clear Smart TV packs with guided setup and practical follow-up.',
             },
         ],
         'max' => [
@@ -50,9 +50,16 @@
         6 => __('workflow.onboarding.durations.6'),
         12 => __('workflow.onboarding.durations.12'),
     ];
-    $summaryName = $selectedPlan
-        ? (($familyMeta[$selectedPlan->family_slug]['display_name'] ?? $selectedPlan->family).' - '.($durationLabels[$selectedPlan->duration_months] ?? $selectedPlan->name))
-        : '-';
+    $displayPlanName = function ($plan) use ($familyMeta, $durationLabels): string {
+        $duration = $durationLabels[$plan->duration_months] ?? $plan->name;
+
+        if ($plan->family_slug === 'sup') {
+            return 'Smart TV - '.$duration;
+        }
+
+        return ($familyMeta[$plan->family_slug]['display_name'] ?? $plan->family).' - '.$duration;
+    };
+    $summaryName = $selectedPlan ? $displayPlanName($selectedPlan) : '-';
     $stageIntro = match ($locale) {
         'ar' => 'ابدأ باختيار خط الخدمة المناسب، ثم حدّد المدة التي تناسبك، وبعدها تنتقل مباشرة إلى صفحة Checkout لاختيار طريقة الدفع.',
         'fr' => 'Choisissez d abord la ligne de service, puis la duree adaptee, avant de passer a la page checkout.',
@@ -230,7 +237,7 @@
                                                 $badgeTone = $plan->is_featured ? 'popular' : ($plan->duration_months === 12 ? 'value' : 'default');
                                             @endphp
                                             <div class="col-lg-4 col-md-6">
-                                                <label class="plan-selector-card plan-selector-card-compact {{ (int) $currentPlanId === (int) $plan->id ? 'is-selected' : '' }}" data-select-card="plan" data-plan-name="{{ ($meta['display_name'] ?? $familySlug) }} - {{ $durationLabels[$plan->duration_months] ?? $plan->name }}" data-plan-price="{{ number_format((float) $plan->price_mad, 2) }} {{ __('workflow.common.currency') }}">
+                                                <label class="plan-selector-card plan-selector-card-compact {{ (int) $currentPlanId === (int) $plan->id ? 'is-selected' : '' }}" data-select-card="plan" data-plan-name="{{ $displayPlanName($plan) }}" data-plan-price="{{ number_format((float) $plan->price_mad, 2) }} {{ __('workflow.common.currency') }}">
                                                     <input type="radio" name="plan_id" value="{{ $plan->id }}" class="visually-hidden" {{ (int) $currentPlanId === (int) $plan->id ? 'checked' : '' }}>
                                                     <span class="selection-indicator" aria-hidden="true">
                                                         <i data-lucide="check" class="icon-sm"></i>

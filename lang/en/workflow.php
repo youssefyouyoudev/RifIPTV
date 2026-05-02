@@ -13,7 +13,7 @@ return [
         'card' => 'Card payment',
         'bank_transfer' => 'Bank transfer',
         'cash' => 'Cash payment',
-        'currency' => 'MAD',
+        'currency' => 'DH',
         'months' => 'months',
     ],
     'statuses' => [
@@ -77,7 +77,7 @@ return [
             'max_ott' => 'A practical service line for everyday device setup and guided assistance.',
             't_rex' => 'A stronger service line for advanced setup help and longer support coverage.',
         ],
-        'select_plan' => 'Save selected package',
+        'select_plan' => 'Order now',
         'card_title' => 'Pay by card with Paddle',
         'card_text' => 'Best for international clients and fast secure checkout.',
         'bank_title' => 'Pay by national transfer',

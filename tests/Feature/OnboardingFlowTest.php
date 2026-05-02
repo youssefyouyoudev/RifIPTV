@@ -24,11 +24,11 @@ class OnboardingFlowTest extends TestCase
         ]);
 
         $plan = Plan::create([
-            'name' => 'SUP 3 Months',
-            'family' => 'Basic / SUP',
+            'name' => 'Smart TV - 3 Months',
+            'family' => 'Smart TV / SUP',
             'family_slug' => 'sup',
             'duration_months' => 3,
-            'price_mad' => 89,
+            'price_mad' => 80,
             'features' => ['Setup help', 'WhatsApp support'],
             'is_featured' => false,
             'is_enabled' => true,
@@ -88,11 +88,11 @@ class OnboardingFlowTest extends TestCase
         ]);
 
         $plan = Plan::create([
-            'name' => 'SUP 12 Months',
-            'family' => 'Basic / SUP',
+            'name' => 'Smart TV - 12 Months',
+            'family' => 'Smart TV / SUP',
             'family_slug' => 'sup',
             'duration_months' => 12,
-            'price_mad' => 199,
+            'price_mad' => 200,
             'features' => ['Step-by-step setup help'],
             'is_featured' => true,
             'is_enabled' => true,

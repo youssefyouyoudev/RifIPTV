@@ -65,11 +65,15 @@ class AdminPlanController extends Controller
     {
         $familySlug = $data['family_slug'];
         $duration = (int) $data['duration_months'];
+        $defaultName = match ($familySlug) {
+            'sup' => "Smart TV - {$duration} Months",
+            default => "{$duration} Months",
+        };
 
         return [
             'family' => $this->familyLabels()[$familySlug] ?? strtoupper($familySlug),
             'family_slug' => $familySlug,
-            'name' => $data['name'] ?: "{$duration} Months",
+            'name' => $data['name'] ?: $defaultName,
             'duration_months' => $duration,
             'price_mad' => $data['price_mad'],
             'features' => $this->parseFeatures($data['features_text'] ?? implode(PHP_EOL, $existing?->features ?? [])),
@@ -101,7 +105,7 @@ class AdminPlanController extends Controller
     protected function familyLabels(): array
     {
         return [
-            'sup' => 'Basic / SUP',
+            'sup' => 'Smart TV / SUP',
             'max' => 'Advanced / MAX',
             'trex' => 'Premium / TREX',
         ];

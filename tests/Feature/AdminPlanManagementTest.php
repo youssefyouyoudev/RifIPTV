@@ -57,9 +57,10 @@ class AdminPlanManagementTest extends TestCase
             ->post(route('admin.plans.store'), [
                 'family_slug' => 'sup',
                 'duration_months' => 12,
-                'name' => '12 Months',
-                'price_mad' => 199,
-                'features_text' => "Annual support\nRegular follow-up",
+                'name' => 'Smart TV - 12 Months',
+                'price_mad' => 200,
+                'features_text' => "Step-by-step Smart TV setup help\nWhatsApp clarification support",
+                'badge_text' => 'Best Value',
                 'is_enabled' => '1',
                 'is_featured' => '1',
                 'sort_order' => 30,
@@ -75,7 +76,8 @@ class AdminPlanManagementTest extends TestCase
         $this->get('/packages')
             ->assertOk()
             ->assertSee('12 Months', false)
-            ->assertSee('199', false)
+            ->assertSee('200', false)
+            ->assertSee('Best Value', false)
             ->assertDontSee('Advanced / MAX', false)
             ->assertDontSee('249', false);
     }

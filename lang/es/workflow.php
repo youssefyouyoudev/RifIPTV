@@ -13,7 +13,7 @@ return [
         'card' => 'Pago con tarjeta',
         'bank_transfer' => 'Transferencia bancaria',
         'cash' => 'Pago en efectivo',
-        'currency' => 'MAD',
+        'currency' => 'DH',
         'months' => 'meses',
     ],
     'statuses' => [

@@ -155,7 +155,8 @@
                         <div>
                             <label class="form-label">{{ $copy['family'] }}</label>
                             <select name="family_slug" class="form-control @error('family_slug') is-invalid @enderror" required>
-                                <option value="sup">Smart TV / SUP</option>
+                                <option value="smart_tv">Smart TV</option>
+                                <option value="sup">SUP</option>
                                 <option value="max">Advanced / MAX</option>
                                 <option value="trex">Premium / TREX</option>
                             </select>

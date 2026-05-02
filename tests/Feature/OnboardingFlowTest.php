@@ -25,8 +25,8 @@ class OnboardingFlowTest extends TestCase
 
         $plan = Plan::create([
             'name' => 'Smart TV - 3 Months',
-            'family' => 'Smart TV / SUP',
-            'family_slug' => 'sup',
+            'family' => 'Smart TV',
+            'family_slug' => 'smart_tv',
             'duration_months' => 3,
             'price_mad' => 80,
             'features' => ['Setup help', 'WhatsApp support'],
@@ -89,8 +89,8 @@ class OnboardingFlowTest extends TestCase
 
         $plan = Plan::create([
             'name' => 'Smart TV - 12 Months',
-            'family' => 'Smart TV / SUP',
-            'family_slug' => 'sup',
+            'family' => 'Smart TV',
+            'family_slug' => 'smart_tv',
             'duration_months' => 12,
             'price_mad' => 200,
             'features' => ['Step-by-step setup help'],

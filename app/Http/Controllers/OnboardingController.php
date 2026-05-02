@@ -24,7 +24,7 @@ class OnboardingController extends Controller
     {
         $user = $request->user();
         $client = $this->clientFor($user->id);
-        $familyOrder = ['sup' => 1, 'max' => 2, 'trex' => 3];
+        $familyOrder = ['smart_tv' => 1, 'sup' => 2, 'max' => 3, 'trex' => 4];
         $plans = Plan::query()
             ->whereIn('family_slug', array_keys($familyOrder))
             ->where('is_enabled', true)

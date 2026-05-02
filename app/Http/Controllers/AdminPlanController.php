@@ -15,7 +15,7 @@ class AdminPlanController extends Controller
     {
         abort_unless($request->user()?->isAdmin(), 403);
 
-        $familyOrder = ['sup' => 1, 'max' => 2, 'trex' => 3];
+        $familyOrder = ['smart_tv' => 1, 'sup' => 2, 'max' => 3, 'trex' => 4];
 
         $plans = Plan::query()
             ->get()
@@ -66,7 +66,8 @@ class AdminPlanController extends Controller
         $familySlug = $data['family_slug'];
         $duration = (int) $data['duration_months'];
         $defaultName = match ($familySlug) {
-            'sup' => "Smart TV - {$duration} Months",
+            'smart_tv' => "Smart TV - {$duration} Months",
+            'sup' => "SUP - {$duration} Months",
             default => "{$duration} Months",
         };
 
@@ -105,7 +106,8 @@ class AdminPlanController extends Controller
     protected function familyLabels(): array
     {
         return [
-            'sup' => 'Smart TV / SUP',
+            'smart_tv' => 'Smart TV',
+            'sup' => 'SUP',
             'max' => 'Advanced / MAX',
             'trex' => 'Premium / TREX',
         ];

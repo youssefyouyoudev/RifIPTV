@@ -57,6 +57,7 @@ class SupportPlanLocalizer
     protected static function translationKey(string $slug): string
     {
         return match ($slug) {
+            'smart_tv' => 'smart_tv',
             'sup', 'basic' => 'basic',
             'max', 'advanced' => 'advanced',
             'trex', 'premium' => 'premium',
@@ -67,6 +68,7 @@ class SupportPlanLocalizer
     protected static function codeFor(string $slug): string
     {
         return match ($slug) {
+            'smart_tv' => 'STV',
             'basic', 'sup' => 'SUP',
             'advanced', 'max' => 'MAX',
             'premium', 'trex' => 'TREX',
@@ -128,10 +130,10 @@ class SupportPlanLocalizer
     {
         return [
             'fr' => [
-                'basic' => [
+                'smart_tv' => [
                     'label' => 'Smart TV',
                     'name' => 'Packs Smart TV',
-                    'summary' => 'Trois durees claires pour Smart TV, avec installation guidee, verification et suivi WhatsApp.',
+                    'summary' => 'Choisissez 3, 6 ou 12 mois pour votre Smart TV avec installation guidee et suivi pratique.',
                     'scope' => 'Setup Smart TV',
                     'devices' => '1 ecran principal',
                     'response' => 'Standard',
@@ -143,6 +145,25 @@ class SupportPlanLocalizer
                         'Suivi pratique via WhatsApp',
                     ],
                     'featured_badge' => 'Meilleure valeur',
+                    'choose_cta' => 'Commander maintenant',
+                    'continue_cta' => 'Commander maintenant',
+                    'talk_cta' => 'Parler au support',
+                ],
+                'basic' => [
+                    'label' => 'Support',
+                    'name' => 'Pack SUP',
+                    'summary' => 'La formule SUP reste disponible en 12 mois pour un support clair et stable.',
+                    'scope' => 'Support SUP',
+                    'devices' => '1 appareil principal',
+                    'response' => 'Standard',
+                    'follow_up' => 'Suivi essentiel',
+                    'features' => [
+                        'Aide de configuration pas a pas',
+                        'Guidage pratique pour les applications',
+                        'Verification du compte et de l acces',
+                        'Support de clarification via WhatsApp',
+                    ],
+                    'featured_badge' => 'En ligne',
                     'choose_cta' => 'Commander maintenant',
                     'continue_cta' => 'Commander maintenant',
                     'talk_cta' => 'Parler au support',
@@ -183,10 +204,10 @@ class SupportPlanLocalizer
                 ],
             ],
             'es' => [
-                'basic' => [
+                'smart_tv' => [
                     'label' => 'Smart TV',
-                    'name' => 'Paquetes Smart TV',
-                    'summary' => 'Tres duraciones claras para Smart TV con instalacion guiada, revision y seguimiento por WhatsApp.',
+                    'name' => 'Packs Smart TV',
+                    'summary' => 'Elige 3, 6 o 12 meses para Smart TV con instalacion guiada y seguimiento practico.',
                     'scope' => 'Setup Smart TV',
                     'devices' => '1 pantalla principal',
                     'response' => 'Estandar',
@@ -198,6 +219,25 @@ class SupportPlanLocalizer
                         'Seguimiento practico por WhatsApp',
                     ],
                     'featured_badge' => 'Mejor valor',
+                    'choose_cta' => 'Pedir ahora',
+                    'continue_cta' => 'Pedir ahora',
+                    'talk_cta' => 'Hablar con soporte',
+                ],
+                'basic' => [
+                    'label' => 'Support',
+                    'name' => 'Pack SUP',
+                    'summary' => 'La formula SUP sigue disponible en 12 meses para soporte claro y estable.',
+                    'scope' => 'Support SUP',
+                    'devices' => '1 dispositivo principal',
+                    'response' => 'Estandar',
+                    'follow_up' => 'Seguimiento esencial',
+                    'features' => [
+                        'Ayuda de configuracion paso a paso',
+                        'Guia practica para aplicaciones',
+                        'Revision de cuenta y acceso',
+                        'Soporte de aclaracion por WhatsApp',
+                    ],
+                    'featured_badge' => 'Disponible',
                     'choose_cta' => 'Pedir ahora',
                     'continue_cta' => 'Pedir ahora',
                     'talk_cta' => 'Hablar con soporte',
@@ -238,10 +278,10 @@ class SupportPlanLocalizer
                 ],
             ],
             'ar' => [
-                'basic' => [
+                'smart_tv' => [
                     'label' => 'Smart TV',
                     'name' => 'باقات Smart TV',
-                    'summary' => 'ثلاث مدد واضحة لخدمة Smart TV مع إعداد موجه ومراجعة ومتابعة عبر واتساب.',
+                    'summary' => 'اختر 3 أو 6 أو 12 شهرا لخدمة Smart TV مع إعداد موجه ومتابعة عملية.',
                     'scope' => 'إعداد Smart TV',
                     'devices' => 'شاشة رئيسية واحدة',
                     'response' => 'عادي',
@@ -253,6 +293,25 @@ class SupportPlanLocalizer
                         'متابعة عملية عبر واتساب',
                     ],
                     'featured_badge' => 'أفضل قيمة',
+                    'choose_cta' => 'اطلب الآن',
+                    'continue_cta' => 'متابعة الطلب',
+                    'talk_cta' => 'تحدث مع الدعم',
+                ],
+                'basic' => [
+                    'label' => 'الدعم',
+                    'name' => 'باقة SUP',
+                    'summary' => 'تبقى باقة SUP متاحة لمدة 12 شهرا للدعم الواضح والمستقر.',
+                    'scope' => 'دعم SUP',
+                    'devices' => 'جهاز رئيسي واحد',
+                    'response' => 'عادي',
+                    'follow_up' => 'متابعة أساسية',
+                    'features' => [
+                        'مساعدة في الإعداد خطوة بخطوة',
+                        'إرشاد عملي للتطبيقات',
+                        'مراجعة الحساب والوصول',
+                        'دعم توضيحي عبر واتساب',
+                    ],
+                    'featured_badge' => 'متاح',
                     'choose_cta' => 'اطلب الآن',
                     'continue_cta' => 'متابعة الطلب',
                     'talk_cta' => 'تحدث مع الدعم',

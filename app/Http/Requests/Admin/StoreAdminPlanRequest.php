@@ -15,7 +15,7 @@ class StoreAdminPlanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'family_slug' => ['required', Rule::in(['sup', 'max', 'trex'])],
+            'family_slug' => ['required', Rule::in(['smart_tv', 'sup', 'max', 'trex'])],
             'name' => ['nullable', 'string', 'max:80'],
             'duration_months' => ['required', 'integer', 'min:1', 'max:36'],
             'price_mad' => ['required', 'numeric', 'min:0', 'max:99999'],

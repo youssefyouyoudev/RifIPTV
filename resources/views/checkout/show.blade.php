@@ -9,19 +9,12 @@
     $locale = app()->getLocale();
     $currentMethod = old('payment_method', $selectedTransaction?->payment_method);
     $selectedBankName = old('bank_name');
-    $familyMeta = [
-        'sup' => 'Smart TV / SUP',
-        'max' => 'Advanced / MAX',
-        'trex' => 'Premium / TREX',
-    ];
     $durationLabels = [
         3 => __('workflow.onboarding.durations.3'),
         6 => __('workflow.onboarding.durations.6'),
         12 => __('workflow.onboarding.durations.12'),
     ];
-    $summaryPlan = $subscription->plan->family_slug === 'sup'
-        ? 'Smart TV - '.($durationLabels[$subscription->plan->duration_months] ?? $subscription->plan->name)
-        : (($familyMeta[$subscription->plan->family_slug] ?? strtoupper((string) $subscription->plan->family_slug)).' - '.($durationLabels[$subscription->plan->duration_months] ?? $subscription->plan->name));
+    $summaryPlan = $subscription->plan->name;
     $paymentIntro = match ($locale) {
         'ar' => 'اختر طريقة الدفع المناسبة لإكمال الطلب. البطاقة تنتقل إلى Paddle، أما التحويل البنكي أو الدفع النقدي فيتم متابعتهما يدويًا مع فريق الدعم عبر واتساب.',
         'fr' => 'Choisissez votre methode de paiement. La carte continue avec Paddle, tandis que le virement bancaire ou le paiement cash sont suivis manuellement via WhatsApp.',

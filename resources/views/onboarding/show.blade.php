@@ -10,15 +10,26 @@
     $currentPlanId = old('plan_id', $selectedSubscription?->plan_id);
     $selectedPlan = $plans->firstWhere('id', (int) $currentPlanId) ?? $selectedSubscription?->plan;
     $familyMeta = [
+        'smart_tv' => [
+            'display_name' => 'Smart TV',
+            'icon' => 'tv-2',
+            'accent' => 'family-sup',
+            'description' => match ($locale) {
+                'ar' => 'باقات Smart TV بثلاث مدد واضحة مع إعداد موجه ومتابعة عملية.',
+                'fr' => 'Des packs Smart TV avec 3 durees claires, une installation guidee et un suivi pratique.',
+                'es' => 'Packs Smart TV con 3 duraciones claras, instalacion guiada y seguimiento practico.',
+                default => 'Smart TV packs with 3 clear durations, guided setup, and practical follow-up.',
+            },
+        ],
         'sup' => [
-            'display_name' => 'Smart TV / SUP',
+            'display_name' => 'SUP',
             'icon' => 'sparkles',
             'accent' => 'family-sup',
             'description' => match ($locale) {
                 'ar' => 'الخيار الأساسي للبداية الواضحة والسريعة.',
-                'fr' => 'Des packs Smart TV clairs avec installation guidee et suivi pratique.',
-                'es' => 'Packs Smart TV claros con instalacion guiada y seguimiento practico.',
-                default => 'Clear Smart TV packs with guided setup and practical follow-up.',
+                'fr' => 'Le pack SUP reste disponible uniquement en 12 mois.',
+                'es' => 'El pack SUP sigue disponible solo por 12 meses.',
+                default => 'The SUP pack is currently available in a single 12-month duration.',
             },
         ],
         'max' => [
@@ -50,16 +61,7 @@
         6 => __('workflow.onboarding.durations.6'),
         12 => __('workflow.onboarding.durations.12'),
     ];
-    $displayPlanName = function ($plan) use ($familyMeta, $durationLabels): string {
-        $duration = $durationLabels[$plan->duration_months] ?? $plan->name;
-
-        if ($plan->family_slug === 'sup') {
-            return 'Smart TV - '.$duration;
-        }
-
-        return ($familyMeta[$plan->family_slug]['display_name'] ?? $plan->family).' - '.$duration;
-    };
-    $summaryName = $selectedPlan ? $displayPlanName($selectedPlan) : '-';
+    $summaryName = $selectedPlan ? $selectedPlan->name : '-';
     $stageIntro = match ($locale) {
         'ar' => 'ابدأ باختيار خط الخدمة المناسب، ثم حدّد المدة التي تناسبك، وبعدها تنتقل مباشرة إلى صفحة Checkout لاختيار طريقة الدفع.',
         'fr' => 'Choisissez d abord la ligne de service, puis la duree adaptee, avant de passer a la page checkout.',
@@ -237,7 +239,7 @@
                                                 $badgeTone = $plan->is_featured ? 'popular' : ($plan->duration_months === 12 ? 'value' : 'default');
                                             @endphp
                                             <div class="col-lg-4 col-md-6">
-                                                <label class="plan-selector-card plan-selector-card-compact {{ (int) $currentPlanId === (int) $plan->id ? 'is-selected' : '' }}" data-select-card="plan" data-plan-name="{{ $displayPlanName($plan) }}" data-plan-price="{{ number_format((float) $plan->price_mad, 2) }} {{ __('workflow.common.currency') }}">
+                                                <label class="plan-selector-card plan-selector-card-compact {{ (int) $currentPlanId === (int) $plan->id ? 'is-selected' : '' }}" data-select-card="plan" data-plan-name="{{ $plan->name }}" data-plan-price="{{ number_format((float) $plan->price_mad, 2) }} {{ __('workflow.common.currency') }}">
                                                     <input type="radio" name="plan_id" value="{{ $plan->id }}" class="visually-hidden" {{ (int) $currentPlanId === (int) $plan->id ? 'checked' : '' }}>
                                                     <span class="selection-indicator" aria-hidden="true">
                                                         <i data-lucide="check" class="icon-sm"></i>

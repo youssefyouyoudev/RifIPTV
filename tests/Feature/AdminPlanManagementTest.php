@@ -55,7 +55,7 @@ class AdminPlanManagementTest extends TestCase
 
         $this->actingAs($admin)
             ->post(route('admin.plans.store'), [
-                'family_slug' => 'sup',
+                'family_slug' => 'smart_tv',
                 'duration_months' => 12,
                 'name' => 'Smart TV - 12 Months',
                 'price_mad' => 200,
@@ -68,7 +68,7 @@ class AdminPlanManagementTest extends TestCase
             ->assertRedirect(route('admin.plans.index'));
 
         $this->assertDatabaseHas('plans', [
-            'family_slug' => 'sup',
+            'family_slug' => 'smart_tv',
             'duration_months' => 12,
             'is_enabled' => true,
         ]);
@@ -77,6 +77,7 @@ class AdminPlanManagementTest extends TestCase
             ->assertOk()
             ->assertSee('12 Months', false)
             ->assertSee('200', false)
+            ->assertSee('100', false)
             ->assertSee('Best Value', false)
             ->assertDontSee('Advanced / MAX', false)
             ->assertDontSee('249', false);

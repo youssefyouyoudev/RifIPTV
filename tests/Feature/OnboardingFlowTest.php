@@ -77,6 +77,63 @@ class OnboardingFlowTest extends TestCase
             ->assertSee('cash', false);
     }
 
+    public function test_onboarding_page_lists_all_enabled_plans_for_selection(): void
+    {
+        $user = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        Client::create([
+            'user_id' => $user->id,
+        ]);
+
+        Plan::create([
+            'name' => 'Smart TV - 3 Months',
+            'family' => 'Smart TV',
+            'family_slug' => 'smart_tv',
+            'duration_months' => 3,
+            'price_mad' => 80,
+            'features' => ['Setup help'],
+            'is_featured' => false,
+            'is_enabled' => true,
+            'sort_order' => 10,
+        ]);
+
+        Plan::create([
+            'name' => 'Smart TV - 6 Months',
+            'family' => 'Smart TV',
+            'family_slug' => 'smart_tv',
+            'duration_months' => 6,
+            'price_mad' => 140,
+            'features' => ['Setup help'],
+            'is_featured' => false,
+            'is_enabled' => true,
+            'sort_order' => 20,
+        ]);
+
+        Plan::create([
+            'name' => 'SUP - 12 Months',
+            'family' => 'SUP',
+            'family_slug' => 'sup',
+            'duration_months' => 12,
+            'price_mad' => 100,
+            'features' => ['Setup help'],
+            'is_featured' => false,
+            'is_enabled' => true,
+            'sort_order' => 30,
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('onboarding.show'))
+            ->assertOk()
+            ->assertSee('Smart TV - 3 Months', false)
+            ->assertSee('Smart TV - 6 Months', false)
+            ->assertSee('SUP - 12 Months', false)
+            ->assertSee('80', false)
+            ->assertSee('140', false)
+            ->assertSee('100', false);
+    }
+
     public function test_cash_payment_creates_manual_cash_transaction_and_redirects_to_dashboard(): void
     {
         $user = User::factory()->create([

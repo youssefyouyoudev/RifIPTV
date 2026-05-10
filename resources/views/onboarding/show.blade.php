@@ -199,27 +199,10 @@
 
                     <form method="POST" action="{{ route('onboarding.plan') }}">
                         @csrf
-                        <div class="pack-switcher" data-pack-switcher data-pack-default="{{ $initialFamilySlug }}">
-                            <div class="pack-toggle-bar mb-4" role="tablist" aria-label="Plan families">
-                                @foreach ($planFamilies as $familySlug => $familyPlans)
-                                    @php $meta = $familyMeta[$familySlug] ?? null; @endphp
-                                    <button type="button" class="pack-toggle-btn {{ $familySlug === $initialFamilySlug ? 'is-active' : '' }}" data-pack-toggle="{{ $familySlug }}">
-                                        <span class="pack-toggle-logo-wrap">
-                                            <i data-lucide="{{ $meta['icon'] ?? 'layers-3' }}" class="icon-sm"></i>
-                                        </span>
-                                        <span class="pack-toggle-copy">
-                                            <strong>{{ $meta['display_name'] ?? strtoupper($familySlug) }}</strong>
-                                            <small>{{ $meta['description'] ?? '' }}</small>
-                                        </span>
-                                    </button>
-                                @endforeach
-                            </div>
-
-                            <input type="hidden" name="plan_family" value="{{ $initialFamilySlug }}" data-pack-family-input>
-
+                        <div class="d-grid gap-4">
                             @foreach ($planFamilies as $familySlug => $familyPlans)
                                 @php $meta = $familyMeta[$familySlug] ?? null; @endphp
-                                <div class="plan-family-card {{ $meta['accent'] ?? '' }} pack-panel {{ $familySlug === $initialFamilySlug ? 'is-active' : '' }}" data-pack-panel="{{ $familySlug }}">
+                                <div class="plan-family-card {{ $meta['accent'] ?? '' }}">
                                     <div class="plan-family-header align-items-start">
                                         <div class="plan-family-brand">
                                             <span class="family-pricing-logo-wrap">

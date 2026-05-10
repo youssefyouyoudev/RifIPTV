@@ -40,12 +40,7 @@ class DashboardController extends Controller
 
         $client->latest_subscription = $client->subscriptions->sortByDesc('id')->first();
         $client->latest_transaction = $client->transactions->sortByDesc('id')->first();
-
-        if ($client->assigned_admin_id && (int) $client->assigned_admin_id !== (int) $admin->id) {
-            return redirect()->route('dashboard');
-        }
-
-        $actionState = $this->actionStateForClient($client);
+        $actionState = $this->actionStateForClient($client, $admin);
 
         return view('admin.clients.show', [
             'clientRecord' => $client,
@@ -54,6 +49,11 @@ class DashboardController extends Controller
             'actionState' => $actionState,
             'nextAction' => $this->nextActionLabel($actionState),
             'statusLabel' => __('workflow.statuses.'.$this->clientWorkflowStatus($client)),
+            'checkoutState' => $this->checkoutStateForClient($client),
+            'checkoutLabel' => $this->checkoutStateLabel($this->checkoutStateForClient($client)),
+            'availablePlans' => $this->availablePlans(),
+            'adminUsers' => User::query()->where('role', 'admin')->orderBy('name')->get(['id', 'name']),
+            'bankOptions' => $this->bankOptions(),
         ]);
     }
 
@@ -68,12 +68,14 @@ class DashboardController extends Controller
             ])
             ->latest('id')
             ->get()
-            ->each(function (Client $client): void {
+            ->each(function (Client $client) use ($user): void {
                 $client->latest_subscription = $client->subscriptions->sortByDesc('id')->first();
                 $client->latest_transaction = $client->transactions->sortByDesc('id')->first();
-                $client->action_state = $this->actionStateForClient($client);
+                $client->action_state = $this->actionStateForClient($client, $user);
                 $client->next_action = $this->nextActionLabel($client->action_state);
                 $client->workflow_status = $this->clientWorkflowStatus($client);
+                $client->checkout_state = $this->checkoutStateForClient($client);
+                $client->checkout_label = $this->checkoutStateLabel($client->checkout_state);
             });
 
         $managedClients = $clients
@@ -81,12 +83,12 @@ class DashboardController extends Controller
             ->values();
 
         $actionableClients = $clients
-            ->filter(function (Client $client) use ($user): bool {
+            ->filter(function (Client $client): bool {
                 if ($client->completed_at) {
                     return false;
                 }
 
-                return ! $client->assigned_admin_id || (int) $client->assigned_admin_id === (int) $user->id;
+                return true;
             })
             ->values();
 
@@ -100,13 +102,11 @@ class DashboardController extends Controller
 
         $subscriptions = Subscription::query()
             ->with(['client.user', 'plan'])
-            ->whereHas('client', fn ($query) => $query->where('assigned_admin_id', $user->id))
             ->latest('id')
             ->get();
 
         $transactions = Transaction::query()
             ->with(['client.user', 'subscription.plan', 'assignedAdmin'])
-            ->whereHas('client', fn ($query) => $query->where('assigned_admin_id', $user->id))
             ->latest('id')
             ->get();
 
@@ -116,7 +116,7 @@ class DashboardController extends Controller
             ->filter(fn (Transaction $transaction) => optional($transaction->paid_at)->isCurrentMonth())
             ->sum('amount_mad');
 
-        $supportedTodayCount = $managedClients->filter(function (Client $client): bool {
+        $supportedTodayCount = $clients->filter(function (Client $client): bool {
             return optional($client->last_contacted_at)->isToday()
                 || optional($client->support_started_at)->isToday()
                 || optional($client->completed_at)->isToday();
@@ -162,7 +162,7 @@ class DashboardController extends Controller
             'pendingTransferCount' => $bankTransferClients->count(),
             'cardPaymentCount' => $cardPaymentClients->count(),
             'activeSubscriptionsCount' => $subscriptions->where('status', 'active')->count(),
-            'clients' => $managedClients,
+            'clients' => $clients,
             'bankTransferClients' => $bankTransferClients,
             'cardPaymentClients' => $cardPaymentClients,
             'subscriptions' => $subscriptions,
@@ -247,18 +247,21 @@ class DashboardController extends Controller
         return $client->onboarding_status ?: 'new';
     }
 
-    protected function actionStateForClient(Client $client): array
+    protected function actionStateForClient(Client $client, ?User $admin = null): array
     {
         $transaction = $client->latest_transaction;
         $paymentMethod = $transaction?->payment_method;
+        $assignedToCurrentAdmin = $admin ? (int) $client->assigned_admin_id === (int) $admin->id : false;
+        $needsAssignment = ! $client->assigned_admin_id || ($admin && ! $assignedToCurrentAdmin);
 
         if (in_array($paymentMethod, ['bank_transfer', 'cash'], true)) {
             $paymentConfirmed = ($transaction?->status === 'paid') || filled($transaction?->proof_path);
 
             return [
-                'assign' => ! $client->assigned_admin_id,
-                'start_support' => (bool) $client->assigned_admin_id && ! $client->support_started_at,
-                'confirm_payment' => (bool) $client->support_started_at && ! $paymentConfirmed,
+                'assign' => $needsAssignment,
+                'save_order' => ! $client->latest_subscription || ! $transaction,
+                'start_support' => (bool) $client->assigned_admin_id && (bool) $client->latest_subscription && ! $client->support_started_at,
+                'confirm_payment' => (bool) $transaction && (bool) $client->support_started_at && ! $paymentConfirmed,
                 'send_tutorial' => $paymentConfirmed && ! $client->setup_tutorial_sent_at,
                 'save_credentials' => $paymentConfirmed && (bool) $client->setup_tutorial_sent_at && ! $client->completed_at,
                 'mark_completed' => ! $client->completed_at && filled($client->iptv_username) && filled($client->iptv_password),
@@ -269,8 +272,9 @@ class DashboardController extends Controller
         $paymentConfirmed = $transaction?->status === 'paid';
 
         return [
-            'assign' => ! $client->assigned_admin_id,
-            'start_support' => (bool) $client->assigned_admin_id && ! $client->support_started_at,
+            'assign' => $needsAssignment,
+            'save_order' => ! $client->latest_subscription || ! $transaction,
+            'start_support' => (bool) $client->assigned_admin_id && (bool) $client->latest_subscription && ! $client->support_started_at,
             'confirm_payment' => false,
             'send_tutorial' => $paymentConfirmed && (bool) $client->support_started_at && ! $client->setup_tutorial_sent_at,
             'save_credentials' => $paymentConfirmed && (bool) $client->setup_tutorial_sent_at && ! $client->completed_at,
@@ -279,10 +283,70 @@ class DashboardController extends Controller
         ];
     }
 
+    protected function checkoutStateForClient(Client $client): string
+    {
+        $transaction = $client->latest_transaction;
+
+        if (! $client->latest_subscription && ! $transaction) {
+            return 'not_started';
+        }
+
+        if (($transaction?->status === 'paid') || in_array($client->onboarding_status, ['payment_confirmed', 'tutorial_sent', 'credentials_sent', 'completed'], true)) {
+            return 'complete';
+        }
+
+        if ($client->latest_subscription && ! $transaction) {
+            return 'plan_selected';
+        }
+
+        return 'pending';
+    }
+
+    protected function checkoutStateLabel(string $state): string
+    {
+        return match ($state) {
+            'complete' => 'Checkout complete',
+            'plan_selected' => 'Plan selected',
+            'pending' => 'Checkout incomplete',
+            default => 'Not started',
+        };
+    }
+
+    protected function availablePlans()
+    {
+        $familyOrder = ['smart_tv' => 1, 'sup' => 2, 'max' => 3, 'trex' => 4];
+
+        return \App\Models\Plan::query()
+            ->where('is_enabled', true)
+            ->orderBy('family_slug')
+            ->orderBy('duration_months')
+            ->get()
+            ->sortBy(fn (\App\Models\Plan $plan) => sprintf(
+                '%02d-%02d-%06d',
+                $familyOrder[$plan->family_slug] ?? 99,
+                $plan->duration_months,
+                $plan->sort_order ?? 0
+            ))
+            ->values();
+    }
+
+    protected function bankOptions(): array
+    {
+        return [
+            'attijariwafa' => 'Attijariwafa Bank',
+            'cih' => 'CIH Bank',
+            'bank_of_africa' => 'Bank of Africa',
+            'chaabi' => 'Chaabi Bank',
+            'cashplus' => 'Cash Plus',
+            'saham' => 'Saham Bank',
+        ];
+    }
+
     protected function nextActionLabel(array $actionState): string
     {
         return match (true) {
             $actionState['assign'] => 'assign',
+            $actionState['save_order'] ?? false => 'save_order',
             $actionState['start_support'] => 'start_support',
             $actionState['confirm_payment'] => 'confirm_payment',
             $actionState['send_tutorial'] => 'send_tutorial',

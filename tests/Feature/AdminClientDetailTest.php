@@ -70,4 +70,92 @@ class AdminClientDetailTest extends TestCase
             ->assertSee('CIH Bank')
             ->assertSee('Handle this client');
     }
+
+    public function test_admin_can_open_client_detail_even_when_client_is_assigned_to_another_admin(): void
+    {
+        $ownerAdmin = User::factory()->create([
+            'role' => 'admin',
+            'name' => 'Owner Admin',
+        ]);
+
+        $viewerAdmin = User::factory()->create([
+            'role' => 'admin',
+            'name' => 'Viewer Admin',
+        ]);
+
+        $clientUser = User::factory()->create([
+            'role' => 'client',
+            'name' => 'Shared Client',
+            'email' => 'shared-client@example.com',
+        ]);
+
+        $client = Client::create([
+            'user_id' => $clientUser->id,
+            'assigned_admin_id' => $ownerAdmin->id,
+            'onboarding_status' => 'awaiting_whatsapp',
+        ]);
+
+        $response = $this->actingAs($viewerAdmin)->get(route('admin.clients.show', $client));
+
+        $response
+            ->assertOk()
+            ->assertSee('Shared Client')
+            ->assertSee('Checkout')
+            ->assertSee('Edit client details');
+    }
+
+    public function test_admin_can_complete_order_setup_on_behalf_of_a_client(): void
+    {
+        $admin = User::factory()->create([
+            'role' => 'admin',
+            'name' => 'Workflow Admin',
+        ]);
+
+        $clientUser = User::factory()->create([
+            'role' => 'client',
+            'name' => 'Rescue Client',
+        ]);
+
+        $client = Client::create([
+            'user_id' => $clientUser->id,
+            'onboarding_status' => 'new',
+        ]);
+
+        $plan = Plan::create([
+            'name' => 'Smart TV - 12 Months',
+            'family' => 'Smart TV',
+            'family_slug' => 'smart_tv',
+            'duration_months' => 12,
+            'price_mad' => 200,
+            'features' => ['Setup help'],
+            'is_enabled' => true,
+            'is_featured' => true,
+            'sort_order' => 10,
+        ]);
+
+        $response = $this->actingAs($admin)->post(route('admin.clients.workflow', $client), [
+            'action' => 'save_order',
+            'plan_id' => $plan->id,
+            'payment_method' => 'cash',
+        ]);
+
+        $response
+            ->assertRedirect()
+            ->assertSessionHas('status', 'client-workflow-updated');
+
+        $client->refresh();
+        $subscription = $client->subscriptions()->latest('id')->first();
+        $transaction = $client->transactions()->latest('id')->first();
+
+        $this->assertSame($admin->id, $client->assigned_admin_id);
+        $this->assertSame('awaiting_whatsapp', $client->onboarding_status);
+        $this->assertSame('cash', $client->preferred_payment_method);
+        $this->assertNotNull($subscription);
+        $this->assertSame($plan->id, $subscription->plan_id);
+        $this->assertSame('awaiting_payment', $subscription->status);
+        $this->assertNotNull($transaction);
+        $this->assertSame('cash', $transaction->payment_method);
+        $this->assertSame('awaiting_cash', $transaction->status);
+        $this->assertSame('200.00', $transaction->amount_mad);
+    }
 }

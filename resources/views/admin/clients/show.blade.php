@@ -32,12 +32,19 @@
     $workflowStatusLabels = __('workflow.statuses');
     $clientStatus = $clientRecord->onboarding_status ?: 'new';
     $clientPhone = $clientRecord->phone ?: trim(($clientRecord->user->phone_country_code ?? '').' '.($clientRecord->user->phone_number ?? ''));
+    $checkoutStatusClasses = [
+        'complete' => 'status-success',
+        'pending' => 'status-warning',
+        'plan_selected' => 'status-warning',
+        'not_started' => 'status-danger',
+    ];
     $paymentMethodLabel = $latestTransaction?->payment_method === 'bank_transfer'
         ? __('workflow.common.bank_transfer')
         : ($latestTransaction?->payment_method === 'cash' ? __('workflow.common.cash') : __('workflow.common.card'));
     $providerLabel = $latestTransaction?->provider ?: ($latestTransaction?->payment_method === 'card' ? 'Paddle' : '-');
     $stepOrder = [
         'assign' => __('workflow.admin.actions.assign'),
+        'save_order' => 'Complete order setup',
         'start_support' => __('workflow.admin.actions.start_support'),
         'confirm_payment' => __('workflow.admin.actions.confirm_payment'),
         'send_tutorial' => __('workflow.admin.actions.send_tutorial'),
@@ -51,6 +58,15 @@
         @if (session('status'))
             <div class="alert alert-rif-success mb-4">{{ __('workflow.flash.'.session('status')) }}</div>
         @endif
+        @if ($errors->any())
+            <div class="alert alert-rif-danger mb-4">
+                <ul class="mb-0 ps-3">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <div class="mesh-panel p-4 p-lg-5 mb-4">
             <div class="d-flex flex-column flex-lg-row justify-content-between gap-4 align-items-lg-end">
@@ -61,6 +77,7 @@
                 </div>
                 <div class="d-flex flex-wrap gap-2">
                     <span class="status-badge {{ $statusClasses[$clientStatus] ?? 'status-warning' }}">{{ $statusLabel }}</span>
+                    <span class="status-badge {{ $checkoutStatusClasses[$checkoutState] ?? 'status-warning' }}">{{ $checkoutLabel }}</span>
                     @if ($latestTransaction?->status)
                         <span class="status-badge {{ $statusClasses[$latestTransaction->status] ?? 'status-warning' }}">{{ $workflowStatusLabels[$latestTransaction->status] ?? ucfirst(str_replace('_', ' ', $latestTransaction->status)) }}</span>
                     @endif
@@ -87,6 +104,7 @@
                         <div class="admin-detail-list">
                             <div><span>Package</span><strong>{{ $latestSubscription?->plan?->name ?: __('portal.dashboard.shared.unknown_plan') }}</strong></div>
                             <div><span>Amount</span><strong>{{ number_format((float) ($latestTransaction?->amount_mad ?? 0), 2) }} {{ $currency }}</strong></div>
+                            <div><span>Checkout</span><strong>{{ $checkoutLabel }}</strong></div>
                             <div><span>Payment type</span><strong>{{ $paymentMethodLabel }}</strong></div>
                             <div><span>Bank</span><strong>{{ $latestTransaction?->bank_name ?: '-' }}</strong></div>
                             <div><span>Provider</span><strong>{{ $providerLabel }}</strong></div>
@@ -132,7 +150,7 @@
                         <div class="admin-progress-grid">
                             @foreach ($stepOrder as $stepKey => $stepLabel)
                                 @php
-                                    $done = !($actionState[$stepKey] ?? false) && in_array($stepKey, ['assign', 'start_support', 'confirm_payment', 'send_tutorial', 'save_credentials', 'mark_completed'], true);
+                                    $done = !($actionState[$stepKey] ?? false) && in_array($stepKey, ['assign', 'save_order', 'start_support', 'confirm_payment', 'send_tutorial', 'save_credentials', 'mark_completed'], true);
                                     $active = ($actionState[$stepKey] ?? false);
                                 @endphp
                                 <div class="admin-progress-item {{ $active ? 'is-active' : ($done ? 'is-done' : '') }}">
@@ -153,13 +171,92 @@
                         </div>
 
                         <div class="d-grid gap-4">
+                            <form method="POST" action="{{ route('admin.clients.workflow', $clientRecord) }}" class="admin-action-panel admin-action-panel-form">
+                                @csrf
+                                <input type="hidden" name="action" value="update_profile">
+                                <div class="w-100">
+                                    <h3 class="h5 text-body-rif mb-2">Edit client details</h3>
+                                    <p class="text-soft-rif mb-3">All admins can review and update the client profile, assignment, and support notes from here.</p>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label form-label-rif">Name</label>
+                                            <input type="text" name="client_name" class="form-control form-control-rif" value="{{ old('client_name', $clientRecord->user->name) }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label form-label-rif">Email</label>
+                                            <input type="email" name="email" class="form-control form-control-rif" value="{{ old('email', $clientRecord->user->email) }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label form-label-rif">Phone</label>
+                                            <input type="text" name="phone" class="form-control form-control-rif" value="{{ old('phone', $clientPhone) }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label form-label-rif">City</label>
+                                            <input type="text" name="city" class="form-control form-control-rif" value="{{ old('city', $clientRecord->city) }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label form-label-rif">Assigned admin</label>
+                                            <select name="assigned_admin_id" class="form-select form-control-rif">
+                                                @foreach ($adminUsers as $adminUser)
+                                                    <option value="{{ $adminUser->id }}" @selected((int) old('assigned_admin_id', $clientRecord->assigned_admin_id ?: auth()->id()) === (int) $adminUser->id)>{{ $adminUser->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label form-label-rif">Support notes</label>
+                                            <textarea name="support_notes" rows="4" class="form-control form-control-rif">{{ old('support_notes', $clientRecord->support_notes) }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-rif-secondary">Save profile</button>
+                            </form>
+
+                            <form method="POST" action="{{ route('admin.clients.workflow', $clientRecord) }}" class="admin-action-panel admin-action-panel-form">
+                                @csrf
+                                <input type="hidden" name="action" value="save_order">
+                                <div class="w-100">
+                                    <h3 class="h5 text-body-rif mb-2">Complete order on behalf of client</h3>
+                                    <p class="text-soft-rif mb-3">If the client stopped before choosing a plan or payment method, an admin can complete the order setup here and continue the workflow.</p>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label form-label-rif">Plan</label>
+                                            <select name="plan_id" class="form-select form-control-rif">
+                                                @foreach ($availablePlans as $plan)
+                                                    <option value="{{ $plan->id }}" @selected((int) old('plan_id', $latestSubscription?->plan_id) === (int) $plan->id)>
+                                                        {{ $plan->name }} - {{ (int) $plan->price_mad }} {{ $currency }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label form-label-rif">Payment method</label>
+                                            <select name="payment_method" class="form-select form-control-rif" data-admin-payment-method>
+                                                <option value="cash" @selected(old('payment_method', $latestTransaction?->payment_method) === 'cash')>{{ __('workflow.common.cash') }}</option>
+                                                <option value="bank_transfer" @selected(old('payment_method', $latestTransaction?->payment_method) === 'bank_transfer')>{{ __('workflow.common.bank_transfer') }}</option>
+                                                <option value="card" @selected(old('payment_method', $latestTransaction?->payment_method) === 'card')>{{ __('workflow.common.card') }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6" data-admin-bank-wrap>
+                                            <label class="form-label form-label-rif">Bank</label>
+                                            <select name="bank_name" class="form-select form-control-rif">
+                                                <option value="">Choose bank</option>
+                                                @foreach ($bankOptions as $bankKey => $bankLabel)
+                                                    <option value="{{ $bankKey }}" @selected(old('bank_name') === $bankKey || ($latestTransaction?->payment_method === 'bank_transfer' && $latestTransaction?->bank_name === $bankLabel))>{{ $bankLabel }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-rif-secondary">Save order details</button>
+                            </form>
+
                             @if ($actionState['assign'])
                                 <form method="POST" action="{{ route('admin.clients.workflow', $clientRecord) }}" class="admin-action-panel">
                                     @csrf
                                     <input type="hidden" name="action" value="assign">
                                     <div>
                                         <h3 class="h5 text-body-rif mb-2">{{ __('workflow.admin.actions.assign') }}</h3>
-                                        <p class="text-soft-rif mb-0">Take ownership of this client so every next step stays under one admin.</p>
+                                        <p class="text-soft-rif mb-0">Take over this client or move the ownership to your queue so the next actions stay together.</p>
                                     </div>
                                     <button type="submit" class="btn-rif-secondary">{{ __('workflow.admin.actions.assign') }}</button>
                                 </form>
@@ -284,6 +381,7 @@
     </div>
 </section>
 
+@if ($latestTransaction?->proof_path)
 <!-- Proof Modal -->
 <div class="modal fade" id="proofModal" tabindex="-1" aria-labelledby="proofModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -298,5 +396,26 @@
         </div>
     </div>
 </div>
+@endif
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const paymentMethod = document.querySelector('[data-admin-payment-method]');
+    const bankWrap = document.querySelector('[data-admin-bank-wrap]');
+
+    if (!paymentMethod || !bankWrap) {
+        return;
+    }
+
+    const syncBankVisibility = function () {
+        bankWrap.style.display = paymentMethod.value === 'bank_transfer' ? '' : 'none';
+    };
+
+    paymentMethod.addEventListener('change', syncBankVisibility);
+    syncBankVisibility();
+});
+</script>
+@endpush

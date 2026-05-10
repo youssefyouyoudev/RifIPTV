@@ -127,4 +127,35 @@ class DashboardExperienceTest extends TestCase
             ->assertSee('Managed Client')
             ->assertSee('Client tracking table');
     }
+
+    public function test_admin_dashboard_lists_clients_even_when_assigned_to_other_admins(): void
+    {
+        $viewerAdmin = User::factory()->create([
+            'name' => 'Viewer Admin',
+            'role' => 'admin',
+        ]);
+
+        $ownerAdmin = User::factory()->create([
+            'name' => 'Owner Admin',
+            'role' => 'admin',
+        ]);
+
+        $clientUser = User::factory()->create([
+            'name' => 'Visible Client',
+            'role' => 'client',
+        ]);
+
+        Client::create([
+            'user_id' => $clientUser->id,
+            'assigned_admin_id' => $ownerAdmin->id,
+            'onboarding_status' => 'awaiting_whatsapp',
+        ]);
+
+        $response = $this->actingAs($viewerAdmin)->get('/dashboard');
+
+        $response
+            ->assertOk()
+            ->assertSee('Visible Client')
+            ->assertSee('Checkout');
+    }
 }

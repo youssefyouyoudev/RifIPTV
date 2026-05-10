@@ -36,6 +36,12 @@
         'cancelled' => 'status-danger',
         'failed' => 'status-danger',
     ];
+    $checkoutStatusClasses = [
+        'complete' => 'status-success',
+        'pending' => 'status-warning',
+        'plan_selected' => 'status-warning',
+        'not_started' => 'status-danger',
+    ];
     $workflowStatusLabels = __('workflow.statuses');
     $latestPaymentMethod = $latestTransaction?->payment_method ?? $client?->preferred_payment_method ?? null;
     $clientStatus = $client?->onboarding_status ?? $subscription?->status ?? 'new';
@@ -220,7 +226,7 @@
                                                 <span class="status-badge {{ $statusClasses[$queueStatus] ?? 'status-warning' }}">{{ $workflowStatusLabels[$queueStatus] ?? ucfirst(str_replace('_', ' ', $queueStatus)) }}</span>
                                             </td>
                                             <td>
-                                                <span class="admin-step-pill">{{ ($queueClient->next_action ?? null) === 'completed' ? ($workflowStatusLabels['completed'] ?? 'Completed') : __('workflow.admin.actions.'.($queueClient->next_action ?? 'mark_completed')) }}</span>
+                                                <span class="admin-step-pill">{{ ($queueClient->next_action ?? null) === 'completed' ? ($workflowStatusLabels['completed'] ?? 'Completed') : (($queueClient->next_action ?? null) === 'save_order' ? 'Complete order setup' : __('workflow.admin.actions.'.($queueClient->next_action ?? 'mark_completed'))) }}</span>
                                             </td>
                                             <td class="text-end">
                                                 <a href="{{ route('admin.clients.show', $queueClient) }}" class="btn-rif-outline btn-rif-sm">Open</a>
@@ -277,7 +283,7 @@
                                                 <span class="status-badge {{ $statusClasses[$queueStatus] ?? 'status-warning' }}">{{ $workflowStatusLabels[$queueStatus] ?? ucfirst(str_replace('_', ' ', $queueStatus)) }}</span>
                                             </td>
                                             <td>
-                                                <span class="admin-step-pill">{{ ($queueClient->next_action ?? null) === 'completed' ? ($workflowStatusLabels['completed'] ?? 'Completed') : __('workflow.admin.actions.'.($queueClient->next_action ?? 'mark_completed')) }}</span>
+                                                <span class="admin-step-pill">{{ ($queueClient->next_action ?? null) === 'completed' ? ($workflowStatusLabels['completed'] ?? 'Completed') : (($queueClient->next_action ?? null) === 'save_order' ? 'Complete order setup' : __('workflow.admin.actions.'.($queueClient->next_action ?? 'mark_completed'))) }}</span>
                                             </td>
                                             <td class="text-end">
                                                 <a href="{{ route('admin.clients.show', $queueClient) }}" class="btn-rif-outline btn-rif-sm">Open</a>
@@ -312,6 +318,7 @@
                                 <th>{{ __('workflow.admin.clients_table.columns.payment') }}</th>
                                 <th>{{ __('workflow.admin.clients_table.columns.bank') }}</th>
                                 <th>{{ __('workflow.admin.clients_table.columns.assigned_to') }}</th>
+                                <th>Checkout</th>
                                 <th>{{ __('workflow.admin.clients_table.columns.status') }}</th>
                                 <th>{{ __('workflow.admin.clients_table.columns.proof') }}</th>
                                 <th class="text-end">Open</th>
@@ -332,6 +339,7 @@
                                     <td>{{ $managedTransaction?->payment_method === 'bank_transfer' ? __('workflow.common.bank_transfer') : ($managedTransaction?->payment_method === 'cash' ? __('workflow.common.cash') : __('workflow.common.card')) }}</td>
                                     <td>{{ $managedTransaction?->bank_name ?: '-' }}</td>
                                     <td>{{ optional($managedClient->assignedAdmin)->name ?: __('portal.dashboard.shared.unassigned') }}</td>
+                                    <td><span class="status-badge {{ $checkoutStatusClasses[$managedClient->checkout_state ?? 'pending'] ?? 'status-warning' }}">{{ $managedClient->checkout_label ?? 'Checkout incomplete' }}</span></td>
                                     <td><span class="status-badge {{ $statusClasses[$managedStatus] ?? 'status-warning' }}">{{ $workflowStatusLabels[$managedStatus] ?? ucfirst(str_replace('_', ' ', $managedStatus)) }}</span></td>
                                     <td>
                                         @if ($managedTransaction?->proof_path)
@@ -345,7 +353,7 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr><td colspan="8" class="text-center text-soft-rif py-4">{{ __('workflow.admin.clients_table.empty') }}</td></tr>
+                                <tr><td colspan="9" class="text-center text-soft-rif py-4">{{ __('workflow.admin.clients_table.empty') }}</td></tr>
                             @endforelse
                         </tbody>
                     </table>

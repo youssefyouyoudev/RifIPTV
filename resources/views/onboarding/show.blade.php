@@ -273,32 +273,6 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('[data-pack-switcher]').forEach(function (switcher) {
-        const buttons = switcher.querySelectorAll('[data-pack-toggle]');
-        const panels = switcher.querySelectorAll('[data-pack-panel]');
-        const familyInput = switcher.querySelector('[data-pack-family-input]');
-
-        const activate = function (slug) {
-            buttons.forEach(function (button) {
-                button.classList.toggle('is-active', button.getAttribute('data-pack-toggle') === slug);
-            });
-
-            panels.forEach(function (panel) {
-                panel.classList.toggle('is-active', panel.getAttribute('data-pack-panel') === slug);
-            });
-
-            if (familyInput) {
-                familyInput.value = slug;
-            }
-        };
-
-        buttons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                activate(button.getAttribute('data-pack-toggle'));
-            });
-        });
-    });
-
     const updateSelectedCards = function () {
         document.querySelectorAll('[data-select-card="plan"]').forEach(function (card) {
             const input = card.querySelector('input[type="radio"]');
